@@ -1,0 +1,37 @@
+{
+  "name": "hafizyol",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hafız Yol — Kur'an öğrenme + hafızlık. This repo currently ships the recovered Expo web export (build 2026-09-06). Original TypeScript/TSX source was not found.",
+  "license": "UNLICENSED",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "web": "node scripts/serve.js",
+    "serve": "node scripts/serve.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@expo-google-fonts/amiri-quran": "^0.2.3",
+    "@expo-google-fonts/scheherazade-new": "^0.2.3",
+    "@expo/vector-icons": "^14.0.4",
+    "expo": "~52.0.0",
+    "expo-av": "~15.0.2",
+    "expo-constants": "~17.0.8",
+    "expo-file-system": "~18.0.12",
+    "expo-font": "~13.0.4",
+    "expo-router": "~4.0.21",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-native": "0.76.9",
+    "react-native-screens": "~4.4.0",
+    "react-native-web": "~0.19.13"
+  },
+  "expo": {
+    "install": {
+      "exclude": []
+    }
+  }
+}

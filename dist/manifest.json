@@ -1,0 +1,16 @@
+{
+  "name": "Hafız Yol",
+  "short_name": "Hafız Yol",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1b4332",
+  "theme_color": "#1b4332",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}
