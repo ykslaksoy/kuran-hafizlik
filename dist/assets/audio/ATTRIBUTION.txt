@@ -1,0 +1,15 @@
+Amentü hoca okuması (amentu-hoca-v1.mp3)
+=======================================
+
+Parça 1 — Amentü / iman esasları (آمنت بالله … والبعث بعد الموت)
+  Kaynak: Microsoft Edge neural TTS, ar-SA-HamedNeural
+  Tempo: yavaş, cümle cümle (öğrenme / hoca üslubu)
+  Lisans: Azure Cognitive Services Speech çıktısı; eğitim amaçlı uygulama içi kullanım
+
+Parça 2 — Âl-i İmrân 8 (ربنا لا تزغ قلوبنا … إنك أنت الوهاب)
+  Kâri: Mahmoud Khalil Al-Husary — Muallim / Teacher
+  Kaynak: EveryAyah (Husary_Muallim_128kbps/003008.mp3)
+  Aynı ücretsiz ayet CDN’i uygulama Kur’an oynatıcısında da kullanılıyor
+  Artist etiketi: "Mahmoud Khalil Al-Husari (Teacher)"
+
+Yeniden üretmek: scripts/generate-amentu-audio.py
