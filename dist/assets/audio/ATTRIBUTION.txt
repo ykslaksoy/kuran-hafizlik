@@ -1,15 +1,13 @@
-Amentü hoca okuması (amentu-hoca-v1.mp3)
-=======================================
+Amentü — Mishary Rashid Alafasy (amentu-mishari-v1.mp3)
+=======================================================
 
-Parça 1 — Amentü / iman esasları (آمنت بالله … والبعث بعد الموت)
-  Kaynak: Microsoft Edge neural TTS, ar-SA-HamedNeural
-  Tempo: yavaş, cümle cümle (öğrenme / hoca üslubu)
-  Lisans: Azure Cognitive Services Speech çıktısı; eğitim amaçlı uygulama içi kullanım
+Tamamı Mişari / Alafasy; TTS yok.
 
-Parça 2 — Âl-i İmrân 8 (ربنا لا تزغ قلوبنا … إنك أنت الوهاب)
-  Kâri: Mahmoud Khalil Al-Husary — Muallim / Teacher
-  Kaynak: EveryAyah (Husary_Muallim_128kbps/003008.mp3)
-  Aynı ücretsiz ayet CDN’i uygulama Kur’an oynatıcısında da kullanılıyor
-  Artist etiketi: "Mahmoud Khalil Al-Husari (Teacher)"
+1) Bakara 285 — «Âmenerrasûlü… küllün âmene billâhi ve melâiketihî…»
+   EveryAyah Alafasy_128kbps/002285.mp3
+2) Âl-i İmrân 8 — «Rabbenâ lâ tuzigh… inneke entel-Vehhâb»
+   EveryAyah Alafasy_128kbps/003008.mp3
 
+Kaynak: aynı CDN (everyayah.com) — uygulama Kur’an oynatıcısının varsayılan kârisi.
+Artist: Mishary Rashid Alafasy
 Yeniden üretmek: scripts/generate-amentu-audio.py

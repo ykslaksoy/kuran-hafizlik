@@ -1,5 +1,5 @@
 /* Hafız Yol shell SW — 2026-09-06T09:58:39.416Z */
-const BUILD = 'amentu1';
+const BUILD = 'mishari1';
 const SHELL = 'hafiz-shell-' + BUILD;
 
 self.addEventListener('install', (event) => {

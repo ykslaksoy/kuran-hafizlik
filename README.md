@@ -8,7 +8,7 @@ Canlı: https://hafizyol.vercel.app
 
 `dist/` içinde **2026-09-06** tarihli Expo web export’unun birebir kopyası var (`expo export --platform web`). Bu ağaç `npm start` ile yerelde açılır ve Vercel’de statik site olarak yayınlanabilir.
 
-Amentü (Çocuk Namaz) artık tarayıcı TTS yerine `dist/assets/audio/amentu-hoca-v1.mp3` hoca kaydını çalar (iman esasları + Husary Muallim, Âl-i İmrân 8). Kur’an ayet oynatıcısına dokunulmadı.
+Amentü (Çocuk Namaz) **Mishary Rashid Alafasy** kaydı çalar (`dist/assets/audio/amentu-mishari-v1.mp3`: Bakara 285 + Âl-i İmrân 8, EveryAyah). Kur’an tilavet varsayılanı da Mişari (`alafasy`); ayarlardan değiştirilebilir.
 
 **Orijinal Expo / TypeScript kaynağı bu ortamda bulunamadı.** `app/*.tsx` yok. Ayrıntı: [SOURCE_RECOVERY.md](./SOURCE_RECOVERY.md).
 
