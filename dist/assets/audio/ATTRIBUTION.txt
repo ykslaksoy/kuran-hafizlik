@@ -1,0 +1,13 @@
+Amentü — Mishary Rashid Alafasy (amentu-mishari-v1.mp3)
+=======================================================
+
+Tamamı Mişari / Alafasy; TTS yok.
+
+1) Bakara 285 — «Âmenerrasûlü… küllün âmene billâhi ve melâiketihî…»
+   EveryAyah Alafasy_128kbps/002285.mp3
+2) Âl-i İmrân 8 — «Rabbenâ lâ tuzigh… inneke entel-Vehhâb»
+   EveryAyah Alafasy_128kbps/003008.mp3
+
+Kaynak: aynı CDN (everyayah.com) — uygulama Kur’an oynatıcısının varsayılan kârisi.
+Artist: Mishary Rashid Alafasy
+Yeniden üretmek: scripts/generate-amentu-audio.py
