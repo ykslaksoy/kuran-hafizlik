@@ -1210,59 +1210,74 @@ __d(function (g, _r, i, a, m, e, d) {
                   (0, p.jsxs)(c.default, {
                     style: z.heroStage,
                     children: [
-                      y.loading && null == y.qiblaBearing
-                        ? (0, p.jsx)(o.default, { color: "#fff", size: "large", style: z.loader })
-                        : null,
                       (0, p.jsxs)(c.default, {
-                        style: [z.compassStage, { width: size, height: size }],
+                        style: [z.heroCard, R && z.heroCardCompact],
                         children: [
-                          (0, p.jsx)(c.default, { style: z.lubber }),
+                          y.loading && null == y.qiblaBearing
+                            ? (0, p.jsx)(o.default, { color: "#fff", size: "large", style: z.loader })
+                            : null,
                           (0, p.jsxs)(c.default, {
-                            style: [
-                              z.dial,
-                              {
-                                width: size,
-                                height: size,
-                                borderRadius: size / 2,
-                                transform: [{ rotate: w + "deg" }],
-                              },
-                            ],
+                            style: [z.compassStage, { width: size, height: size }],
                             children: [
-                              (0, p.jsx)(j, { size: size }),
-                              (0, p.jsx)(C, { size: size }),
-                              (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalN], children: "N" }),
-                              (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalE], children: "E" }),
-                              (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalS], children: "S" }),
-                              (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalW], children: "W" }),
+                              (0, p.jsx)(c.default, { style: z.lubber }),
                               (0, p.jsxs)(c.default, {
                                 style: [
-                                  z.qiblaMarker,
-                                  { width: size, height: size, transform: [{ rotate: S + "deg" }] },
+                                  z.dial,
+                                  {
+                                    width: size,
+                                    height: size,
+                                    borderRadius: size / 2,
+                                    transform: [{ rotate: w + "deg" }],
+                                  },
                                 ],
                                 children: [
-                                  (0, p.jsx)(c.default, { style: z.qiblaArrow }),
+                                  (0, p.jsx)(j, { size: size }),
+                                  (0, p.jsx)(C, { size: size }),
+                                  (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalN], children: "N" }),
+                                  (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalE], children: "E" }),
+                                  (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalS], children: "S" }),
+                                  (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalW], children: "W" }),
+                                  (0, p.jsxs)(c.default, {
+                                    style: [
+                                      z.qiblaMarker,
+                                      { width: size, height: size, transform: [{ rotate: S + "deg" }] },
+                                    ],
+                                    children: [
+                                      (0, p.jsx)(c.default, { style: z.qiblaArrow }),
+                                      (0, p.jsxs)(c.default, {
+                                        style: z.kaabaBadge,
+                                        children: [
+                                          (0, p.jsx)(c.default, { style: z.kaabaCube }),
+                                          (0, p.jsx)(c.default, { style: z.kaabaBand }),
+                                          (0, p.jsx)(c.default, { style: z.kaabaDoor }),
+                                        ],
+                                      }),
+                                    ],
+                                  }),
                                   (0, p.jsx)(c.default, {
-                                    style: z.kaabaBadge,
-                                    children: (0, p.jsx)(u.MaterialCommunityIcons, {
-                                      name: "mosque",
-                                      size: 18,
-                                      color: "#222",
-                                    }),
+                                    style: [z.levelDot, y.aligned && z.levelDotAligned],
+                                    children: y.aligned
+                                      ? (0, p.jsx)(u.MaterialCommunityIcons, {
+                                          name: "check",
+                                          size: 18,
+                                          color: "#0f3d32",
+                                        })
+                                      : null,
                                   }),
                                 ],
                               }),
-                              (0, p.jsx)(c.default, {
-                                style: [z.levelDot, y.aligned && z.levelDotAligned],
-                              }),
                             ],
+                          }),
+                          (0, p.jsx)(s.default, {
+                            style: [z.bigDegrees, R && z.bigDegreesCompact],
+                            children: x,
+                          }),
+                          (0, p.jsx)(s.default, {
+                            style: z.heroUnits,
+                            children: "k\u0131ble a\xe7\u0131s\u0131",
                           }),
                         ],
                       }),
-                      (0, p.jsx)(s.default, {
-                        style: [z.bigDegrees, R && z.bigDegreesCompact],
-                        children: x,
-                      }),
-                      (0, p.jsx)(s.default, { style: z.heroUnits, children: "k\u0131ble a\xe7\u0131s\u0131" }),
                     ],
                   }),
                   (0, p.jsxs)(c.default, {
@@ -1530,6 +1545,16 @@ __d(function (g, _r, i, a, m, e, d) {
       justifyContent: "center",
       paddingVertical: 8,
     },
+    heroCard: {
+      backgroundColor: glass,
+      borderRadius: 28,
+      paddingVertical: 22,
+      paddingHorizontal: 24,
+      alignItems: "center",
+      borderWidth: st.default.hairlineWidth,
+      borderColor: "rgba(255,255,255,0.28)",
+    },
+    heroCardCompact: { paddingVertical: 16, borderRadius: 24, paddingHorizontal: 16 },
     compassStage: { alignItems: "center", justifyContent: "center", marginBottom: 10 },
     lubber: {
       position: "absolute",
@@ -1573,24 +1598,44 @@ __d(function (g, _r, i, a, m, e, d) {
       marginBottom: 4,
     },
     kaabaBadge: {
-      width: 34,
-      height: 34,
-      borderRadius: 17,
-      backgroundColor: "#f0f0f0",
+      width: 36,
+      height: 36,
+      borderRadius: 8,
+      backgroundColor: "#1a1a1a",
       alignItems: "center",
       justifyContent: "center",
-      borderWidth: st.default.hairlineWidth,
-      borderColor: "#ccc",
+      overflow: "hidden",
+      borderWidth: 1,
+      borderColor: "#c9a227",
+    },
+    kaabaCube: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      backgroundColor: "#111",
+    },
+    kaabaBand: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: 11,
+      height: 7,
+      backgroundColor: "#c9a227",
+      opacity: 0.9,
     },
     levelDot: {
-      width: 18,
-      height: 18,
-      borderRadius: 9,
+      width: 28,
+      height: 28,
+      borderRadius: 14,
       borderWidth: 2,
       borderColor: "#66bb6a",
       backgroundColor: "transparent",
+      alignItems: "center",
+      justifyContent: "center",
     },
-    levelDotAligned: { backgroundColor: "rgba(102, 187, 106, 0.35)", borderColor: "#43a047" },
+    levelDotAligned: { backgroundColor: "#9fd9cf", borderColor: "#0f3d32" },
     bigDegrees: {
       fontSize: 56,
       fontWeight: "700",
