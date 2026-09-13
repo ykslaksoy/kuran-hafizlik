@@ -20,7 +20,10 @@ __d(function (g, _r, i, a, m, e, d) {
         w = -(y.deviceHeading ?? 0),
         S = y.qiblaBearing ?? 0,
         q = (0, bg.resolvePrayerBackgroundSource)(cfg.prayerBackgroundId, cfg.backgroundImageUri),
-        size = R ? 228 : 280;
+        size = R ? 228 : 280,
+        previewAlign =
+          "undefined" != typeof location && /(?:\?|&)hizala=1(?:&|$)/.test(location.search || ""),
+        isAligned = !!(y.aligned || previewAlign);
       (0, f.useFocusEffect)(
         (0, n.useCallback)(() => {
           const parent = nav.getParent();
@@ -144,8 +147,8 @@ __d(function (g, _r, i, a, m, e, d) {
                                     ],
                                   }),
                                   (0, p.jsx)(c.default, {
-                                    style: [z.levelDot, y.aligned && z.levelDotAligned],
-                                    children: y.aligned
+                                    style: [z.levelDot, isAligned && z.levelDotAligned],
+                                    children: isAligned
                                       ? (0, p.jsx)(u.MaterialCommunityIcons, {
                                           name: "check",
                                           size: 18,
@@ -196,7 +199,7 @@ __d(function (g, _r, i, a, m, e, d) {
                           y.orientationNote ||
                           y.calibrationHint ||
                           y.needsOrientationGesture ||
-                          y.aligned
+                          isAligned
                             ? z.timeRowBorder
                             : null,
                         ],
@@ -213,22 +216,22 @@ __d(function (g, _r, i, a, m, e, d) {
                       }),
                       y.locationLabel
                         ? (0, p.jsxs)(c.default, {
-                            style: [z.timeRow, y.aligned && z.timeRowActive],
+                            style: [z.timeRow, isAligned && z.timeRowActive],
                             children: [
                               (0, p.jsxs)(c.default, {
                                 style: z.timeLeft,
                                 children: [
                                   (0, p.jsx)(c.default, {
-                                    style: y.aligned ? z.activeDot : z.idleDot,
+                                    style: isAligned ? z.activeDot : z.idleDot,
                                   }),
                                   (0, p.jsx)(s.default, {
-                                    style: [z.timeLabel, y.aligned && z.timeLabelActive],
+                                    style: [z.timeLabel, isAligned && z.timeLabelActive],
                                     children: "Konum",
                                   }),
                                 ],
                               }),
                               (0, p.jsxs)(s.default, {
-                                style: [z.timeValue, z.timeValueSmall, y.aligned && z.timeValueActive],
+                                style: [z.timeValue, z.timeValueSmall, isAligned && z.timeValueActive],
                                 children: [y.locationLabel, locSrc],
                               }),
                             ],
@@ -262,7 +265,7 @@ __d(function (g, _r, i, a, m, e, d) {
                             ],
                           })
                         : null,
-                      y.aligned
+                      isAligned
                         ? (0, p.jsx)(s.default, {
                             style: z.alignedMsg,
                             children: "K\u0131bleye hizal\u0131s\u0131n\u0131z",
