@@ -1133,7 +1133,8 @@ __d(function (g, _r, i, a, m, e, d) {
         q = (0, bg.resolvePrayerBackgroundSource)(cfg.prayerBackgroundId, cfg.backgroundImageUri),
         size = R ? 228 : 280,
         previewAlign =
-          "undefined" != typeof location && /(?:\?|&)hizala=1(?:&|$)/.test(location.search || ""),
+          "undefined" != typeof window &&
+          /(?:\?|&)hizala=1(?:&|$)/.test(window.location && window.location.search ? window.location.search : ""),
         isAligned = !!(y.aligned || previewAlign);
       (0, f.useFocusEffect)(
         (0, n.useCallback)(() => {
@@ -1503,7 +1504,7 @@ __d(function (g, _r, i, a, m, e, d) {
     orbBR: { width: 260, height: 260, bottom: 40, right: -90, backgroundColor: "#c4a484" },
     orbBL: { width: 160, height: 160, bottom: 120, left: -40, backgroundColor: "#5fa88f" },
     scroll: { flex: 1, zIndex: 2 },
-    scrollContent: { flexGrow: 1, paddingHorizontal: 18, paddingTop: 14, paddingBottom: 104 },
+    scrollContent: { flexGrow: 1, paddingHorizontal: 18, paddingTop: 14, paddingBottom: 120 },
     scrollContentCompact: { paddingTop: 10 },
     topRow: {
       flexDirection: "row",
@@ -1751,7 +1752,7 @@ __d(function (g, _r, i, a, m, e, d) {
     ctaLabel: { color: "#fff", fontWeight: "700", fontSize: 15 },
     alignedMsg: {
       marginTop: 8,
-      marginBottom: 10,
+      marginBottom: 14,
       color: "#2e7d32",
       fontWeight: "700",
       fontSize: 15,
