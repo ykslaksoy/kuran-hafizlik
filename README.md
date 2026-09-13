@@ -8,7 +8,7 @@ Canlı: https://hafizyol.vercel.app
 
 `dist/` içinde **2026-09-06** tarihli Expo web export’unun birebir kopyası var (`expo export --platform web`). Bu ağaç `npm start` ile yerelde açılır ve Vercel’de statik site olarak yayınlanabilir.
 
-Amentü (Çocuk Namaz) **Mishary Rashid Alafasy** kaydı çalar (`dist/assets/audio/amentu-mishari-v1.mp3`: Bakara 285 + Âl-i İmrân 8, EveryAyah). Kur’an tilavet varsayılanı da Mişari (`alafasy`); ayarlardan değiştirilebilir.
+Amentü, ekrandaki metni okur (`آمنت بالله…`, sonra Âl-i İmrân 8 / Mişari). Bakara 285 (Âmenerrasûlü) kullanılmaz. Kur’an tilavet varsayılanı Mişari (`alafasy`).
 
 **Orijinal Expo / TypeScript kaynağı bu ortamda bulunamadı.** `app/*.tsx` yok. Ayrıntı: [SOURCE_RECOVERY.md](./SOURCE_RECOVERY.md).
 

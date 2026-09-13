@@ -1,13 +1,14 @@
-Amentü — Mishary Rashid Alafasy (amentu-mishari-v1.mp3)
-=======================================================
+Amentü (amentu-v2.mp3) — doğru metin
+====================================
 
-Tamamı Mişari / Alafasy; TTS yok.
+Âmenerrasûlü (Bakara 285) YOK.
 
-1) Bakara 285 — «Âmenerrasûlü… küllün âmene billâhi ve melâiketihî…»
-   EveryAyah Alafasy_128kbps/002285.mp3
-2) Âl-i İmrân 8 — «Rabbenâ lâ tuzigh… inneke entel-Vehhâb»
-   EveryAyah Alafasy_128kbps/003008.mp3
+1) İman esasları — ekrandaki Amentü metni:
+   آمَنْتُ بِاللهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ وَالْيَوْمِ الْآخِرِ
+   وَبِالْقَدَرِ خَيْرِهِ وَشَرِّهِ مِنَ اللهِ تَعَالَى وَالْبَعْثِ بَعْدَ الْمَوْتِ
+   (cümle cümle, öğrenme temposu)
 
-Kaynak: aynı CDN (everyayah.com) — uygulama Kur’an oynatıcısının varsayılan kârisi.
-Artist: Mishary Rashid Alafasy
-Yeniden üretmek: scripts/generate-amentu-audio.py
+2) Rabbenâ — Âl-i İmrân 8 (ekrandaki ikinci paragraf)
+   EveryAyah Alafasy_128kbps/003008.mp3 — Mishary Rashid Alafasy
+
+scripts/generate-amentu-audio.py

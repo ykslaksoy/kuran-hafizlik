@@ -1,41 +1,145 @@
 #!/usr/bin/env python3
-"""Regenerate Amentü Mishari clip from EveryAyah Alafasy ayahs."""
+"""Amentü kaydı: doğru iman metni + Alafasy Âl-i İmrân 8. Bakara 285 yok."""
 from __future__ import annotations
 
+import asyncio
 import shutil
 import subprocess
 import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "dist" / "assets" / "audio" / "amentu-mishari-v1.mp3"
-ALSO = ROOT / "assets" / "audio" / "amentu-mishari-v1.mp3"
-BASE = "https://everyayah.com/data/Alafasy_128kbps"
-AYAH = ("002285.mp3", "003008.mp3")
+OUT = ROOT / "dist" / "assets" / "audio" / "amentu-v2.mp3"
+ALSO = ROOT / "assets" / "audio" / "amentu-v2.mp3"
+RABBENA = "https://everyayah.com/data/Alafasy_128kbps/003008.mp3"
+
+PHRASES = [
+    "آمَنْتُ بِاللهِ",
+    "وَمَلَائِكَتِهِ",
+    "وَكُتُبِهِ",
+    "وَرُسُلِهِ",
+    "وَالْيَوْمِ الْآخِرِ",
+    "وَبِالْقَدَرِ خَيْرِهِ وَشَرِّهِ مِنَ اللهِ تَعَالَى",
+    "وَالْبَعْثِ بَعْدَ الْمَوْتِ",
+]
+
+
+def run(cmd: list[str]) -> None:
+    subprocess.check_call(cmd)
+
+
+async def synth(work: Path) -> None:
+    import edge_tts
+
+    for i, phrase in enumerate(PHRASES):
+        dest = work / f"p{i:02d}.mp3"
+        await edge_tts.Communicate(phrase, "ar-SA-HamedNeural", rate="-18%", pitch="-2Hz").save(
+            str(dest)
+        )
 
 
 def main() -> None:
-    work = Path(tempfile.mkdtemp(prefix="amentu-mishari-"))
+    work = Path(tempfile.mkdtemp(prefix="amentu-v2-"))
     try:
-        for name in AYAH:
-            dest = work / name
-            subprocess.check_call(["curl", "-fsSL", "--retry", "3", "-o", str(dest), f"{BASE}/{name}"])
-        out = work / "out.mp3"
-        subprocess.check_call(
+        asyncio.run(synth(work))
+        run(["curl", "-fsSL", "--retry", "3", "-o", str(work / "003008.mp3"), RABBENA])
+        wavs = []
+        for i in range(len(PHRASES)):
+            wav = work / f"p{i:02d}.wav"
+            run(
+                [
+                    "ffmpeg",
+                    "-y",
+                    "-hide_banner",
+                    "-loglevel",
+                    "error",
+                    "-i",
+                    str(work / f"p{i:02d}.mp3"),
+                    "-ar",
+                    "44100",
+                    "-ac",
+                    "2",
+                    "-af",
+                    "loudnorm=I=-16:LRA=11:TP=-1.5",
+                    str(wav),
+                ]
+            )
+            wavs.append(wav)
+        sil42 = work / "sil42.wav"
+        sil75 = work / "sil75.wav"
+        run(
             [
                 "ffmpeg",
                 "-y",
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-f",
+                "lavfi",
                 "-i",
-                str(work / AYAH[0]),
+                "anullsrc=r=44100:cl=stereo",
+                "-t",
+                "0.42",
+                str(sil42),
+            ]
+        )
+        run(
+            [
+                "ffmpeg",
+                "-y",
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-f",
+                "lavfi",
                 "-i",
-                str(work / AYAH[1]),
-                "-filter_complex",
-                "[0:a]loudnorm=I=-16:LRA=11:TP=-1.5,afade=t=in:st=0:d=0.08[a0];"
-                "[1:a]loudnorm=I=-16:LRA=11:TP=-1.5,afade=t=in:st=0:d=0.08[a1];"
-                "anullsrc=r=44100:cl=stereo:d=0.7[s];"
-                "[a0][s][a1]concat=n=3:v=0:a=1[out]",
-                "-map",
-                "[out]",
+                "anullsrc=r=44100:cl=stereo",
+                "-t",
+                "0.75",
+                str(sil75),
+            ]
+        )
+        rabbena = work / "rabbena.wav"
+        run(
+            [
+                "ffmpeg",
+                "-y",
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-i",
+                str(work / "003008.mp3"),
+                "-ar",
+                "44100",
+                "-ac",
+                "2",
+                "-af",
+                "loudnorm=I=-16:LRA=11:TP=-1.5,afade=t=in:st=0:d=0.1",
+                str(rabbena),
+            ]
+        )
+        concat = work / "concat.txt"
+        lines = []
+        for wav in wavs:
+            lines.append(f"file '{wav}'")
+            lines.append(f"file '{sil42}'")
+        lines.append(f"file '{sil75}'")
+        lines.append(f"file '{rabbena}'")
+        concat.write_text("\n".join(lines) + "\n")
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        run(
+            [
+                "ffmpeg",
+                "-y",
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-f",
+                "concat",
+                "-safe",
+                "0",
+                "-i",
+                str(concat),
                 "-c:a",
                 "libmp3lame",
                 "-b:a",
@@ -44,13 +148,11 @@ def main() -> None:
                 "44100",
                 "-ac",
                 "2",
-                str(out),
+                str(OUT),
             ]
         )
-        OUT.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(out, OUT)
         ALSO.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(out, ALSO)
+        shutil.copy2(OUT, ALSO)
         print("wrote", OUT, OUT.stat().st_size)
     finally:
         shutil.rmtree(work, ignore_errors=True)
