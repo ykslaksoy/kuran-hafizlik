@@ -1,10 +1,10 @@
 /* Hafız Yol shell SW — 2026-09-06T09:58:39.416Z */
-const BUILD = 'amentu2';
+const BUILD = 'pusula1';
 const SHELL = 'hafiz-shell-' + BUILD;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(SHELL).then((cache) => cache.addAll(['/', '/index.html', '/vakitler', '/manifest.json']).catch(() => undefined))
+    caches.open(SHELL).then((cache) => cache.addAll(['/', '/index.html', '/vakitler', '/pusula', '/manifest.json']).catch(() => undefined))
   );
   self.skipWaiting();
 });

@@ -1109,7 +1109,620 @@ __d(function(g,_r,i,a,m,e,d){var t=_r(d[0]);Object.defineProperty(e,"__esModule"
 __d(function(g,r,i,a,m,e,d){var t=r(d[0]);Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(){const t=(0,u.useRouter)(),{persistProgress:l,progress:x}=(0,f.useUserProgress)(),[j,p]=(0,n.useState)(0),[v,C]=(0,n.useState)(0),[P,S]=(0,n.useState)(!1),T=t=>{const n=t?b[j].yes:b[j].no,s=v+n;if(j>=b.length-1)return C(s),S(!0),void(x&&l(Object.assign({},x,{mahrecScore:Math.min(100,s),elifbaComplete:s>=50})));C(s),p(j+1)};if(P)return(0,y.jsxs)(c.default,{style:h.center,children:[(0,y.jsxs)(o.default,{style:h.title,children:["Seviye: %",Math.min(100,v)]}),(0,y.jsx)(o.default,{style:h.sub,children:v>=70?'Ezber moduna ge\xe7ebilirsin':'\xd6nce Elif Ba ve mahre\xe7 \xf6nerilir'}),(0,y.jsx)(s.default,{style:h.btn,onPress:()=>t.back(),children:(0,y.jsx)(o.default,{style:h.btnText,children:"Tamam"})})]});const k=b[j];return(0,y.jsxs)(c.default,{style:h.center,children:[(0,y.jsxs)(o.default,{style:h.progress,children:[j+1,"/",b.length]}),(0,y.jsx)(o.default,{style:h.title,children:k.q}),(0,y.jsxs)(c.default,{style:h.row,children:[(0,y.jsx)(s.default,{style:h.btn,onPress:()=>T(!0),children:(0,y.jsx)(o.default,{style:h.btnText,children:"Evet"})}),(0,y.jsx)(s.default,{style:[h.btn,h.btnNo],onPress:()=>T(!1),children:(0,y.jsx)(o.default,{style:h.btnText,children:"Hay\u0131r"})})]})]})};var n=r(d[1]),s=t(r(d[2])),l=t(r(d[3])),o=t(r(d[4])),c=t(r(d[5])),u=r(d[6]),f=r(d[7]),y=r(d[8]);const b=[{q:'Elif Ba biliyor musun?',yes:20,no:0},{q:'K\u0131sa surelerden ezber yapt\u0131n m\u0131?',yes:30,no:10},{q:'Mahre\xe7 / tecvid \xe7al\u0131\u015ft\u0131n m\u0131?',yes:25,no:5},{q:'Tam mushaf okuyabiliyor musun?',yes:25,no:0}];const h=l.default.create({center:{flex:1,justifyContent:'center',padding:24,backgroundColor:'#f5f5f0'},progress:{color:'#2d6a4f',fontWeight:'700',marginBottom:8},title:{fontSize:20,fontWeight:'800',color:'#1a3d2e',textAlign:'center',marginBottom:24},sub:{color:'#666',textAlign:'center',marginBottom:20},row:{flexDirection:'row',gap:12,justifyContent:'center'},btn:{backgroundColor:'#2d6a4f',paddingVertical:14,paddingHorizontal:28,borderRadius:12},btnNo:{backgroundColor:'#888'},btnText:{color:'#fff',fontWeight:'800'}})},1016,[20,15,372,160,148,276,22,761,13]);
 __d(function(g,r,i,a,m,e,d){var t=r(d[0]);Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(){const{progress:t,selectPlan:o}=(0,x.useUserProgress)(),j=t?.currentPlanId;return(0,y.jsxs)(l.default,{style:b.container,children:[(0,y.jsxs)(f.default,{style:b.templates,children:[(0,y.jsx)(s.default,{style:b.title,children:"Haz\u0131r plan \u015fablonlar\u0131"}),(0,y.jsx)(s.default,{style:b.sub,children:"Bir plan se\xe7 \u2014 Bug\xfcn ekran\u0131 buna g\xf6re g\xfcncellenir"}),u.PLAN_TEMPLATES.map(t=>{const l=t.id===j;return(0,y.jsxs)(n.default,{style:[b.row,l&&b.rowActive],onPress:()=>{o(t.id)},children:[(0,y.jsxs)(s.default,{style:b.name,children:[t.nameTr,l?' \u2713':'']}),(0,y.jsx)(s.default,{style:b.target,children:t.target}),t.durationDays>0&&(0,y.jsxs)(s.default,{style:b.days,children:[t.durationDays," g\xfcn"]})]},t.id)})]}),(0,y.jsx)(c.Link,{href:"/e-hafizlik",asChild:!0,children:(0,y.jsx)(n.default,{style:b.eHafizlikBtn,children:(0,y.jsx)(s.default,{style:b.eHafizlikText,children:"\ud83d\udcf9 e-Haf\u0131zl\u0131k \u2014 g\xf6r\xfcnt\xfcl\xfc canl\u0131 ders"})})}),(0,y.jsx)(h.ModuleScreen,{modulId:"plan",embedded:!0})]})};var n=t(r(d[1])),l=t(r(d[2])),o=t(r(d[3])),s=t(r(d[4])),f=t(r(d[5])),c=r(d[6]),u=r(d[7]),h=r(d[8]),x=r(d[9]),y=r(d[10]);const b=o.default.create({container:{flex:1,backgroundColor:'#f5f5f0'},templates:{padding:16},title:{fontSize:18,fontWeight:'700',color:'#1a3d2e',marginBottom:4},sub:{fontSize:13,color:'#666',marginBottom:12},row:{backgroundColor:'#fff',padding:14,borderRadius:10,marginBottom:8},rowActive:{borderWidth:2,borderColor:'#2d6a4f'},name:{fontWeight:'600',color:'#222'},target:{color:'#666',fontSize:13,marginTop:4},days:{color:'#2d6a4f',fontSize:12,marginTop:4,fontWeight:'600'},eHafizlikBtn:{marginHorizontal:16,marginBottom:8,backgroundColor:'#2d6a4f',padding:14,borderRadius:10},eHafizlikText:{color:'#fff',fontWeight:'800',textAlign:'center'}})},1017,[20,372,284,160,148,276,22,747,800,761,13]);
 __d(function(g,r,i,a,m,e,d){Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(){return(0,t.jsx)(n.QiblaCompassScreen,{})};var n=r(d[0]),t=r(d[1])},1018,[1019,13]);
-__d(function(g,_r,i,a,m,e,d){var t=_r(d[0]);Object.defineProperty(e,"__esModule",{value:!0}),e.QiblaCompassScreen=function(){const t=(0,f.useRouter)(),{settings:r}=(0,h.useAppAppearanceSettings)(),y=(0,b.useQiblaCompass)(r.prayerCity,r.prayerCountry),x=(0,n.useMemo)(()=>null==y.qiblaBearing?'\u2014':`${Math.round(y.qiblaBearing)}\xb0`,[y.qiblaBearing]),k=(0,n.useMemo)(()=>null==y.distanceKm?'\u2014':`${y.distanceKm.toFixed(1)} km`,[y.distanceKm]),w=-(y.deviceHeading??0),S=y.qiblaBearing??0;return(0,p.jsxs)(c.default,{style:z.root,children:[(0,p.jsxs)(c.default,{style:z.topBar,children:[(0,p.jsx)(l.default,{style:z.iconBtn,onPress:()=>t.back(),accessibilityLabel:"Geri",children:(0,p.jsx)(u.MaterialCommunityIcons,{name:"arrow-left",size:24,color:"#111"})}),(0,p.jsx)(s.default,{style:z.topTitle,children:"Pusula"}),(0,p.jsx)(l.default,{style:z.mapBtn,onPress:()=>{y.refreshLocation()},accessibilityLabel:"Harita / konumu yenile",children:(0,p.jsx)(u.MaterialCommunityIcons,{name:"map-outline",size:22,color:"#111"})})]}),(0,p.jsxs)(c.default,{style:z.body,children:[y.loading&&null==y.qiblaBearing?(0,p.jsx)(o.default,{color:"#666",size:"large",style:{marginTop:40}}):null,(0,p.jsxs)(c.default,{style:z.compassStage,children:[(0,p.jsx)(c.default,{style:z.lubber}),(0,p.jsxs)(c.default,{style:[z.dial,{transform:[{rotate:`${w}deg`}]}],children:[(0,p.jsx)(j,{}),(0,p.jsx)(C,{}),(0,p.jsx)(s.default,{style:[z.cardinal,z.cardinalN],children:"N"}),(0,p.jsx)(s.default,{style:[z.cardinal,z.cardinalE],children:"E"}),(0,p.jsx)(s.default,{style:[z.cardinal,z.cardinalS],children:"S"}),(0,p.jsx)(s.default,{style:[z.cardinal,z.cardinalW],children:"W"}),(0,p.jsxs)(c.default,{style:[z.qiblaMarker,{transform:[{rotate:`${S}deg`}]}],children:[(0,p.jsx)(c.default,{style:z.qiblaArrow}),(0,p.jsx)(c.default,{style:z.kaabaBadge,children:(0,p.jsx)(u.MaterialCommunityIcons,{name:"mosque",size:18,color:"#222"})})]}),(0,p.jsx)(c.default,{style:[z.levelDot,y.aligned&&z.levelDotAligned]})]})]}),(0,p.jsx)(s.default,{style:z.bigDegrees,children:x}),(0,p.jsxs)(s.default,{style:z.detailLine,children:["K\u0131ble A\xe7\u0131s\u0131 : ",x]}),(0,p.jsxs)(s.default,{style:z.detailLine,children:["Uzakl\u0131k : ",k]}),y.locationLabel?(0,p.jsxs)(s.default,{style:z.meta,children:[y.locationLabel,'city'===y.locationSource?' \xb7 \u015fehir':'gps'===y.locationSource?' \xb7 GPS':'']}):null,y.locationNote?(0,p.jsx)(s.default,{style:z.warn,children:y.locationNote}):null,y.orientationNote?(0,p.jsx)(s.default,{style:z.warn,children:y.orientationNote}):null,y.calibrationHint?(0,p.jsx)(s.default,{style:z.calibrate,children:y.calibrationHint}):null,y.needsOrientationGesture?(0,p.jsxs)(l.default,{style:z.cta,onPress:()=>{y.requestOrientationPermission()},children:[(0,p.jsx)(u.MaterialCommunityIcons,{name:"compass-outline",size:20,color:"#fff"}),(0,p.jsx)(s.default,{style:z.ctaLabel,children:"Pusulay\u0131 a\xe7 (izin ver)"})]}):null,y.aligned?(0,p.jsx)(s.default,{style:z.alignedMsg,children:"K\u0131bleye hizal\u0131s\u0131n\u0131z"}):null]})]})};var n=_r(d[1]),o=t(_r(d[2])),l=(t(_r(d[3])),t(_r(d[4]))),r=t(_r(d[5])),s=t(_r(d[6])),c=t(_r(d[7])),u=_r(d[8]),f=_r(d[9]),h=_r(d[10]),b=_r(d[11]),p=_r(d[12]);const y=280,x=140;function j(){const t=[];for(let n=0;n<360;n+=2){const o=n%30==0,l=o?14:n%10==0?9:5;t.push((0,p.jsx)(c.default,{style:[z.tickWrap,{transform:[{rotate:`${n}deg`}]}],children:(0,p.jsx)(c.default,{style:[z.tick,{height:l,backgroundColor:o?'#222':'#bdbdbd',width:o?2:1}]})},`t-${n}`))}return(0,p.jsx)(p.Fragment,{children:t})}function C(){return(0,p.jsx)(p.Fragment,{children:[30,60,120,150,210,240,300,330].map(t=>{const n=(t-90)*Math.PI/180,o=x+104*Math.cos(n),l=x+104*Math.sin(n);return(0,p.jsx)(s.default,{style:[z.degLabel,{left:o-14,top:l-8,width:28}],children:t},`d-${t}`)})})}const z=r.default.create({root:{flex:1,backgroundColor:'#ffffff'},topBar:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingTop:14,paddingHorizontal:8,paddingBottom:6},iconBtn:{width:44,height:44,alignItems:'center',justifyContent:'center'},mapBtn:{width:44,height:44,borderRadius:22,borderWidth:r.default.hairlineWidth,borderColor:'#ddd',alignItems:'center',justifyContent:'center',backgroundColor:'#fafafa'},topTitle:{color:'#111',fontSize:18,fontWeight:'700'},body:{flex:1,alignItems:'center',paddingHorizontal:20,paddingTop:8},compassStage:{width:y,height:y,marginTop:12,marginBottom:28,alignItems:'center',justifyContent:'center'},lubber:{position:'absolute',top:2,zIndex:5,width:3,height:18,borderRadius:1,backgroundColor:'#e53935'},dial:{width:y,height:y,borderRadius:x,backgroundColor:'#fff',alignItems:'center',justifyContent:'center'},tickWrap:{position:'absolute',width:y,height:y,alignItems:'center'},tick:{marginTop:4,borderRadius:1},degLabel:{position:'absolute',textAlign:'center',fontSize:11,color:'#9e9e9e',fontWeight:'500'},cardinal:{position:'absolute',color:'#111',fontSize:16,fontWeight:'700'},cardinalN:{top:22},cardinalS:{bottom:22},cardinalE:{right:22},cardinalW:{left:22},qiblaMarker:{position:'absolute',width:y,height:y,alignItems:'center',paddingTop:22},qiblaArrow:{width:0,height:0,borderLeftWidth:7,borderRightWidth:7,borderBottomWidth:12,borderLeftColor:'transparent',borderRightColor:'transparent',borderBottomColor:'#e53935',marginBottom:4},kaabaBadge:{width:34,height:34,borderRadius:17,backgroundColor:'#f0f0f0',alignItems:'center',justifyContent:'center',borderWidth:r.default.hairlineWidth,borderColor:'#ccc'},levelDot:{width:18,height:18,borderRadius:9,borderWidth:2,borderColor:'#66bb6a',backgroundColor:'transparent'},levelDotAligned:{backgroundColor:'rgba(102, 187, 106, 0.35)',borderColor:'#43a047'},bigDegrees:{fontSize:56,fontWeight:'300',color:'#111',letterSpacing:-1,marginBottom:8},detailLine:{fontSize:15,color:'#333',marginTop:2},meta:{marginTop:14,fontSize:13,color:'#757575'},warn:{marginTop:10,fontSize:13,color:'#c62828',textAlign:'center',lineHeight:18,paddingHorizontal:12},calibrate:{marginTop:8,fontSize:13,color:'#546e7a',textAlign:'center',lineHeight:18,paddingHorizontal:12},cta:{marginTop:16,flexDirection:'row',alignItems:'center',gap:8,backgroundColor:'#e53935',paddingHorizontal:18,paddingVertical:12,borderRadius:10},ctaLabel:{color:'#fff',fontWeight:'700',fontSize:15},alignedMsg:{marginTop:14,color:'#2e7d32',fontWeight:'700',fontSize:15}})},1019,[20,15,466,21,372,160,148,276,622,22,773,1020,13]);
+__d(function (g, _r, i, a, m, e, d) {
+  var t = _r(d[0]);
+  Object.defineProperty(e, "__esModule", { value: !0 }),
+    (e.QiblaCompassScreen = function () {
+      const t = (0, f.useRouter)(),
+        nav = (0, f.useNavigation)(),
+        { height: winH } = (0, dim.default)(),
+        R = winH < 740,
+        { settings: cfg } = (0, h.useAppAppearanceSettings)(),
+        y = (0, b.useQiblaCompass)(cfg.prayerCity, cfg.prayerCountry),
+        [F, K] = (0, n.useState)(!1),
+        x = (0, n.useMemo)(
+          () => (null == y.qiblaBearing ? "\u2014" : Math.round(y.qiblaBearing) + "\xb0"),
+          [y.qiblaBearing]
+        ),
+        k = (0, n.useMemo)(
+          () => (null == y.distanceKm ? "\u2014" : y.distanceKm.toFixed(1) + " km"),
+          [y.distanceKm]
+        ),
+        w = -(y.deviceHeading ?? 0),
+        S = y.qiblaBearing ?? 0,
+        q = (0, bg.resolvePrayerBackgroundSource)(cfg.prayerBackgroundId, cfg.backgroundImageUri),
+        size = R ? 228 : 280;
+      (0, f.useFocusEffect)(
+        (0, n.useCallback)(() => {
+          const parent = nav.getParent();
+          nav.setOptions?.({ tabBarStyle: T }), parent?.setOptions({ tabBarStyle: T });
+          const o = setTimeout(() => {
+            parent?.setOptions({ tabBarStyle: T });
+          }, 50);
+          return () => {
+            clearTimeout(o), parent?.setOptions({ tabBarStyle: void 0 });
+          };
+        }, [nav])
+      );
+      const locSrc =
+        "city" === y.locationSource ? " \xb7 \u015fehir" : "gps" === y.locationSource ? " \xb7 GPS" : "";
+      return (0, p.jsxs)(c.default, {
+        style: z.root,
+        children: [
+          (0, p.jsxs)(Img.default, {
+            source: q,
+            style: z.bg,
+            imageStyle: z.bgImg,
+            children: [
+              (0, p.jsx)(c.default, { style: z.bgScrim }),
+              (0, p.jsx)(W, {}),
+              (0, p.jsxs)(Scroll.default, {
+                style: z.scroll,
+                contentContainerStyle: [z.scrollContent, R && z.scrollContentCompact],
+                showsVerticalScrollIndicator: !1,
+                bounces: !1,
+                children: [
+                  (0, p.jsxs)(c.default, {
+                    style: z.topRow,
+                    children: [
+                      (0, p.jsxs)(c.default, {
+                        style: z.cityBlock,
+                        children: [
+                          (0, p.jsxs)(c.default, {
+                            style: z.cityLine,
+                            children: [
+                              (0, p.jsx)(l.default, {
+                                style: z.iconBtn,
+                                onPress: () => t.back(),
+                                accessibilityLabel: "Geri",
+                                children: (0, p.jsx)(u.MaterialCommunityIcons, {
+                                  name: "arrow-left",
+                                  size: 24,
+                                  color: "#f7fffb",
+                                }),
+                              }),
+                              (0, p.jsx)(s.default, {
+                                style: [z.city, R && z.cityCompact],
+                                children: cfg.prayerCity,
+                              }),
+                            ],
+                          }),
+                          (0, p.jsx)(s.default, {
+                            style: z.nextHint,
+                            children: "K\u0131ble pusulas\u0131",
+                          }),
+                        ],
+                      }),
+                      (0, p.jsx)(l.default, {
+                        style: z.mapChip,
+                        onPress: () => {
+                          y.refreshLocation();
+                        },
+                        accessibilityLabel: "Harita / konumu yenile",
+                        children: (0, p.jsx)(u.MaterialCommunityIcons, {
+                          name: "map-outline",
+                          size: 20,
+                          color: "#e8fff8",
+                        }),
+                      }),
+                    ],
+                  }),
+                  (0, p.jsxs)(c.default, {
+                    style: z.heroStage,
+                    children: [
+                      y.loading && null == y.qiblaBearing
+                        ? (0, p.jsx)(o.default, { color: "#fff", size: "large", style: z.loader })
+                        : null,
+                      (0, p.jsxs)(c.default, {
+                        style: [z.compassStage, { width: size, height: size }],
+                        children: [
+                          (0, p.jsx)(c.default, { style: z.lubber }),
+                          (0, p.jsxs)(c.default, {
+                            style: [
+                              z.dial,
+                              {
+                                width: size,
+                                height: size,
+                                borderRadius: size / 2,
+                                transform: [{ rotate: w + "deg" }],
+                              },
+                            ],
+                            children: [
+                              (0, p.jsx)(j, { size: size }),
+                              (0, p.jsx)(C, { size: size }),
+                              (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalN], children: "N" }),
+                              (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalE], children: "E" }),
+                              (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalS], children: "S" }),
+                              (0, p.jsx)(s.default, { style: [z.cardinal, z.cardinalW], children: "W" }),
+                              (0, p.jsxs)(c.default, {
+                                style: [
+                                  z.qiblaMarker,
+                                  { width: size, height: size, transform: [{ rotate: S + "deg" }] },
+                                ],
+                                children: [
+                                  (0, p.jsx)(c.default, { style: z.qiblaArrow }),
+                                  (0, p.jsx)(c.default, {
+                                    style: z.kaabaBadge,
+                                    children: (0, p.jsx)(u.MaterialCommunityIcons, {
+                                      name: "mosque",
+                                      size: 18,
+                                      color: "#222",
+                                    }),
+                                  }),
+                                ],
+                              }),
+                              (0, p.jsx)(c.default, {
+                                style: [z.levelDot, y.aligned && z.levelDotAligned],
+                              }),
+                            ],
+                          }),
+                        ],
+                      }),
+                      (0, p.jsx)(s.default, {
+                        style: [z.bigDegrees, R && z.bigDegreesCompact],
+                        children: x,
+                      }),
+                      (0, p.jsx)(s.default, { style: z.heroUnits, children: "k\u0131ble a\xe7\u0131s\u0131" }),
+                    ],
+                  }),
+                  (0, p.jsxs)(c.default, {
+                    style: z.timesPanel,
+                    children: [
+                      (0, p.jsxs)(c.default, {
+                        style: [z.timeRow, z.timeRowBorder],
+                        children: [
+                          (0, p.jsxs)(c.default, {
+                            style: z.timeLeft,
+                            children: [
+                              (0, p.jsx)(c.default, { style: z.idleDot }),
+                              (0, p.jsx)(s.default, {
+                                style: z.timeLabel,
+                                children: "K\u0131ble A\xe7\u0131s\u0131",
+                              }),
+                            ],
+                          }),
+                          (0, p.jsx)(s.default, { style: z.timeValue, children: x }),
+                        ],
+                      }),
+                      (0, p.jsxs)(c.default, {
+                        style: [
+                          z.timeRow,
+                          y.locationLabel ||
+                          y.locationNote ||
+                          y.orientationNote ||
+                          y.calibrationHint ||
+                          y.needsOrientationGesture ||
+                          y.aligned
+                            ? z.timeRowBorder
+                            : null,
+                        ],
+                        children: [
+                          (0, p.jsxs)(c.default, {
+                            style: z.timeLeft,
+                            children: [
+                              (0, p.jsx)(c.default, { style: z.idleDot }),
+                              (0, p.jsx)(s.default, { style: z.timeLabel, children: "Uzakl\u0131k" }),
+                            ],
+                          }),
+                          (0, p.jsx)(s.default, { style: z.timeValue, children: k }),
+                        ],
+                      }),
+                      y.locationLabel
+                        ? (0, p.jsxs)(c.default, {
+                            style: [z.timeRow, y.aligned && z.timeRowActive],
+                            children: [
+                              (0, p.jsxs)(c.default, {
+                                style: z.timeLeft,
+                                children: [
+                                  (0, p.jsx)(c.default, {
+                                    style: y.aligned ? z.activeDot : z.idleDot,
+                                  }),
+                                  (0, p.jsx)(s.default, {
+                                    style: [z.timeLabel, y.aligned && z.timeLabelActive],
+                                    children: "Konum",
+                                  }),
+                                ],
+                              }),
+                              (0, p.jsxs)(s.default, {
+                                style: [z.timeValue, z.timeValueSmall, y.aligned && z.timeValueActive],
+                                children: [y.locationLabel, locSrc],
+                              }),
+                            ],
+                          })
+                        : null,
+                      y.locationNote
+                        ? (0, p.jsx)(s.default, { style: z.warn, children: y.locationNote })
+                        : null,
+                      y.orientationNote
+                        ? (0, p.jsx)(s.default, { style: z.warn, children: y.orientationNote })
+                        : null,
+                      y.calibrationHint
+                        ? (0, p.jsx)(s.default, { style: z.calibrate, children: y.calibrationHint })
+                        : null,
+                      y.needsOrientationGesture
+                        ? (0, p.jsxs)(l.default, {
+                            style: z.cta,
+                            onPress: () => {
+                              y.requestOrientationPermission();
+                            },
+                            children: [
+                              (0, p.jsx)(u.MaterialCommunityIcons, {
+                                name: "compass-outline",
+                                size: 20,
+                                color: "#fff",
+                              }),
+                              (0, p.jsx)(s.default, {
+                                style: z.ctaLabel,
+                                children: "Pusulay\u0131 a\xe7 (izin ver)",
+                              }),
+                            ],
+                          })
+                        : null,
+                      y.aligned
+                        ? (0, p.jsx)(s.default, {
+                            style: z.alignedMsg,
+                            children: "K\u0131bleye hizal\u0131s\u0131n\u0131z",
+                          })
+                        : null,
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          }),
+          (0, p.jsx)(c.default, {
+            style: z.bottomBar,
+            children: v.map((o) =>
+              (0, p.jsxs)(
+                l.default,
+                {
+                  style: z.bottomItem,
+                  onPress: () => {
+                    null === o.route ? K(!0) : "/pusula" === o.route ? null : t.push(o.route);
+                  },
+                  children: [
+                    (0, p.jsx)(u.MaterialCommunityIcons, {
+                      name: o.icon,
+                      size: 22,
+                      color: "/pusula" === o.route ? "#9fd9cf" : "#f2fffa",
+                    }),
+                    (0, p.jsx)(s.default, {
+                      style: [z.bottomLabel, "/pusula" === o.route && z.bottomLabelActive],
+                      children: o.label,
+                    }),
+                  ],
+                },
+                o.label
+              )
+            ),
+          }),
+          (0, p.jsx)(sheet.VakitlerMenuSheet, { visible: F, onClose: () => K(!1) }),
+        ],
+      });
+    });
+  var n = _r(d[1]),
+    o = t(_r(d[2])),
+    Img = t(_r(d[3])),
+    l = (t(_r(d[4])), t(_r(d[5]))),
+    Scroll = t(_r(d[6])),
+    st = t(_r(d[7])),
+    s = t(_r(d[8])),
+    dim = t(_r(d[9])),
+    c = t(_r(d[10])),
+    u = _r(d[11]),
+    f = _r(d[12]),
+    sheet = _r(d[13]),
+    h = _r(d[14]),
+    b = _r(d[15]),
+    bg = _r(d[16]),
+    p = _r(d[17]);
+  function j({ size: size }) {
+    const t = [];
+    for (let n = 0; n < 360; n += 2) {
+      const o = n % 30 == 0,
+        l = o ? 14 : n % 10 == 0 ? 9 : 5;
+      t.push(
+        (0, p.jsx)(
+          c.default,
+          {
+            style: [z.tickWrap, { width: size, height: size, transform: [{ rotate: n + "deg" }] }],
+            children: (0, p.jsx)(c.default, {
+              style: [z.tick, { height: l, backgroundColor: o ? "#222" : "#bdbdbd", width: o ? 2 : 1 }],
+            }),
+          },
+          "t-" + n
+        )
+      );
+    }
+    return (0, p.jsx)(p.Fragment, { children: t });
+  }
+  function C({ size: size }) {
+    const x = size / 2,
+      rad = x * 0.743;
+    return (0, p.jsx)(p.Fragment, {
+      children: [30, 60, 120, 150, 210, 240, 300, 330].map((t) => {
+        const n = ((t - 90) * Math.PI) / 180,
+          o = x + rad * Math.cos(n),
+          l = x + rad * Math.sin(n);
+        return (0, p.jsx)(
+          s.default,
+          { style: [z.degLabel, { left: o - 14, top: l - 8, width: 28 }], children: t },
+          "d-" + t
+        );
+      }),
+    });
+  }
+  function W() {
+    return (0, p.jsxs)(c.default, {
+      style: z.orbs,
+      pointerEvents: "none",
+      children: [
+        (0, p.jsx)(c.default, { style: [z.orb, z.orbTL] }),
+        (0, p.jsx)(c.default, { style: [z.orb, z.orbBR] }),
+        (0, p.jsx)(c.default, { style: [z.orb, z.orbBL] }),
+      ],
+    });
+  }
+  const v = [
+      { icon: "book-open-page-variant", label: "Kuran", route: "/kuran" },
+      { icon: "cog-outline", label: "Ayarlar", route: "/ayarlar" },
+      { icon: "compass-outline", label: "Pusula", route: "/pusula" },
+      { icon: "calendar-clock", label: "\u0130msakiye", route: "/imsakiye" },
+      { icon: "dots-horizontal", label: "Men\xfc", route: null },
+    ],
+    T = { display: "none", height: 0, overflow: "hidden" },
+    glass = "rgba(255,255,255,0.14)";
+  const z = st.default.create({
+    root: { flex: 1, backgroundColor: "#14352c" },
+    bg: { flex: 1 },
+    bgImg: { resizeMode: "cover", opacity: 0.42 },
+    bgScrim: Object.assign({}, st.default.absoluteFillObject, {
+      backgroundColor: "rgba(12, 36, 30, 0.72)",
+    }),
+    orbs: Object.assign({}, st.default.absoluteFillObject, { zIndex: 0 }),
+    orb: { position: "absolute", borderRadius: 999, opacity: 0.22 },
+    orbTL: { width: 220, height: 220, top: -60, left: -70, backgroundColor: "#2f6b5a" },
+    orbBR: { width: 260, height: 260, bottom: 40, right: -90, backgroundColor: "#c4a484" },
+    orbBL: { width: 160, height: 160, bottom: 120, left: -40, backgroundColor: "#5fa88f" },
+    scroll: { flex: 1, zIndex: 2 },
+    scrollContent: { flexGrow: 1, paddingHorizontal: 18, paddingTop: 14, paddingBottom: 104 },
+    scrollContentCompact: { paddingTop: 10 },
+    topRow: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+      justifyContent: "space-between",
+      marginBottom: 8,
+    },
+    cityBlock: { flex: 1, paddingRight: 12 },
+    cityLine: { flexDirection: "row", alignItems: "center", gap: 4 },
+    iconBtn: { width: 40, height: 40, alignItems: "center", justifyContent: "center", marginLeft: -8 },
+    city: {
+      color: "#f7fffb",
+      fontSize: 30,
+      fontWeight: "700",
+      letterSpacing: -0.8,
+      fontFamily: "Georgia, serif",
+    },
+    cityCompact: { fontSize: 24 },
+    nextHint: {
+      marginTop: 2,
+      marginLeft: 36,
+      color: "rgba(232,255,248,0.78)",
+      fontSize: 13,
+      fontWeight: "600",
+      letterSpacing: 0.2,
+    },
+    mapChip: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: glass,
+      borderRadius: 999,
+      width: 44,
+      height: 44,
+      borderWidth: st.default.hairlineWidth,
+      borderColor: "rgba(255,255,255,0.22)",
+    },
+    heroStage: {
+      flexGrow: 1,
+      minHeight: 320,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingVertical: 8,
+    },
+    compassStage: { alignItems: "center", justifyContent: "center", marginBottom: 10 },
+    lubber: {
+      position: "absolute",
+      top: 2,
+      zIndex: 5,
+      width: 3,
+      height: 18,
+      borderRadius: 1,
+      backgroundColor: "#e53935",
+    },
+    dial: {
+      backgroundColor: "rgba(255,255,255,0.96)",
+      alignItems: "center",
+      justifyContent: "center",
+      shadowColor: "#000",
+      shadowOpacity: 0.22,
+      shadowRadius: 18,
+      shadowOffset: { width: 0, height: 8 },
+      elevation: 6,
+      borderWidth: st.default.hairlineWidth,
+      borderColor: "rgba(255,255,255,0.7)",
+    },
+    tickWrap: { position: "absolute", alignItems: "center" },
+    tick: { marginTop: 4, borderRadius: 1 },
+    degLabel: { position: "absolute", textAlign: "center", fontSize: 11, color: "#9e9e9e", fontWeight: "500" },
+    cardinal: { position: "absolute", color: "#111", fontSize: 16, fontWeight: "700" },
+    cardinalN: { top: 22 },
+    cardinalS: { bottom: 22 },
+    cardinalE: { right: 22 },
+    cardinalW: { left: 22 },
+    qiblaMarker: { position: "absolute", alignItems: "center", paddingTop: 22 },
+    qiblaArrow: {
+      width: 0,
+      height: 0,
+      borderLeftWidth: 7,
+      borderRightWidth: 7,
+      borderBottomWidth: 12,
+      borderLeftColor: "transparent",
+      borderRightColor: "transparent",
+      borderBottomColor: "#e53935",
+      marginBottom: 4,
+    },
+    kaabaBadge: {
+      width: 34,
+      height: 34,
+      borderRadius: 17,
+      backgroundColor: "#f0f0f0",
+      alignItems: "center",
+      justifyContent: "center",
+      borderWidth: st.default.hairlineWidth,
+      borderColor: "#ccc",
+    },
+    levelDot: {
+      width: 18,
+      height: 18,
+      borderRadius: 9,
+      borderWidth: 2,
+      borderColor: "#66bb6a",
+      backgroundColor: "transparent",
+    },
+    levelDotAligned: { backgroundColor: "rgba(102, 187, 106, 0.35)", borderColor: "#43a047" },
+    bigDegrees: {
+      fontSize: 56,
+      fontWeight: "700",
+      color: "#fff",
+      letterSpacing: -2,
+      marginTop: 8,
+      fontFamily: 'Georgia, "Times New Roman", serif',
+      fontVariant: ["tabular-nums"],
+    },
+    bigDegreesCompact: { fontSize: 44 },
+    heroUnits: {
+      marginTop: 2,
+      color: "rgba(247,255,251,0.7)",
+      fontSize: 12,
+      fontWeight: "600",
+      letterSpacing: 0.6,
+      textTransform: "uppercase",
+    },
+    loader: { marginBottom: 16 },
+    timesPanel: {
+      backgroundColor: "rgba(255,255,255,0.94)",
+      borderRadius: 24,
+      paddingVertical: 6,
+      paddingHorizontal: 4,
+      borderWidth: st.default.hairlineWidth,
+      borderColor: "rgba(255,255,255,0.55)",
+      shadowColor: "#000",
+      shadowOpacity: 0.18,
+      shadowRadius: 18,
+      shadowOffset: { width: 0, height: 8 },
+      elevation: 4,
+      marginTop: 8,
+    },
+    timeRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingVertical: 13,
+      paddingHorizontal: 14,
+      borderRadius: 16,
+      marginHorizontal: 6,
+      marginVertical: 2,
+    },
+    timeRowBorder: {
+      borderBottomWidth: st.default.hairlineWidth,
+      borderBottomColor: "rgba(20,53,44,0.1)",
+      borderRadius: 0,
+      marginHorizontal: 14,
+      paddingHorizontal: 6,
+    },
+    timeRowActive: {
+      backgroundColor: "rgba(159,217,207,0.55)",
+      borderBottomWidth: 0,
+      marginHorizontal: 6,
+      paddingHorizontal: 14,
+      borderRadius: 16,
+    },
+    timeLeft: { flexDirection: "row", alignItems: "center", gap: 10 },
+    activeDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: "#0f3d32" },
+    idleDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: "rgba(20,53,44,0.18)" },
+    timeLabel: { fontSize: 16, fontWeight: "600", color: "#2a3f38", letterSpacing: 0.1 },
+    timeLabelActive: { color: "#0f2f28", fontWeight: "800" },
+    timeValue: {
+      fontSize: 22,
+      fontWeight: "700",
+      color: "#142820",
+      fontVariant: ["tabular-nums"],
+      letterSpacing: -0.3,
+      fontFamily: "Georgia, serif",
+    },
+    timeValueSmall: { fontSize: 15 },
+    timeValueActive: { color: "#0b241e" },
+    warn: {
+      marginTop: 8,
+      marginHorizontal: 14,
+      fontSize: 13,
+      color: "#c62828",
+      textAlign: "center",
+      lineHeight: 18,
+    },
+    calibrate: {
+      marginTop: 8,
+      marginHorizontal: 14,
+      fontSize: 13,
+      color: "#546e7a",
+      textAlign: "center",
+      lineHeight: 18,
+    },
+    cta: {
+      marginTop: 12,
+      marginHorizontal: 12,
+      marginBottom: 8,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      backgroundColor: "#0f3d32",
+      paddingHorizontal: 18,
+      paddingVertical: 12,
+      borderRadius: 14,
+    },
+    ctaLabel: { color: "#fff", fontWeight: "700", fontSize: 15 },
+    alignedMsg: {
+      marginTop: 8,
+      marginBottom: 10,
+      color: "#2e7d32",
+      fontWeight: "700",
+      fontSize: 15,
+      textAlign: "center",
+    },
+    bottomBar: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 10,
+      flexDirection: "row",
+      justifyContent: "space-around",
+      alignItems: "center",
+      backgroundColor: "rgba(20, 28, 26, 0.94)",
+      paddingTop: 10,
+      paddingBottom: 10,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderTopWidth: st.default.hairlineWidth,
+      borderColor: "rgba(255,255,255,0.12)",
+    },
+    bottomItem: { alignItems: "center", minWidth: 56, gap: 3 },
+    bottomLabel: { color: "rgba(242,255,250,0.9)", fontSize: 10, fontWeight: "600", letterSpacing: 0.2 },
+    bottomLabelActive: { color: "#9fd9cf", fontWeight: "800" },
+  });
+}, 1019, [20, 15, 466, 470, 21, 372, 284, 160, 148, 498, 276, 622, 22, 1030, 773, 1020, 776, 13]);
 __d(function(g,r,i,a,m,_e,_d){var e=r(_d[0]);Object.defineProperty(_e,"__esModule",{value:!0}),_e.useQiblaCompass=function(e,c){const[d,b]=(0,n.useState)(u),y=(0,n.useRef)(null),v=(0,n.useRef)(null),f=(0,n.useRef)(!1),k=(0,n.useCallback)((e,n)=>{const t=v.current;let o=e;if(null!=t){let n=e-t;n>180&&(n-=360),n<-180&&(n+=360),o=(0,l.normalizeBearing)(t+.35*n)}v.current=o;const s=y.current,u=null!=s?(0,l.qiblaRelativeAngle)(s,o):null,c=null!=s&&(0,l.angleDeltaAbs)(s,o)<=8,d=null!=n&&n>25;b(e=>Object.assign({},e,{deviceHeading:o,needleAngle:u,aligned:c,calibrationHint:d?'Manyetik alan zay\u0131f. Telefonu yatay tutup 8 \u015feklinde yava\u015f\xe7a hareket ettirin (kalibrasyon).':e.calibrationHint&&!d?null:e.calibrationHint,orientationPermission:'granted',orientationNote:null,needsOrientationGesture:!1,loading:!1}))},[]),O=(0,n.useCallback)(e=>{const n=s(e);n&&k(n.heading,n.accuracy)},[k]),p=(0,n.useCallback)(()=>{f.current||(f.current=!0,window.addEventListener('deviceorientationabsolute',O,!0),window.addEventListener('deviceorientation',O,!0))},[O]),P=(0,n.useCallback)(()=>{f.current=!1,window.removeEventListener('deviceorientationabsolute',O,!0),window.removeEventListener('deviceorientation',O,!0)},[O]),S=(0,n.useCallback)(async()=>{if(!(0,o.isSecureContextForSensors)())return b(e=>Object.assign({},e,{orientationPermission:'denied',orientationNote:'Pusula i\xe7in HTTPS gerekir. iPhone\u2019da Safari ile g\xfcvenli adresi a\xe7\u0131n; HTTP\u2019de sens\xf6r kapal\u0131d\u0131r.',needsOrientationGesture:!1,loading:!1})),!1;const e=window.DeviceOrientationEvent;try{if(e&&'function'==typeof e.requestPermission){if('granted'!==await e.requestPermission())return b(e=>Object.assign({},e,{orientationPermission:'denied',orientationNote:'Y\xf6nelim izni verilmedi. Safari \u2192 Site ayarlar\u0131 \u2192 Hareket ve y\xf6nelim\u2019e izin verin, sonra bu sayfada \xabPusulay\u0131 a\xe7\xbba bas\u0131n.',needsOrientationGesture:!0,loading:!1})),!1}return p(),b(e=>Object.assign({},e,{orientationPermission:'granted',orientationNote:null,needsOrientationGesture:!1,calibrationHint:'Telefonu d\xfcz (yatay) tutun. \u0130\u011fne K\xe2be y\xf6n\xfcn\xfc g\xf6sterir \u2014 ye\u015fil olunca hizal\u0131s\u0131n\u0131z.',loading:!1})),setTimeout(()=>{b(e=>null!=e.deviceHeading?e:Object.assign({},e,{orientationNote:'Sens\xf6r verisi gelmiyor. Telefonu yatay tutun, kalibre edin (8 hareketi) veya PWA yerine Safari\u2019de deneyin.',calibrationHint:'Manyetik parazit (k\u0131l\u0131f, m\u0131knat\u0131s, hoparl\xf6r) pusulay\u0131 bozar. A\xe7\u0131k alanda tekrar deneyin.'}))},3500),!0}catch{return b(e=>Object.assign({},e,{orientationPermission:'denied',orientationNote:'Y\xf6nelim izni istenemedi. iOS\u2019ta bu i\u015flem bir d\xfc\u011fmeye bas\u0131larak (kullan\u0131c\u0131 jesti) yap\u0131lmal\u0131.',needsOrientationGesture:!0,loading:!1})),!1}},[p]),h=(0,n.useCallback)(async()=>{b(e=>Object.assign({},e,{loading:!0}));let n={status:'unsupported'};try{n=await(0,o.probeGeolocation)()}catch{n={status:'unavailable'}}if('ok'===n.status){const e=(0,l.qiblaBearingDegrees)(n.lat,n.lon),t=(0,l.distanceToKaabaKm)(n.lat,n.lon);return y.current=e,void b(n=>Object.assign({},n,{loading:!1,qiblaBearing:e,distanceKm:t,locationSource:'gps',locationLabel:'GPS konumu',locationNote:null}))}const s=await(0,t.resolveCityCoords)(e,c);if(s){const t=(0,l.qiblaBearingDegrees)(s.lat,s.lon),u=(0,l.distanceToKaabaKm)(s.lat,s.lon);y.current=t;const c=(0,o.geoAvailabilityMessageTr)(n);return void b(n=>Object.assign({},n,{loading:!1,qiblaBearing:t,distanceKm:u,locationSource:'city',locationLabel:s.label||e,locationNote:c||`\u015eehir: ${s.label||e} (GPS yok \u2014 yakla\u015f\u0131k k\u0131ble a\xe7\u0131s\u0131 ve mesafe)`}))}b(e=>Object.assign({},e,{loading:!1,qiblaBearing:null,distanceKm:null,locationSource:null,locationLabel:null,locationNote:(0,o.geoAvailabilityMessageTr)(n)||'Konum al\u0131namad\u0131. Ayarlardan \u015fehir se\xe7in veya konum izni verin.'}))},[e,c]);return(0,n.useEffect)(()=>(h().then(()=>{if(!(0,o.isSecureContextForSensors)())return void b(e=>Object.assign({},e,{loading:!1,orientationPermission:'denied',needsOrientationGesture:!1,orientationNote:'Pusula sens\xf6r\xfc i\xe7in HTTPS zorunlu (iOS Safari).'}));const e=window.DeviceOrientationEvent;e&&'function'==typeof e.requestPermission?b(e=>Object.assign({},e,{loading:!1,orientationPermission:'needed',needsOrientationGesture:!0,orientationNote:'iPhone/iPad: pusulay\u0131 a\xe7mak i\xe7in a\u015fa\u011f\u0131daki d\xfc\u011fmeye bas\u0131n (Safari izin ister).'})):S().then(e=>{e||b(e=>null!=e.deviceHeading||e.needsOrientationGesture?e:Object.assign({},e,{orientationNote:e.orientationNote||'Canl\u0131 pusula i\xe7in telefonu yatay tutun (iOS Safari\u2019de \xabPusulay\u0131 a\xe7\xbb). Masa\xfcst\xfcnde k\u0131ble a\xe7\u0131s\u0131 ve mesafe yine do\u011frudur.'}))})}),()=>P()),[h,S,P]),Object.assign({},d,{requestOrientationPermission:S,refreshLocation:h})};var n=r(_d[1]),t=(e(r(_d[2])),r(_d[3])),o=r(_d[4]),l=r(_d[5]);function s(e){const n=e.webkitCompassHeading;if('number'==typeof n&&!Number.isNaN(n)){const t='number'==typeof e.webkitCompassAccuracy?e.webkitCompassAccuracy:void 0;return{heading:(0,l.normalizeBearing)(n),accuracy:t}}return'number'!=typeof e.alpha||Number.isNaN(e.alpha)?null:!0===e.absolute?{heading:(0,l.normalizeBearing)(e.alpha)}:{heading:(0,l.normalizeBearing)(360-e.alpha)}}const u={loading:!0,qiblaBearing:null,deviceHeading:null,needleAngle:null,aligned:!1,locationSource:null,locationLabel:null,locationNote:null,orientationPermission:'unknown',orientationNote:null,calibrationHint:null,needsOrientationGesture:!1,distanceKm:null}},1020,[20,15,21,1021,1022,1023]);
 __d(function(g,_r,i,a,m,e,d){var l=_r(d[0]);Object.defineProperty(e,"__esModule",{value:!0}),e.resolveCityCoords=async function(l,r){const s=`${n}${l}|${r}`;try{const l=await t.default.getItem(s);if(l){const t=JSON.parse(l);if(t?.coords&&Date.now()-t.savedAt<o)return t.coords}}catch{}try{const n=new URLSearchParams({name:l,count:'3',language:'tr'}),o=await fetch(`https://geocoding-api.open-meteo.com/v1/search?${n}`);if(o.ok){const n=(await o.json()).results??[],c=r.slice(0,2).toLowerCase(),u=n.find(l=>l.country_code?.toLowerCase()===c)??n.find(l=>'tr'===l.country_code?.toLowerCase())??n[0];if(u){const n={lat:u.latitude,lon:u.longitude,label:u.name??l};return t.default.setItem(s,JSON.stringify({savedAt:Date.now(),coords:n})).catch(()=>{}),n}}}catch{}return c(l)};var t=l(_r(d[1]));const n='cityCoords:v1:',o=2592e6,r={istanbul:{lat:41.0082,lon:28.9784},ankara:{lat:39.9334,lon:32.8597},izmir:{lat:38.4192,lon:27.1287},bursa:{lat:40.1826,lon:29.0665},antalya:{lat:36.8969,lon:30.7133},konya:{lat:37.8746,lon:32.4932},gaziantep:{lat:37.0662,lon:37.3833},adana:{lat:37,lon:35.3213},cayeli:{lat:41.0922,lon:40.7292},"\xe7ayeli":{lat:41.0922,lon:40.7292},rize:{lat:41.0201,lon:40.5234},trabzon:{lat:41.0015,lon:39.7178},samsun:{lat:41.2867,lon:36.33},erzurum:{lat:39.9055,lon:41.2658},diyarbakir:{lat:37.9144,lon:40.2306},"diyarbak\u0131r":{lat:37.9144,lon:40.2306},kayseri:{lat:38.7312,lon:35.4787},eskisehir:{lat:39.7767,lon:30.5206},"eski\u015fehir":{lat:39.7767,lon:30.5206},sakarya:{lat:40.7889,lon:30.4053},kocaeli:{lat:40.8533,lon:29.8815},mersin:{lat:36.8121,lon:34.6415},hatay:{lat:36.4018,lon:36.3498},van:{lat:38.4891,lon:43.4089},malatya:{lat:38.3552,lon:38.3095},denizli:{lat:37.7765,lon:29.0864},balikesir:{lat:39.6484,lon:27.8826},"bal\u0131kesir":{lat:39.6484,lon:27.8826},manisa:{lat:38.6191,lon:27.4289},kahramanmaras:{lat:37.5858,lon:36.9371},"kahramanmara\u015f":{lat:37.5858,lon:36.9371},mugla:{lat:37.2153,lon:28.3636},"mu\u011fla":{lat:37.2153,lon:28.3636},aydin:{lat:37.856,lon:27.8416},"ayd\u0131n":{lat:37.856,lon:27.8416},tekirdag:{lat:40.9833,lon:27.5167},"tekirda\u011f":{lat:40.9833,lon:27.5167}};function s(l){return l.trim().toLocaleLowerCase('tr-TR').normalize('NFD').replace(/\p{M}/gu,'')}function c(l){const t=s(l),n=r[t]??r[l.trim().toLocaleLowerCase('tr-TR')]??null;return n?{lat:n.lat,lon:n.lon,label:l}:null}},1021,[20,711]);
 __d(function(g,r,i,_a,m,_e,d){var e=r(d[0]);Object.defineProperty(_e,"__esModule",{value:!0}),_e.geoAvailabilityMessageTr=function(e){switch(e.status){case'ok':return'';case'unsupported':return'Bu ortamda GPS konum desteklenmiyor. \u015eehir konumuna g\xf6re k\u0131ble hesaplan\u0131r.';case'permission_denied':return'Konum izni yok. Taray\u0131c\u0131 ayarlar\u0131ndan izin verin veya ayarlardaki \u015fehir kullan\u0131l\u0131r.';case'policy_blocked':return'Bu demo sunucusu konumu engelliyor (Permissions-Policy). K\u0131ble, ayarlardaki \u015fehre g\xf6re hesaplan\u0131r.';case'unavailable':return'GPS sinyali yok. \u015eehir konumuna g\xf6re k\u0131ble hesaplan\u0131r.';case'error':return e.message}},_e.isGeoLikelyBlockedHost=o,_e.isSecureContextForSensors=t,_e.probeGeolocation=async function(e=8e3){if('undefined'==typeof navigator||!navigator.geolocation)return{status:'unsupported'};if(!t())return{status:'error',message:'Konum i\xe7in HTTPS gerekir (g\xfcvenli ba\u011flant\u0131).'};o();return new Promise(t=>{let n=!1;const a=e=>{n||(n=!0,t(e))},s=setTimeout(()=>a({status:'unavailable'}),e);try{navigator.geolocation.getCurrentPosition(e=>{clearTimeout(s),a({status:'ok',lat:e.coords.latitude,lon:e.coords.longitude,accuracy:e.coords.accuracy})},e=>{clearTimeout(s);const t=e?.message??'';if(1===e?.code||/permission|not allowed|permissions policy|secure/i.test(t))return o()||/permissions policy/i.test(t)?void a({status:'policy_blocked'}):void a({status:'permission_denied'});a(2!==e?.code?{status:'error',message:t||'Konum al\u0131namad\u0131'}:{status:'unavailable'})},{enableHighAccuracy:!0,timeout:e-200,maximumAge:6e4})}catch(e){clearTimeout(s);const t=e instanceof Error?e.message:String(e);/permissions policy|not allowed/i.test(t)||o()?a({status:'policy_blocked'}):a({status:'error',message:t})}})};e(r(d[1]));function o(){return'undefined'!=typeof location&&/hostthis\.dev$/i.test(location.hostname)}function t(){return'undefined'!=typeof location&&'https:'===location.protocol||(!('undefined'==typeof location||!/^(localhost|127\.0\.0\.1)$/i.test(location.hostname))||'boolean'==typeof window.isSecureContext&&window.isSecureContext)}},1022,[20,21]);
