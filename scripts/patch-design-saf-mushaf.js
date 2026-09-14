@@ -144,6 +144,13 @@ replaceOnce(
   "title:{fontSize:16,fontWeight:'800',color:'#1c2e28',letterSpacing:-.2,fontFamily:'Georgia, \"Fraunces\", serif'},titleHero:{fontSize:20},subtitle:{marginTop:3,fontSize:12,fontWeight:'600',color:'#5a6f66',lineHeight:16},"
 );
 
+// --- Hub Kur'an tile copy
+replaceOnce(
+  "kuran tile subtitle",
+  'subtitle:"Ezan Vakti mushaf \\xb7 ok"',
+  'subtitle:"Saf mushaf \\xb7 okuma"'
+);
+
 // --- Vakitler: keep dark green prayer world; soften stark white panel → warm cream
 replaceOnce(
   "vakitler timesPanel warm cream",
