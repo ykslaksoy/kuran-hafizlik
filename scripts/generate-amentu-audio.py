@@ -23,6 +23,16 @@ PHRASES = [
     "وَالْبَعْثِ بَعْدَ الْمَوْتِ",
 ]
 
+# 32 kelime (metindeki ۖ ayrı token). playHocaReadingWithFollow bu saniyeleri kullanır.
+# İlk 16: HamedNeural cümleleri (enerji analizi). Son 16: Alafasy 3:8 + 23.73s ofset.
+# Ses yeniden üretilirse bu zamanlar ve dist entry içindeki W dizisi güncellenmeli.
+WORD_STARTS_SEC = [
+    0.24, 0.68, 3.12, 6.06, 8.67, 11.27, 12.00, 14.36,
+    14.85, 15.30, 16.08, 16.40, 17.30, 19.71, 20.00, 20.28,
+    23.86, 24.87, 25.23, 25.89, 27.25, 27.89, 28.26, 29.63,
+    30.34, 31.04, 31.21, 33.25, 34.56, 34.56, 36.06, 37.44,
+]
+
 
 def run(cmd: list[str]) -> None:
     subprocess.check_call(cmd)
