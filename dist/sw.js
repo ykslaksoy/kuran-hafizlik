@@ -1,6 +1,7 @@
+/* saf-mushaf-2026-09-14 */
 /* kuran-ezan-mushaf-2026-09-14 */
 /* Hafız Yol shell SW — 2026-09-06T09:58:39.416Z */
-const BUILD = 'kuranezan1';
+const BUILD = 'safmushaf1';
 const SHELL = 'hafiz-shell-' + BUILD;
 
 self.addEventListener('install', (event) => {
