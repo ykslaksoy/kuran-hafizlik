@@ -209,11 +209,21 @@ replaceOnce(
 fs.writeFileSync(ENTRY, src);
 console.log("patched entry,", n, "replacements");
 
-// Bust caches
+// Force reader to always render ezan-vakti page chrome (full mushaf pages, sade)
+replaceOnce(
+  "force MushafPageView layoutMode",
+  "highlightSerlevha:mt,layoutMode:Ze,trackAyahBg:qe.ayahBg",
+  "highlightSerlevha:mt,layoutMode:'ezan-vakti',trackAyahBg:qe.ayahBg"
+);
+
+// Bust caches (script query + SW build id)
 let html = fs.readFileSync(INDEX, "utf8");
 html = html
   .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-09-14-kuran-ezan-mushaf"')
-  .replace(/bust: amentu2/, "bust: kuranezan1");
+  .replace(/content="2026-09-14-kuran-ezan-mushaf"/g, 'content="2026-09-14-kuran-ezan-mushaf"')
+  .replace(/bust: amentu2/, "bust: kuranezan1")
+  .replace(/\?v=amentu2/g, "?v=kuranezan1")
+  .replace(/var bust = 'amentu2';/, "var bust = 'kuranezan1';");
 fs.writeFileSync(INDEX, html);
 console.log("patched index.html");
 
@@ -221,14 +231,11 @@ if (fs.existsSync(SW)) {
   let sw = fs.readFileSync(SW, "utf8");
   const stamp = "kuran-ezan-mushaf-2026-09-14";
   if (!sw.includes(stamp)) {
-    sw = sw.replace(/const CACHE_NAME\s*=\s*['"][^'"]+['"]/, `const CACHE_NAME='${stamp}'`);
-    // fallback: append comment bump
-    if (!sw.includes(stamp)) {
-      sw = `/* ${stamp} */\n` + sw;
-    }
-    fs.writeFileSync(SW, sw);
-    console.log("patched sw.js");
+    sw = `/* ${stamp} */\n` + sw;
   }
+  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'kuranezan1';");
+  fs.writeFileSync(SW, sw);
+  console.log("patched sw.js");
 }
 
 console.log("done");
