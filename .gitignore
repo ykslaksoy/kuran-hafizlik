@@ -5,3 +5,6 @@
 .env
 .env.*
 .vercel
+# Build inputs only — not product data (Bakara / Amme)
+dist/assets/timing/segments-s1-s2.json
+dist/assets/timing/segments-alafasy-78-114.json

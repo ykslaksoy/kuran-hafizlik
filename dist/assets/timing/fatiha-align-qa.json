@@ -1,0 +1,97 @@
+{
+  "generatedAt": "2026-10-19T23:11:54.290Z",
+  "reciter": "alafasy",
+  "ayahs": [
+    {
+      "ayah": 1,
+      "words": 4,
+      "letters": 16,
+      "audioMs": 6087,
+      "qulDur": 6090,
+      "audioVsQul": -3.5,
+      "speech": "35–6017",
+      "meanWordSnapMs": 14.6,
+      "endGapMs": 0,
+      "firstLetter": "ب@35",
+      "lastLetter": "م@5550+467"
+    },
+    {
+      "ayah": 2,
+      "words": 4,
+      "letters": 15,
+      "audioMs": 5590,
+      "qulDur": 5590,
+      "audioVsQul": 0.2,
+      "speech": "75–5520",
+      "meanWordSnapMs": 24,
+      "endGapMs": 0,
+      "firstLetter": "ل@75",
+      "lastLetter": "ن@5140+380"
+    },
+    {
+      "ayah": 3,
+      "words": 2,
+      "letters": 10,
+      "audioMs": 4624,
+      "qulDur": 4620,
+      "audioVsQul": 3.7,
+      "speech": "55–4554",
+      "meanWordSnapMs": 40.2,
+      "endGapMs": 0,
+      "firstLetter": "ل@55",
+      "lastLetter": "م@4150+404"
+    },
+    {
+      "ayah": 4,
+      "words": 3,
+      "letters": 10,
+      "audioMs": 4650,
+      "qulDur": 4650,
+      "audioVsQul": -0.2,
+      "speech": "25–4580",
+      "meanWordSnapMs": 55.6,
+      "endGapMs": 0,
+      "firstLetter": "م@25",
+      "lastLetter": "ن@4130+450"
+    },
+    {
+      "ayah": 5,
+      "words": 4,
+      "letters": 19,
+      "audioMs": 6713,
+      "qulDur": 6710,
+      "audioVsQul": 3.5,
+      "speech": "55–6643",
+      "meanWordSnapMs": 23.6,
+      "endGapMs": 0,
+      "firstLetter": "إ@55",
+      "lastLetter": "ن@6110+533"
+    },
+    {
+      "ayah": 6,
+      "words": 3,
+      "letters": 15,
+      "audioMs": 5590,
+      "qulDur": 5590,
+      "audioVsQul": 0.2,
+      "speech": "35–5520",
+      "meanWordSnapMs": 41.9,
+      "endGapMs": 0,
+      "firstLetter": "ه@35",
+      "lastLetter": "م@5070+450"
+    },
+    {
+      "ayah": 7,
+      "words": 9,
+      "letters": 40,
+      "audioMs": 13244,
+      "qulDur": 13240,
+      "audioVsQul": 4.1,
+      "speech": "25–13174",
+      "meanWordSnapMs": 53.6,
+      "endGapMs": 0,
+      "firstLetter": "ص@25",
+      "lastLetter": "ن@12710+464"
+    }
+  ]
+}

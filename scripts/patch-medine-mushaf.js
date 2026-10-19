@@ -7,7 +7,9 @@
  * - Yatay kaydırarak sayfa geçişi
  * - Açılışta doğrudan hedef sayfa (tarama/scroll yok)
  * - Aktif ayet #97FF0A (Ezan Vakti #8097FF0A overlay)
- * - Sol yeşil üçgen: satır + kelime offset (everyayah progress)
+ * - Ok HARF altında: QUL/quran.com kelime zamanı + tecvid ağırlıklı harf
+ * - Kelime başında gerçek ms ile yeniden senkron (hata birikmez)
+ * - Kelime timing yoksa ok ayet başına sabit + listede işaret
  * - Sayfa bitince otomatik sonraki sayfa + çalmaya devam
  * - Kutu kelime vurgusu yok
  * - Varsayılan hafız: Mişari (Alafasy / everyayah)
@@ -82,9 +84,14 @@ replaceOnce(
   "u.preload='auto',u.src=t,"
 );
 replaceOnce(
-  "tighter progress + ended threshold",
+  "tighter progress + ended threshold + currentTime",
   "(a-f>=.012||a>=.99||f<0)&&(f=a,o?.(a))},b=()=>{if(s||r||n!==i)return void h('aborted');if(A)return;const t=Number.isFinite(u.duration)&&u.duration>0?u.duration:0,a=Number.isFinite(u.currentTime)?u.currentTime:0;(!u.paused&&!u.ended||a>0)&&(y=!0),t>0?p(a/t):y&&p(Math.min(.92,(Date.now()-w)/45e3)),u.ended&&(p(1),h('ok'))},M=setInterval(()=>{s||(r||n!==i?h('aborted'):Date.now()-w>12e4?h('failed'):A||(b(),!y&&Date.now()-w>12e3&&h('failed')))},120);",
-  "(a-f>=.006||a>=.99||f<0)&&(f=a,o?.(a))},b=()=>{if(s||r||n!==i)return void h('aborted');const t=Number.isFinite(u.duration)&&u.duration>0?u.duration:0,a=Number.isFinite(u.currentTime)?u.currentTime:0;(!u.paused&&!u.ended||a>0)&&(y=!0);if(u.ended||t>0&&a>=Math.max(0,t-.08))return p(1),void h('ok');if(A)return;t>0?p(a/t):y&&p(Math.min(.92,(Date.now()-w)/45e3))},M=setInterval(()=>{s||(r||n!==i?h('aborted'):Date.now()-w>12e4?h('failed'):A||(b(),!y&&Date.now()-w>2e4&&h('failed')))},120);"
+  "(a-f>=.006||a>=.99||f<0)&&(f=a,o?.(a,u.currentTime))},b=()=>{if(s||r||n!==i)return void h('aborted');const t=Number.isFinite(u.duration)&&u.duration>0?u.duration:0,a=Number.isFinite(u.currentTime)?u.currentTime:0;(!u.paused&&!u.ended||a>0)&&(y=!0);if(u.ended||t>0&&a>=Math.max(0,t-.08))return p(1,a),void h('ok');if(A)return;t>0?p(a/t,a):y&&p(Math.min(.92,(Date.now()-w)/45e3),a)},M=setInterval(()=>{s||(r||n!==i?h('aborted'):Date.now()-w>12e4?h('failed'):A||(b(),!y&&Date.now()-w>2e4&&h('failed')))},120);"
+);
+replaceOnce(
+  "progress callback passes currentTime",
+  "a=>{!w&&a>0&&(w=!0),t.onAyahProgress?.(f,a)}",
+  "(a,q)=>{!w&&a>0&&(w=!0),t.onAyahProgress?.(f,a,q)}"
 );
 
 // ---------------------------------------------------------------------------
@@ -113,7 +120,7 @@ replaceOnce(
 replaceOnce(
   "lineRow jsxs + left offset triangle",
   "(0,f.jsx)(o.default,{style:[P.lineRow,null==H&&{minHeight:d},null!=H&&{flexGrow:1,justifyContent:'center'},E&&{backgroundColor:O},y&&P.bismillahRow,F&&!E&&{backgroundColor:`${R}14`,borderLeftWidth:2,borderLeftColor:R}],children:j?.length?(0,f.jsx)(n.default,{style:[P.lineFlow,{fontSize:l,lineHeight:Math.round(.95*d),fontFamily:b},(y||j.length<=5&&t.lines.length<=10)&&P.lineFlowCentered],children:I(j,a,t,l,u,b,p,w,A,T,B,L,V,G)}):(0,f.jsx)(o.default,{style:[P.lineContent,y&&P.bismillahContent],children:(0,f.jsx)(n.default,{style:[P.lineText,P.fallbackText,{fontSize:l,lineHeight:Math.round(.92*d),fontFamily:b,letterSpacing:p},y&&P.bismillahText,A&&P.hiddenText],children:A?'\\xb7 \\xb7 \\xb7 \\xb7 \\xb7':S?.join(' ')??''})})}),c&&!V?(0,f.jsx)(o.default,{style:P.trackArrowRow,pointerEvents:\"none\",children:(0,f.jsx)(n.default,{style:[P.trackArrowBelow,{color:D}],children:x})}):null]",
-  "(0,f.jsxs)(o.default,{style:[P.lineRow,{height:d,minHeight:d,maxHeight:d,justifyContent:'center'},E&&{backgroundColor:O},y&&P.bismillahRow,F&&!E&&{backgroundColor:`${R}14`,borderLeftWidth:2,borderLeftColor:R}],children:[j?.length?(0,f.jsx)(n.default,{style:[P.lineFlow,{fontSize:l,lineHeight:Math.round(.92*d),fontFamily:b},(y||(j.length<=5))&&P.lineFlowCentered],children:I(j,a,t,l,u,b,p,w,A,T,B,L,V,G)}):(0,f.jsx)(o.default,{style:[P.lineContent,y&&P.bismillahContent],children:(0,f.jsx)(n.default,{style:[P.lineText,P.fallbackText,{fontSize:l,lineHeight:Math.round(.92*d),fontFamily:b,letterSpacing:p},y&&P.bismillahText,A&&P.hiddenText],children:A?'\\xb7 \\xb7 \\xb7 \\xb7 \\xb7':S?.join(' ')??''})}),c&&!V?(0,f.jsx)(o.default,{style:[P.trackArrowRow,{left:j&&j.length?`${Math.round(100*(1-(.5+Math.max(0,j.findIndex(x=>x.ayahIndex===a.ayahIndex&&x.wordIndex===a.wordIndex)))/j.length))}%`:'2%'}],pointerEvents:\"none\",children:(0,f.jsx)(n.default,{style:[P.trackArrowBelow,{color:D}],children:x})}):null]})"
+  "(0,f.jsxs)(o.default,{style:[P.lineRow,{height:d,minHeight:d,maxHeight:d,justifyContent:'center'},E&&{backgroundColor:O},y&&P.bismillahRow,F&&!E&&{backgroundColor:`${R}14`,borderLeftWidth:2,borderLeftColor:R}],children:[j?.length?(0,f.jsx)(n.default,{style:[P.lineFlow,{fontSize:l,lineHeight:Math.round(.92*d),fontFamily:b},(y||(j.length<=5))&&P.lineFlowCentered],children:I(j,a,t,l,u,b,p,w,A,T,B,L,V,G)}):(0,f.jsx)(o.default,{style:[P.lineContent,y&&P.bismillahContent],children:(0,f.jsx)(n.default,{style:[P.lineText,P.fallbackText,{fontSize:l,lineHeight:Math.round(.92*d),fontFamily:b,letterSpacing:p},y&&P.bismillahText,A&&P.hiddenText],children:A?'\\xb7 \\xb7 \\xb7 \\xb7 \\xb7':S?.join(' ')??''})}),!window.hyQuranTiming&&c&&!V?(0,f.jsx)(o.default,{style:[P.trackArrowRow,{left:j&&j.length?`${Math.round(100*(1-(.5+Math.max(0,j.findIndex(x=>x.ayahIndex===a.ayahIndex&&x.wordIndex===a.wordIndex)))/j.length))}%`:'2%'}],pointerEvents:\"none\",children:(0,f.jsx)(n.default,{style:[P.trackArrowBelow,{color:D}],children:x})}):null]})]"
 );
 replaceOnce(
   "lineRow relative overflow",
@@ -144,11 +151,7 @@ replaceOnce(
   "y='rgba(165, 214, 167, 0.62)',C='#2e7d32'",
   "y='#8097FF0A',C='#97FF0A'"
 );
-replaceOnce(
-  "left-pointing triangle glyph",
-  "const b='#e91e8c',p=t=>`rgba(198, 40, 40, ${Math.min(.16,.06+.14*t)})`,x='\\u25b2',y='#8097FF0A'",
-  "const b='#e91e8c',p=t=>`rgba(198, 40, 40, ${Math.min(.16,.06+.14*t)})`,x='\\u25c0',y='#8097FF0A'"
-);
+// Ok glifi ▲ olarak kalır; konum hyQuranTiming overlay ile harfin altında.
 
 // ---------------------------------------------------------------------------
 // No word-box highlight
@@ -187,9 +190,14 @@ replaceOnce(
   "onAyahFailed:a=>{e===On.current&&vt(`Ses kesildi \\xb7 ${a.surah}:${a.ayah}`)},onPageDone:()=>{if(e!==On.current||o||Na>=603)return;hyN.current=!0,Fa(Na+1)}});else{const t=async(a,t)=>{"
 );
 replaceOnce(
-  "auto-play after page turn",
+  "auto-play after page turn deps",
   "},[pt,ot.loop,ot.reciterId,ot.speed,br,xr,Ja,kt]),uo=(0,a.useCallback)(()=>{",
-  "},[pt,ot.loop,ot.reciterId,ot.speed,br,xr,Ja,kt,Na]),(0,a.useEffect)(()=>{if(!hyN.current||!pt||Za)return;const e=setTimeout(()=>{hyN.current=!1,co()},200);return()=>clearTimeout(e)},[pt,Za,Na,co]),uo=(0,a.useCallback)(()=>{"
+  "},[pt,ot.loop,ot.reciterId,ot.speed,br,xr,Ja,kt,Na]),uo=(0,a.useCallback)(()=>{"
+);
+replaceOnce(
+  "auto-play effect after const chain",
+  "po=Na>0,yo=Na<u.MUSHAF_PAGE_COUNT-1;if(!Ve||Za||!Oa)",
+  "po=Na>0,yo=Na<u.MUSHAF_PAGE_COUNT-1;(0,a.useEffect)(()=>{if(!hyN.current||!pt||Za)return;const e=setTimeout(()=>{hyN.current=!1,co()},200);return()=>clearTimeout(e)},[pt,Za,Na,co]);if(!Ve||Za||!Oa)"
 );
 
 // ---------------------------------------------------------------------------
@@ -201,21 +209,65 @@ replaceOnce(
   "style:Re.pageStack,onTouchStart:e=>{hyN._sx=e.nativeEvent.pageX},onTouchEnd:e=>{const t=hyN._sx;if(null==t)return;const n=e.nativeEvent.pageX-t;hyN._sx=null;n>72&&po&&no(Na-1);n<-72&&yo&&no(Na+1)},"
 );
 
+// ---------------------------------------------------------------------------
+// Kâriler: quran.com id + kelime timing + Sudais klasör düzeltmesi
+// ---------------------------------------------------------------------------
+replaceOnce(
+  "reciter list + timing flags",
+  "const a=e.QURAN_RECITERS=[{id:'alafasy',nameTr:'Mi\\u015fari',folder:'Alafasy_128kbps',styleTr:'Murattal \\u2014 varsay\\u0131lan'},{id:'abdulbasit',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Mujawwad_128kbps',styleTr:'Mujawwad (makaml\\u0131)'},{id:'minshawi',nameTr:'Min\\u015fevi',folder:'Minshawy_Mujawwad_64kbps',styleTr:'Mujawwad (makaml\\u0131)'},{id:'abdulbasit-murattal',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Murattal_192kbps',styleTr:'Murattal (talim)'},{id:'husary',nameTr:'Husary',folder:'Husary_128kbps',styleTr:'Murattal'},{id:'sudais',nameTr:'Sudais',folder:'Sudais_128kbps',styleTr:'Murattal'},{id:'hoca-tts',nameTr:'Hoca (TTS)',folder:null,styleTr:'Sentez ses \\u2014 yedek'}];",
+  "const a=e.QURAN_RECITERS=[{id:'alafasy',nameTr:'Mi\\u015fari',folder:'Alafasy_128kbps',styleTr:'Murattal \\u2014 varsay\\u0131lan',quranId:7,wordTiming:!0},{id:'abdulbasit',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Mujawwad_128kbps',styleTr:'Mujawwad (makaml\\u0131)',quranId:1,wordTiming:!0},{id:'minshawi',nameTr:'Min\\u015fevi',folder:'Minshawy_Mujawwad_64kbps',styleTr:'Mujawwad (makaml\\u0131)',quranId:8,wordTiming:!0},{id:'abdulbasit-murattal',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Murattal_192kbps',styleTr:'Murattal (talim)',quranId:2,wordTiming:!0},{id:'husary',nameTr:'Husary',folder:'Husary_128kbps',styleTr:'Murattal',quranId:6,wordTiming:!0},{id:'sudais',nameTr:'Sudais',folder:'Abdurrahmaan_As-Sudais_192kbps',styleTr:'Murattal',quranId:3,wordTiming:!0},{id:'hoca-tts',nameTr:'Hoca (TTS)',folder:null,styleTr:'Sentez ses \\u2014 kelime timing yok',quranId:null,wordTiming:!1}];"
+);
+replaceOnce(
+  "picker marks missing word timing",
+  "s.QURAN_RECITERS.map(h=>{const y=h.id===t,x=h.id===s.DEFAULT_QURAN_RECITER_ID;return(0,f.jsx)(o.default,{style:[u.row,y&&u.rowActive],onPress:()=>n(h.id),children:(0,f.jsxs)(c.default,{style:u.rowText,children:[(0,f.jsxs)(l.default,{style:[u.name,y&&u.nameActive],children:[h.nameTr,x?' \\xb7 Varsay\\u0131lan':'',y?' \\u2713':'']}),(0,f.jsx)(l.default,{style:u.style,children:h.styleTr})]})},h.id)})",
+  "s.QURAN_RECITERS.map(h=>{const y=h.id===t,x=h.id===s.DEFAULT_QURAN_RECITER_ID;return(0,f.jsx)(o.default,{style:[u.row,y&&u.rowActive],onPress:()=>n(h.id),children:(0,f.jsxs)(c.default,{style:u.rowText,children:[(0,f.jsxs)(l.default,{style:[u.name,y&&u.nameActive],children:[h.nameTr,x?' \\xb7 Varsay\\u0131lan':'',h.wordTiming?'':' \\xb7 ok: ayet ba\\u015f\\u0131',y?' \\u2713':'']}),(0,f.jsx)(l.default,{style:u.style,children:h.wordTiming?h.styleTr:h.styleTr+' \\xb7 kelime timing yok'})]})},h.id)})"
+);
+
+// ---------------------------------------------------------------------------
+// Harf glifleri + kelime zamanına göre ok (oransal ilerleme yok)
+// ---------------------------------------------------------------------------
+replaceOnce(
+  "split word into letter glyphs",
+  "F.push((0,f.jsxs)(n.default,{style:[P.word,{fontSize:d,fontFamily:h,letterSpacing:x,color:$,fontWeight:'400',backgroundColor:N}],children:[A.text,G?'':' ']},`w-${T}-${B}`))",
+  "F.push((0,f.jsxs)(n.default,{style:[P.word,{fontSize:d,fontFamily:h,letterSpacing:x,color:$,fontWeight:'400',backgroundColor:N}],children:[(window.hyQuranTiming?window.hyQuranTiming.glyphs(A.text):[{i:0,ch:A.text}]).map(z=>(0,f.jsx)(n.default,{nativeID:`hy-l-${T}-${B}-${z.i}`,style:{fontFamily:h,fontSize:d},children:z.ch},`l-${T}-${B}-${z.i}`)),G?'':' ']},`w-${T}-${B}`))"
+);
+replaceOnce(
+  "enrich spans + prefetch + pin/jump by word timing",
+  "const t=(0,Se.collectAyahWordSpans)(pt,a.surah,a.ayah),n=t.length>0?t:[{ayahIndex:a.ayahIndex,wordIndex:0}];Un.current={spans:n,surah:a.surah,ayah:a.ayah};const r=n[0];vt(`${a.surahName} ${a.surah}:${a.ayah}`),l(r.ayahIndex,r.wordIndex,!0)",
+  "const t=(0,Se.collectAyahWordSpans)(pt,a.surah,a.ayah).map(s=>{const w=pt.ayahs[s.ayahIndex];return Object.assign({},s,{text:w&&w.words[s.wordIndex]&&w.words[s.wordIndex].text||''})}),n=t.length>0?t:[{ayahIndex:a.ayahIndex,wordIndex:0,text:''}];Un.current={spans:n,surah:a.surah,ayah:a.ayah};window.hyQuranTiming&&window.hyQuranTiming.prefetchSurah(ot.reciterId,a.surah);const r=n[0];vt(`${a.surahName} ${a.surah}:${a.ayah}`),l(r.ayahIndex,r.wordIndex,!0),window.hyQuranTiming&&window.hyQuranTiming.setActive({ayahIndex:r.ayahIndex,wordIndex:r.wordIndex,letterIndex:0})"
+);
+replaceOnce(
+  "onAyahProgress uses real word+letter timing",
+  "onAyahProgress:(a,t)=>{if(e!==On.current)return;const n=Un.current;if(!n||n.surah!==a.surah||n.ayah!==a.ayah)return;const r=n.spans.length,o=Math.min(r-1,Math.max(0,Math.floor(t*r))),s=n.spans[o];s&&l(s.ayahIndex,s.wordIndex,!1)}",
+  "onAyahProgress:(a,t,q)=>{if(e!==On.current)return;const n=Un.current;if(!n||n.surah!==a.surah||n.ayah!==a.ayah)return;const hy=window.hyQuranTiming;if(!hy||!hy.hasWordTiming(ot.reciterId))return void hy?.setActive({ayahIndex:n.spans[0].ayahIndex,wordIndex:n.spans[0].wordIndex,letterIndex:0});const hit=hy.atTime(ot.reciterId,a.surah,a.ayah,q,n.spans);if(!hit)return;l(hit.ayahIndex,hit.wordIndex,!1);hy.setActive(hit)}"
+);
+
 fs.writeFileSync(ENTRY_OUT, src);
 console.log("wrote", ENTRY_OUT, n, "replacements");
 
 // Cache bust
 let html = fs.readFileSync(INDEX, "utf8");
 html = html
-  .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-10-19-medine604"')
-  .replace(/bust: amentu2/, "bust: medine604")
-  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=medine604")
-  .replace(/var bust = 'amentu2';/, "var bust = 'medine604';");
-if (!html.includes("medine604")) {
+  .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-10-19-fatiha1"')
+  .replace(/content="2026-10-19-medine604"/g, 'content="2026-10-19-fatiha1"')
+  .replace(/bust: amentu2/, "bust: fatiha1")
+  .replace(/bust: medine604/, "bust: fatiha1")
+  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha1")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha1")
+  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=fatiha1")
+  .replace(/var bust = 'amentu2';/, "var bust = 'fatiha1';")
+  .replace(/var bust = 'medine604';/, "var bust = 'fatiha1';");
+if (!html.includes("fatiha1")) {
   console.error("index.html bust failed");
   process.exit(1);
 }
 // swipe helper for mouse + touch (aria-label edge hits)
+if (!html.includes("quran-timing.js")) {
+  html = html.replace(
+    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha1" defer></script>',
+    '<script src="/assets/timing/quran-timing.js?v=fatiha1"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha1" defer></script>'
+  );
+}
 if (!html.includes("hyMedineSwipe")) {
   html = html.replace(
     "</body>",
@@ -244,7 +296,7 @@ console.log("patched index.html");
 
 if (fs.existsSync(SW)) {
   let sw = fs.readFileSync(SW, "utf8");
-  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'medine604';");
+  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'fatiha1';");
   if (!sw.includes("medine-mushaf-2026-10-19")) {
     sw = "/* medine-mushaf-2026-10-19 */\n" + sw;
   }

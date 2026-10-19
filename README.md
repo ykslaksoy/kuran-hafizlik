@@ -10,7 +10,7 @@ Canlı: https://hafizyol.vercel.app
 
 Amentü, ekrandaki metni okur (`آمنت بالله…`, sonra Âl-i İmrân 8 / Mişari). Bakara 285 (Âmenerrasûlü) kullanılmaz. Kur’an tilavet varsayılanı Mişari (`alafasy` / everyayah).
 
-Kur’an okuyucu **604 sayfa × 15 satır Medine (KFGQPC Uthmanic Hafs)** düzenidir: sabit satır grid, sure serlevhası, yatay sayfa geçişi, açılışta doğrudan hedef sayfa. Aktif ayet Ezan Vakti yeşili (`#97FF0A` / `#8097FF0A`); sol üçgen ok satır/offset + ayet zamanına göre senkron; sayfa bitince sonraki sayfa. Kutu kelime vurgusu yok. Ezan Vakti telifli PNG/ses kopyalanmaz — spek: [docs/rakip/ezanvakti.md](./docs/rakip/ezanvakti.md).
+Kur’an okuyucu **604 sayfa × 15 satır Medine (KFGQPC Uthmanic Hafs)** düzenidir: sabit satır grid, sure serlevhası, yatay sayfa geçişi, açılışta doğrudan hedef sayfa. Aktif ayet Ezan Vakti yeşili (`#97FF0A` / `#8097FF0A`). İlk canlı demo **yalnız Fatiha / Mişari**: ok harf altında, varsayılan **Hafızyol harf hizalaması** (everyayah PCM + QUL çapa + tecvid). quran.com/QUL kıyası demo seçicisinde; ürüne gömülmez. Bakara / Amme / tüm Kur’an henüz yok. Kutu kelime vurgusu yok. Spek: [docs/rakip/ezanvakti.md](./docs/rakip/ezanvakti.md), kâri + Fatiha doğruluk: [docs/rakip/kariler-timing.md](./docs/rakip/kariler-timing.md).
 
 **Orijinal Expo / TypeScript kaynağı bu ortamda bulunamadı.** `app/*.tsx` yok. Ayrıntı: [SOURCE_RECOVERY.md](./SOURCE_RECOVERY.md).
 
