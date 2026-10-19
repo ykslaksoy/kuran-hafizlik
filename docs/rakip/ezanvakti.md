@@ -93,6 +93,140 @@ Sayfa modunda overlay, ayetin `StartOffset`/`EndOffset` ve `SiraSayisi` değerle
 - Ses pozisyonu: `MediaPlayer.getCurrentPosition()` ile `J0.p()` listesindeki segment süreleri karşılaştırılır (`ar.s` iç `A0()`).
 - Animasyon kapalıysa (`animator_duration_scale == 0`) oklu takip devre dışı; toast: *“Cihaz animasyon ayarları kapalı olduğundan oklu takip yapılamamaktadır.”*
 
+---
+
+## 5.1 Harf takibi — ok neyle sürülüyor?
+
+**Kullanıcı algısı:** Ok, kâri o harfi okuduğu anda ilgili harfin altına geliyor.  
+**Kod gerçeği:** Uygulama çalışma anında **konuşma tanıma, akustik eşleme veya ses spektrumu analizi yapmıyor**. Ok konumu, oynatıcıdaki **zaman çizelgesi** ile `positions.db_` içindeki **önceden üretilmiş** segment listesinin eşleştirilmesiyle ilerliyor.
+
+### (a) Ses analizi / ML?
+
+`ar`, `hr`, `fr`, `com.mobilexsoft.sesservisi` paketlerinde Kuran okuyucu yolunda şu API’lere **rastlanmadı** (jadx taraması): `AudioRecord`, `Visualizer`, `SpeechRecognizer`, TensorFlow Lite / `Interpreter`, ONNX.
+
+Ses tarafı yalnızca `MediaPlayer` + `KuranService` içindeki `Handler`: `getCurrentPosition()` ile `audioparts` / segment bitiş zamanlarına göre `seekTo` ve mesaj `0` yeniden planlama (`sendEmptyMessageDelayed` / `sendEmptyMessageAtTime`). Bu, **dosya içi zaman damgası** senkronu; canlı harf tanıma değil.
+
+### (b) `positions` verisi — cevap burada
+
+Her kâri için tablo adı: **`positions` + `reciter` id** (`hr.f.d`):
+
+```java
+// hr/f.smali — tablo seçimi
+new StringBuilder().append("positions").append(this.f83562b).toString();
+// örnek: positions5, positions19
+```
+
+`ayetid = {fr.c.d()}` ile satırlar `no` sırasına göre okunur; `fr.j` (`Takip`) listesi `fr.c.Q(...)` → **`p()`** (sayfa/ok modu) ve metin modunda ek olarak **`e()`** (kelime/harf vurgusu).
+
+| `fr.j` alanı | Kaynak kolon | Anlam (kod) |
+|--------------|--------------|-------------|
+| `e()` | `row` → `14 - row` | 15 satırlık Mushaf grid satırı (0 tabanlı) |
+| `g()`, `b()` | `startoffset`, `endoffset` | **Piksel değil** — satır genişliğine çarpılan **yatay oran** (0–1); `× (2·n+o+m) / ayetId` (`n=1000`, `o=10`, `m=2`) |
+| `a()` | `duration` | Segment süresi **ms**; `duration / ayetId × n`; 0 ise `0.001` |
+| `d()` | (kümülatif) | Önceki segmentlerin `a()` toplamı — ayet içi **başlangıç offset ms** |
+| `f()`, `c()` | `location`, `lenght` | `ayetler.Text` üzerinde **Java `String` karakter indeksi** ve uzunluk; `/(Sayfa+1)` ve `/(2n+2o−m)` ölçekleri (`hr.f.d` smali) |
+
+`startoffset` / `endoffset` **harf indeksi değil**; sayfa PNG modunda okun X konumu için kullanılır. Metin modunda ok **glif konumu** `F0(TextView, l()+f(), c())` ile `Layout.getPrimaryHorizontal` / `measureText` üzerinden hesaplanır (`ar.s.j1` smali).
+
+### Zamanlama: “harfe zaman atama” yok, segment bitişi var
+
+Aktif segment indeksi `f24736n2`. Kalan animasyon süresi `A0()`:
+
+```1168:1192:tmp/ezanvakti-jadx/sources/ar/s.java
+    public final long A0() {
+        long j11 = 0;
+        if (this.f24736n2 == 0) {
+            this.f24745q2 = this.f24749s0.s(this.J0.o(), this.J0.n());
+            try {
+                long currentPosition = this.f24761w1.getCurrentPosition() - this.f24745q2.b();
+                for (int i11 = 0; i11 < this.J0.p().size() && currentPosition > this.J0.p().get(i11).a() + this.J0.p().get(i11).d(); i11++) {
+                    this.f24736n2++;
+                }
+                // ...
+                return (long) (((this.J0.p().get(this.f24736n2).a() - (currentPosition - this.J0.p().get(this.f24736n2).d())) - 100) / this.f24738o1);
+            } catch (Exception e11) {
+                e11.printStackTrace();
+            }
+        } else {
+            try {
+                j11 = (long) (this.J0.p().get(this.f24736n2).a() / this.f24738o1);
+                return j11 - ((long) (((this.f24761w1.getCurrentPosition() - this.f24745q2.b()) - this.J0.p().get(this.f24736n2).d()) / this.f24738o1));
+            } catch (Exception e12) {
+                e12.printStackTrace();
+            }
+        }
+        return j11;
+    }
+```
+
+- `f24745q2`: `audioparts` ile ayetin MP3 içi başlangıcı (`hr.f.s`).
+- `f24738o1`: oynatma hızı.
+- İlk segmentte gecikme varsa `A0() < 1` → indeks atlanır (`i1` / `j1` / `l1` içinde `f24736n2++`).
+- Segment bittiğinde `onAnimationEnd` → `f24736n2++` → bir sonraki harf/segment (`ar.s` iç sınıflar `c`, `e`).
+
+**Özet:** Zaman, cihazda hesaplanan bir “harf başı timestamp tablosu” değil; **veritabanındaki `duration` + kümülatif `d()`** ile MP3 pozisyonu karşılaştırılıyor. Davranış “okunduğu anda” görünür çünkü `duration` değerleri o kârin ses kaydına **offline hizalanmış**.
+
+### Ok hareketi — metin modu (`j1`)
+
+`M1 == true` (oklu takip açık) ve liste `J0.p()`:
+
+1. `A0()` → `ObjectAnimator` süresi (ms).
+2. `jVar.f()` / `jVar.c()` → ayet metninde karakter aralığı.
+3. `F0(textView, J0.l() + f, c)` → ekran X/Y.
+4. `arrow.setY` / `setX`, sonra `TranslationX` animasyonu; bitişte `j1` tekrar çağrılır.
+
+Sayfa PNG modu aynı zaman mantığını `i1()` ile `row` + `g()`/`b()` oranlarına uygular (`ObjectAnimator` `TranslationX`).
+
+Handler `Z1`: mesaj `50` (`0x32`) — ok görünürlüğü; gecikme **2000 ms** (`0x7d0`). Bu, harf senkron periyodu değil; segment süresi animatörden gelir.
+
+### `positions5` örnek satırları (ayet `Id=1001`, Fatiha 1)
+
+Ham CSV: [`positions5-ayet-1001-sample.csv`](ezanvakti/positions5-ayet-1001-sample.csv). Ayet metni 37 karakter (`بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّح۪يمِ`); tabloda **6 segment** (`no` 0…5).
+
+| no | duration (ham) | row | location → f() | lenght → c() | Metin dilimi (önceki ölçekleme) |
+|----|----------------|-----|----------------|--------------|----------------------------------|
+| 0 | 414.06… | 12 → UI satır 2 | 0 → 0 | 8072 → 4 | `بِسْ` |
+| 1 | 259.99… | 12 | 8072 → 4 | 4036 → 2 | `مِ` |
+| 2 | 747.10… | 12 | 14126 → 7 | 14126 → 7 | `اللّٰهِ` |
+| 3 | 1022.06… | 12 | … | … | `الرَّحْمٰنِ` (devam) |
+| 4–5 | … | 12 | … | … | kalan heceler |
+
+`location`/`lenght` ham değerleri büyük tamsayılar; yüklemede `Sayfa` (bu ayet için 0) ve sabit `2018` böleniyle **Unicode birim indeksine** indirgenir. Segment her zaman tek harf değil; gerekirse kelime `split(" ")` ile alt parçalara bölünür ve `duration` karakter sayısı oranında dağıtılır (`hr.f.d` smali, `textmode` / `f83576p`).
+
+### (c) Diğer bileşenler
+
+- **`audioparts`:** Ayetin hangi MP3 part’ında ve kaçıncı ms’den başladığı (`fr.a` / `f24745q2`). Oklu takip için yeterli değil; segment listesi şart.
+- **`quran.db3` `ayetler.Text`:** `location`/`lenght` eşlemesi için zorunlu.
+
+### Neden sadece hafız 5 ve 19?
+
+```582:593:tmp/ezanvakti-jadx/sources/hr/f.java
+    public boolean R() {
+        File databasePath = this.f83561a.getDatabasePath("positions.db_");
+        int i11 = this.f83562b;
+        if ((i11 != 5 && i11 != 19) || !databasePath.exists()) {
+            return false;
+        }
+        // textmode + dil koşulu (V / j0)
+        ...
+    }
+```
+
+- Zip’te yalnızca **`positions5`** (Abdül Basit) ve **`positions19`** (Davut Kaya) tabloları var; `positions2` (Mishari) **yok**.
+- Mishari (id **2**) için `hr.f.W(2)` yalnızca `audioparts` satır sayısı &gt; 6235 ile “takipli” timing zip’i olup olmadığını kontrol eder; **oklu harf DB’si bağlanmaz**.
+- `c3` / `ar.s`: `R()` false veya `J0.p()` boş → `M1` açılmaz; ok hareketi çalışmaz.
+
+### Hafızyol — Mishari için aynı davranış
+
+Canlı ASR şart değil (Ezan Vakti de kullanmıyor). Gerekli veri:
+
+1. **Mishari sesi** ile hizalı **`positions2`** (veya `positions{mishariId}`) tablosu: her ayet için `no`, `row`, `startoffset`, `endoffset`, `duration`, `location`, `lenght` — şema `positions5` ile aynı; değerler **Mishari MP3**’e göre üretilmeli (forced alignment / manuel annotation).
+2. **`audioparts`** (reciter=2): ayet başları part içi saniye.
+3. **`ayetler.Text`** + sayfa/satır metadata (`Sayfa`, `Sira`, …) — metin modu ok konumu için.
+4. İsteğe bağlı: sayfa PNG modu için aynı `startoffset`/`endoffset`/`row` (Medine sayfa koordinat sistemi).
+
+Üretim yolu: Mishari `surah-verse-part.mp3` + mevcut `audioparts` → otomatik alignment (Montreal Forced Aligner, Whisper timestamp, vb.) → `fr.j` alanlarına dönüştürüp SQLite’a yaz; istemci tarafında `A0()` + `j1`/`i1` mantığı birebir kopyalanabilir.
+
 ### positions.db_ şeması (oklu takip)
 
 `https://download.ezanvaktipro.com/kuran/positionsV21.zip` → `positions.db_`
