@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
-    <meta name="hafiz-yol-build" content="2026-09-13-amentu-v2" />
-    <meta name="hafiz-yol-push-check" content="2026-09-13-amentu-v2" />
+    <meta name="hafiz-yol-build" content="2026-10-19-medine604" />
+    <meta name="hafiz-yol-push-check" content="2026-10-19-medine604" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Hafız Yol</title>
@@ -28,7 +28,7 @@
     </style>
   <meta name="theme-color" content="#1b4332">
 <meta name="description" content="Kur’an öğrenme ve hafızlık — Android, iOS ve Windows (web).">
-<link rel="shortcut icon" href="/favicon.ico" />    <!-- build: 2026-09-06T09:58:39.416Z bust: amentu2 -->
+<link rel="shortcut icon" href="/favicon.ico" />    <!-- build: 2026-09-06T09:58:39.416Z bust: medine604 -->
       <link rel="manifest" href="/manifest.json" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -41,14 +41,31 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/_expo/static/js/web/entry-a0324b1a9e2452bea2896449b9d2b456.js?v=amentu2" defer></script>
+  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=medine604" defer></script>
 <script>
 (function(){
   if (!('serviceWorker' in navigator)) return;
-  var bust = 'amentu2';
+  var bust = 'medine604';
   window.addEventListener('load', function(){
     navigator.serviceWorker.register('/sw.js?v=' + bust).catch(function(){});
   });
+})();
+</script>
+<script>
+(function(){
+  var x0=null;
+  function onKuran(){return /kuran/i.test(location.pathname+location.hash+location.search)||!!document.querySelector('[aria-label="Sonraki sayfa"]')}
+  function go(dx){
+    if(Math.abs(dx)<72||!onKuran())return;
+    var sel=dx<0?'[aria-label="Sonraki sayfa"]':'[aria-label="Önceki sayfa"]';
+    var el=document.querySelector(sel);
+    el&&el.click();
+  }
+  window.hyMedineSwipe=1;
+  document.addEventListener('touchstart',function(e){x0=e.changedTouches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;x0=null;go(dx)},{passive:true});
+  document.addEventListener('pointerdown',function(e){if(e.pointerType==='mouse'&&e.button===0)x0=e.clientX},{passive:true});
+  document.addEventListener('pointerup',function(e){if(x0==null)return;var dx=e.clientX-x0;x0=null;if(e.pointerType==='mouse')go(dx)},{passive:true});
 })();
 </script>
 </body>
