@@ -132,7 +132,8 @@ new StringBuilder().append("positions").append(this.f83562b).toString();
 
 Aktif segment indeksi `f24736n2`. Kalan animasyon süresi `A0()`:
 
-```1168:1192:tmp/ezanvakti-jadx/sources/ar/s.java
+```java
+// ar.s — jadx decompile (CepBaseFragment)
     public final long A0() {
         long j11 = 0;
         if (this.f24736n2 == 0) {
@@ -198,9 +199,60 @@ Ham CSV: [`positions5-ayet-1001-sample.csv`](ezanvakti/positions5-ayet-1001-samp
 - **`audioparts`:** Ayetin hangi MP3 part’ında ve kaçıncı ms’den başladığı (`fr.a` / `f24745q2`). Oklu takip için yeterli değil; segment listesi şart.
 - **`quran.db3` `ayetler.Text`:** `location`/`lenght` eşlemesi için zorunlu.
 
+### Manuel kayıt hipotezi (dinleyip oku harf harf ilerletme)
+
+**Hipotez:** Davut Kaya (`positions19`) verisi, bir editörün sesi dinleyerek oku elle kaydırmasıyla üretilmiş; bu yüzden yalnızca onda ~%98 doğruluk.
+
+**Sonuç: veri ve istemci kodu bu hipotezi desteklemiyor; eldeki kanıt otomatik (sunucu tarafı) hizalama + paylaşılan metin geometrisi ile uyumlu.** Kesin üretim aracı APK’da yok; aşağıdaki negatif/ pozitif bulgular `positionsV21.zip` içindeki `positions.db_` üzerinde (version=2).
+
+#### İstemci: kayıt / editör yok
+
+| Bulgu | Kaynak |
+|--------|--------|
+| `positions.db_` yalnızca CDN’den indirilir, zip açılır | `UpdateKuranService` → `positionsV21.zip` + `fsq_secret` |
+| SQLite helper şeması boş; uygulama `INSERT`/`UPDATE positions*` yapmıyor | `dr.d` (`TakipVT`) `onCreate`/`onUpgrade` boş; `hr.f.d` yalnızca `SELECT` |
+| Kuran UI’da ok konumu yazan ekran / “kaydet” akışı yok | `ar.s` / `c3` yalnızca okuma + animasyon |
+
+Yani **manuel kayıt bu APK sürümünde yapılmıyor**; varsa üretim sunucu veya harici araçta.
+
+#### Kâri bazlı tablolar
+
+`positions5` (~95 440 satır) ve `positions19` (~90 672 satır) ayrı tablolar — bu, **kâri özel ses süreleri** için beklenen yapı; tek başına manuel kayıt kanıtı değil.
+
+#### Veri izleri: otomatik hizalama
+
+1. **`duration` kesirli ve rasyonel** — manuel tıklamada beklenen düz ms (500, 1200) yerine örnek: `410.9774603174603` ≈ `1294579/3150` ms; tüm tabloda tam sayı ms oranı **~0,1%**. Kesir paydalarda 7, 11, 13, 17, 19, 23 sık — tipik **örnek/saniye bölümü** artefaktı, insan reaksiyon süresi dağılımı değil.
+
+2. **Aynı ayet, iki kâri: metin konumu paylaşılıyor, süre ayrışıyor** (Fatiha 1, `ayetid=1001`):
+
+| no | `location` / `lenght` (5 = 19?) | `duration` pos5 | `duration` pos19 |
+|----|----------------------------------|-----------------|------------------|
+| 0 | 0 / 8072 — **aynı** | 414.06… | 410.98… |
+| 1 | 8072 / 4036 — **aynı** | 259.99… | 182.45… |
+| 2 | 14126 / 14126 — **aynı** | 747.10… | 1197.66… |
+| 3 | 30270 / 22198 — **aynı** | 1022.06… | 1789.59… |
+| 4 | **48432** vs **54486** / farklı `lenght` | 420.06… | 3532.60… |
+
+İlk segmentlerde **`location`/`lenght` birebir aynı**, `duration` kâriden kâriye değişiyor. Bağımsız “dinle–ilerlet” oturumlarında metin indekslerinin bu kadar örtüşmesi beklenmez; **ortak segmentasyon + kâriye özel zaman** modeline uyuyor.
+
+3. **`startoffset` aynı geometri, ince fark** — ör. seg 0: `0.004975149105367793` (5) vs `0.004975149105367804` (19); `endoffset` biraz ayrışır. Sayfa üzerindeki yatay oranlar **kâri sesine göre ince ayar** gibi, sıfırdan elle tıklama gibi değil.
+
+4. **Kodlu `location` boşlukları** — `positions19` ayet 1001’de ardışık segmentler arasında **2018** birim boşluk; istemci böleni `2·1000 + 2·10 − 2 = 2018` (`hr.f.d`). Bu, ham alanların **sabit formülle** metin indeksine indirgenmesini gösterir.
+
+5. **Segment sayısı kâriye göre değişir** — ~4512 ayette `positions5` vs `positions19` satır sayısı farklı (ör. 1001: 6 vs 5). Manuel tek şablon olsaydı sayılar daha sık özdeş kalırdı; fark, **ses hizalamasının segment sınırlarını kâride yeniden kesmesi** ile uyumlu.
+
+6. **“Düzensiz insan” imzası zayıf** — `duration < 50 ms` satır **0**; ardışık özdeş `duration` en fazla **2** tekrar. Varyans ayet içinde yüksek olabilir (kısa hece + uzun kelime), bu **konuşma ritmi** ile uyumlu, düğme gecikmesi modeli ile zorunlu değil.
+
+#### Davut’un ~%98 algısı neden?
+
+Kodda Davut’a özel algoritma yok; yalnızca `positions19` + `reciter==19` + `R()`. Yüksek algı, **bu tablonun Davut sesine iyi hizalanmış olması** ve (kullanıcı gözlemi) metin modu + animasyon açık kullanım ile açıklanır. Abdul Basit (`positions5`) aynı mimariyle çalışır; Mishari’de tablo olmadığı için ok takibi hiç başlamaz.
+
+**Özet:** Manuel dinle–kaydet hipotezi **çürütülmedi değil, desteklenmedi**; güçlü alternatif: **sunucuda üretilmiş `positions{N}` (metin/glif segmentleri + forced alignment / benzeri otomasyon)**. Davut verisi “özel insan kaydı” değil, **aynı üretim hattının `positions19` çıktısı** olarak değerlendirilmeli.
+
 ### Neden sadece hafız 5 ve 19?
 
-```582:593:tmp/ezanvakti-jadx/sources/hr/f.java
+```java
+// hr.f — jadx decompile (ResourceHelper)
     public boolean R() {
         File databasePath = this.f83561a.getDatabasePath("positions.db_");
         int i11 = this.f83562b;
@@ -327,8 +379,8 @@ Uygulama içi SQL yamaları: `assets/update_kuran.sql` (`ayetler` offset + `audi
    - Mushaf overlay: `#8097FF0A` ve **%30 alpha** (veya doğrudan ARGB ile eşdeğer görünüm).
 
 3. **Üçgen ok**  
-   - Sol kenarda 24×15 dp civarı ikon; `row` + yatay `startoffset`/`endoffset` ile konum.  
-   - Ses tarafta: ayet başına `duration` ms listesi (`positions5` benzeri) + part başlangıçları (`audioparts.time`).
+   - Konum: `location`/`lenght` + `Text` (metin) veya `row` + `startoffset`/`endoffset` (sayfa).  
+   - Zaman: önceden hizalanmış `positions{N}` segment `duration` + `MediaPlayer.getCurrentPosition()` (canlı ASR yok).
 
 4. **Ses pipeline**  
    - Tek `MediaPlayer`; Handler ile `currentPosition` polling.  
