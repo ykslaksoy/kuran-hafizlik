@@ -8,8 +8,28 @@ const path = require("path");
 const https = require("https");
 
 const OUT = path.resolve(__dirname, "..", "dist/assets/mushaf");
+const FONT_DIR = path.join(OUT, "fonts", "qcf");
 const API = "https://api.qurancdn.com/api/qdc/verses/by_page";
 const FONT = "https://verses.quran.foundation/fonts/quran/hafs/v2/woff2";
+
+function getBuffer(url) {
+  return new Promise((resolve, reject) => {
+    https
+      .get(url, { headers: { "User-Agent": "Hafizyol/1.0" } }, (res) => {
+        if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          return getBuffer(res.headers.location).then(resolve, reject);
+        }
+        if (res.statusCode !== 200) {
+          reject(new Error(url + " " + res.statusCode));
+          return;
+        }
+        const chunks = [];
+        res.on("data", (c) => chunks.push(c));
+        res.on("end", () => resolve(Buffer.concat(chunks)));
+      })
+      .on("error", reject);
+  });
+}
 
 function get(url) {
   return new Promise((resolve, reject) => {
@@ -83,7 +103,8 @@ function compactPage(page, data) {
   return {
     page,
     mushaf: "qcf-v2",
-    font: `${FONT}/p${page}.woff2`,
+    font: `/assets/mushaf/fonts/qcf/p${page}.woff2`,
+    fontRemote: `${FONT}/p${page}.woff2`,
     juz: (verses[0] && verses[0].juz) || 1,
     lines: lineNos.map((n) => ({ n, words: lines[n] })),
     verses,
@@ -94,6 +115,7 @@ function compactPage(page, data) {
 
 async function main() {
   fs.mkdirSync(OUT, { recursive: true });
+  fs.mkdirSync(FONT_DIR, { recursive: true });
   const pages = {};
   for (const n of [1, 2, 3, 50, 604]) {
     const url = `${API}/${n}?words=true&word_fields=code_v2,text_uthmani,line_number,char_type_name`;
@@ -101,7 +123,9 @@ async function main() {
     const page = compactPage(n, data);
     pages[n] = page;
     fs.writeFileSync(path.join(OUT, `qcf-page-${n}.json`), JSON.stringify(page));
-    console.log("wrote page", n, "lines", page.lines.map((l) => l.n).join(","), "verses", page.verses.length);
+    const fontBuf = await getBuffer(`${FONT}/p${n}.woff2`);
+    fs.writeFileSync(path.join(FONT_DIR, `p${n}.woff2`), fontBuf);
+    console.log("wrote page", n, "lines", page.lines.map((l) => l.n).join(","), "verses", page.verses.length, "font", fontBuf.length);
   }
   const chaptersRaw = await get("https://api.qurancdn.com/api/qdc/chapters?language=ar");
   const chapters = (chaptersRaw.chapters || []).map((c) => ({
@@ -117,10 +141,11 @@ async function main() {
     special: [1, 2],
     lineCount: 15,
     fontBase: FONT,
+    fontLocal: "/assets/mushaf/fonts/qcf/p{page}.woff2",
     api: `${API}/{page}?words=true&word_fields=code_v2,text_uthmani,line_number,char_type_name`,
     baked: [1, 2, 3, 50, 604],
     license:
-      "QCF V2 page fonts: King Fahd Glorious Quran Printing Complex (KFGQPC), served by Quran Foundation / quran.com. Page-line-word layout: quran.com QDC / QUL. Hafızyol does not copy Ezan Vakti PNG or assets.",
+      "QCF V2 page fonts: King Fahd Glorious Quran Printing Complex (KFGQPC). Same-origin copies of p1/p2/p3/p50/p604 woff2 for FOUT-free render; remote source Quran Foundation / quran.com. Page-line-word layout: quran.com QDC / QUL. Hafızyol does not copy Ezan Vakti PNG or assets.",
   };
   fs.writeFileSync(path.join(OUT, "qcf-index.json"), JSON.stringify(index, null, 2));
   console.log("chapters", chapters.length);

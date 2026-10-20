@@ -291,42 +291,47 @@ html = html
   .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-10-19-fatiha2"')
   .replace(/content="2026-10-19-medine604"/g, 'content="2026-10-19-fatiha2"')
   .replace(/content="2026-10-19-fatiha1"/g, 'content="2026-10-19-fatiha4"')
-  .replace(/content="2026-10-19-fatiha2"/g, 'content="2026-10-20-qcf1"')
-  .replace(/content="2026-10-19-fatiha4"/g, 'content="2026-10-20-qcf1"')
-  .replace(/bust: amentu2/, "bust: qcf1")
-  .replace(/bust: medine604/, "bust: qcf1")
-  .replace(/bust: fatiha1/, "bust: qcf1")
-  .replace(/bust: fatiha2/, "bust: qcf1")
-  .replace(/bust: fatiha4/, "bust: qcf1")
-  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf1")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf1")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf1")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf1")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha4/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf1")
-  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=qcf1")
-  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=qcf1")
-  .replace(/quran-timing\.js\?v=fatiha2/g, "quran-timing.js?v=qcf1")
-  .replace(/quran-timing\.js\?v=fatiha3/g, "quran-timing.js?v=qcf1")
-  .replace(/quran-timing\.js\?v=fatiha4/g, "quran-timing.js?v=qcf1")
-  .replace(/var bust = 'amentu2';/, "var bust = 'qcf1';")
-  .replace(/var bust = 'medine604';/, "var bust = 'qcf1';")
-  .replace(/var bust = 'fatiha1';/, "var bust = 'qcf1';")
-  .replace(/var bust = 'fatiha2';/, "var bust = 'qcf1';")
-  .replace(/var bust = 'fatiha4';/, "var bust = 'qcf1';");
-if (!html.includes("qcf1")) {
+  .replace(/content="2026-10-19-fatiha2"/g, 'content="2026-10-20-qcf2"')
+  .replace(/content="2026-10-19-fatiha4"/g, 'content="2026-10-20-qcf2"')
+  .replace(/content="2026-10-20-qcf1"/g, 'content="2026-10-20-qcf2"')
+  .replace(/bust: amentu2/, "bust: qcf2")
+  .replace(/bust: medine604/, "bust: qcf2")
+  .replace(/bust: fatiha1/, "bust: qcf2")
+  .replace(/bust: fatiha2/, "bust: qcf2")
+  .replace(/bust: fatiha4/, "bust: qcf2")
+  .replace(/bust: qcf1/, "bust: qcf2")
+  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha4/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=qcf1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=fatiha2/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=fatiha3/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=fatiha4/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=qcf1/g, "quran-timing.js?v=qcf2")
+  .replace(/var bust = 'amentu2';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'medine604';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'fatiha1';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'fatiha2';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'fatiha4';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'qcf1';/, "var bust = 'qcf2';");
+if (!html.includes("qcf2")) {
   console.error("index.html bust failed");
   process.exit(1);
 }
 if (!html.includes("quran-timing.js")) {
   html = html.replace(
-    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf1" defer></script>',
-    '<script src="/assets/timing/quran-timing.js?v=qcf1"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf1" defer></script>'
+    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2" defer></script>',
+    '<script src="/assets/timing/quran-timing.js?v=qcf2"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2" defer></script>'
   );
 }
 if (!html.includes("qcf-mushaf.js")) {
   html = html.replace(
-    '<script src="/assets/timing/quran-timing.js?v=qcf1"></script>',
-    '<link rel="preload" as="font" type="font/woff2" href="https://verses.quran.foundation/fonts/quran/hafs/v2/woff2/p1.woff2" crossorigin />\n  <link rel="stylesheet" href="/assets/mushaf/qcf-mushaf.css?v=qcf1" />\n  <script src="/assets/timing/quran-timing.js?v=qcf1"></script>\n  <script src="/assets/mushaf/qcf-mushaf.js?v=qcf1"></script>\n  <script src="/assets/mushaf/hy-player.js?v=qcf1"></script>'
+    '<script src="/assets/timing/quran-timing.js?v=qcf2"></script>',
+    '<link rel="preload" as="font" type="font/woff2" href="/assets/mushaf/fonts/qcf/p1.woff2" crossorigin />\n  <link rel="stylesheet" href="/assets/mushaf/qcf-mushaf.css?v=qcf2" />\n  <script src="/assets/timing/quran-timing.js?v=qcf2"></script>\n  <script src="/assets/mushaf/qcf-mushaf.js?v=qcf2"></script>\n  <script src="/assets/mushaf/hy-player.js?v=qcf2"></script>'
   );
 }
 if (!html.includes("hyMedineSwipe")) {
@@ -357,7 +362,7 @@ console.log("patched index.html");
 
 if (fs.existsSync(SW)) {
   let sw = fs.readFileSync(SW, "utf8");
-  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'qcf1';");
+  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'qcf2';");
   if (!sw.includes("medine-mushaf-2026-10-19")) {
     sw = "/* medine-mushaf-2026-10-19 */\n" + sw;
   }

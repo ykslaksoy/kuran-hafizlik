@@ -15,5 +15,6 @@
     50,
     604
   ],
-  "license": "QCF V2 page fonts: King Fahd Glorious Quran Printing Complex (KFGQPC), served by Quran Foundation / quran.com. Page-line-word layout: quran.com QDC / QUL. Hafızyol does not copy Ezan Vakti PNG or assets."
+  "license": "QCF V2 page fonts: King Fahd Glorious Quran Printing Complex (KFGQPC). Same-origin copies of p1/p2/p3/p50/p604 woff2 for FOUT-free render; remote source Quran Foundation / quran.com. Page-line-word layout: quran.com QDC / QUL. Hafızyol does not copy Ezan Vakti PNG or assets.",
+  "fontLocal": "/assets/mushaf/fonts/qcf/p{page}.woff2"
 }

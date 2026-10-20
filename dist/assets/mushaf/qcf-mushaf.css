@@ -1,4 +1,10 @@
 /* Locked Medine page: no reflow, no FOUT, scale-only. */
+@font-face {
+  font-family: "Hafizyol-QCF-Missing";
+  src: local("Hafizyol-QCF-Missing");
+  size-adjust: 0%;
+  font-display: block;
+}
 
 :root {
   --hy-player-h: 64px;
@@ -9,11 +15,17 @@
   --hy-design-h: 1610px;
 }
 
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body.hy-kuran {
   background: #3d3224 !important;
   overflow: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body.hy-kuran #root {
@@ -63,6 +75,9 @@ body.hy-qcf-on .hy-native-hide {
   background: var(--hy-paper);
   color: var(--hy-ink);
   contain: strict;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-synthesis: none;
 }
 
 #hy-qcf-stage.hy-waiting #hy-qcf-glyphs {
@@ -131,13 +146,17 @@ body.hy-qcf-on .hy-native-hide {
   pointer-events: none;
 }
 
-/* Fixed 15 line boxes — never wrap, never grow */
+/* Fixed 15 line boxes — never wrap, never grow, never reflow */
 #hy-qcf-glyphs {
   position: absolute;
   top: 72px;
   left: 56px;
   width: 888px;
   height: 1470px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .hy-qcf-linebox {
@@ -154,18 +173,23 @@ body.hy-qcf-on .hy-native-hide {
   overflow: hidden;
   box-sizing: border-box;
   line-height: 98px;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 #hy-qcf-stage.hy-special .hy-qcf-linebox,
 .hy-qcf-linebox[data-empty="1"],
 .hy-qcf-linebox[data-kind="header"],
 .hy-qcf-linebox[data-kind="bismillah"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   text-align-last: center;
-}
-
-.hy-qcf-linebox[data-empty="1"] {
-  justify-content: center;
+  gap: 0.18em;
 }
 
 .hy-qcf-word,
@@ -174,10 +198,13 @@ body.hy-qcf-on .hy-native-hide {
 .hy-qcf-bismillah {
   display: inline;
   color: #141414 !important;
+  background: transparent !important;
   white-space: nowrap;
   font-style: normal;
   font-weight: 400;
+  font-synthesis: none;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: 0;
 }
 
 .hy-qcf-word,
@@ -185,6 +212,7 @@ body.hy-qcf-on .hy-native-hide {
   font-size: 46px;
   font-synthesis: none;
   font-variant-ligatures: none;
+  font-family: inherit;
 }
 
 #hy-qcf-stage.hy-special .hy-qcf-word,
@@ -193,11 +221,14 @@ body.hy-qcf-on .hy-native-hide {
 }
 
 .hy-qcf-header {
-  font: 700 34px/1 "UthmanicHafs", "Scheherazade New", serif;
+  display: inline-block;
+  flex-shrink: 0;
+  font: 700 34px/1 "Scheherazade New", "Times New Roman", serif;
   color: #f7f1e3 !important;
-  background: #1e4d3d;
+  background: #1e4d3d !important;
   border: 2px solid #e8d48a;
   padding: 8px 22px;
+  white-space: nowrap;
 }
 
 #hy-qcf-stage.hy-special .hy-qcf-header {
@@ -206,7 +237,10 @@ body.hy-qcf-on .hy-native-hide {
 }
 
 .hy-qcf-bismillah {
-  font: 28px/1 "UthmanicHafs", "Scheherazade New", serif;
+  display: inline-block;
+  flex-shrink: 0;
+  font: 28px/1 "Scheherazade New", "Times New Roman", serif;
+  white-space: nowrap;
 }
 
 .hy-qcf-margin {
@@ -225,10 +259,22 @@ body.hy-qcf-on .hy-native-hide {
   z-index: 5;
 }
 
-#hy-qcf-hl {
+#hy-qcf-hl,
+#hy-qcf-overlay #hy-qcf-hl {
   position: absolute;
-  background: #8097ff0a;
-  border-radius: 4px;
+  background: rgba(151, 255, 10, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(151, 255, 10, 0.45);
+  border-radius: 6px;
+  display: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#hy-qcf-overlay #hy-track-arrow {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  transform: translate(-50%, 0);
   display: none;
 }
 

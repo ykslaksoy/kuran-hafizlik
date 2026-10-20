@@ -263,17 +263,40 @@
   }
 
   function ensureArrow() {
-    if (arrowEl && arrowEl.parentNode) return arrowEl;
+    var overlay = document.getElementById("hy-qcf-overlay");
+    var host = overlay || document.body;
+    if (arrowEl && arrowEl.parentNode === host) return arrowEl;
     arrowEl = document.getElementById("hy-track-arrow");
-    if (arrowEl) return arrowEl;
-    arrowEl = document.createElement("div");
-    arrowEl.id = "hy-track-arrow";
-    arrowEl.setAttribute("aria-hidden", "true");
-    arrowEl.innerHTML = '<span style="display:block;font-size:34px;line-height:28px;color:#97FF0A;text-shadow:0 0 8px #14532d,0 2px 0 #052e16">\u25B2</span>';
-    arrowEl.style.cssText =
-      "position:fixed;z-index:99999;pointer-events:none;transform:translate(-50%,0);display:none;";
-    document.body.appendChild(arrowEl);
+    if (!arrowEl) {
+      arrowEl = document.createElement("div");
+      arrowEl.id = "hy-track-arrow";
+      arrowEl.setAttribute("aria-hidden", "true");
+      arrowEl.innerHTML =
+        '<span style="display:block;font-size:34px;line-height:28px;color:#97FF0A;text-shadow:0 0 8px #14532d,0 2px 0 #052e16">\u25B2</span>';
+    }
+    if (overlay) {
+      arrowEl.style.cssText = "position:absolute;z-index:2;pointer-events:none;transform:translate(-50%,0);display:none;";
+      overlay.appendChild(arrowEl);
+    } else {
+      arrowEl.style.cssText =
+        "position:fixed;z-index:99999;pointer-events:none;transform:translate(-50%,0);display:none;";
+      if (!arrowEl.parentNode) document.body.appendChild(arrowEl);
+    }
     return arrowEl;
+  }
+
+  function ensureHighlight() {
+    var overlay = document.getElementById("hy-qcf-overlay");
+    if (!overlay) return null;
+    var hl = document.getElementById("hy-qcf-hl");
+    if (!hl) {
+      hl = document.createElement("div");
+      hl.id = "hy-qcf-hl";
+      overlay.appendChild(hl);
+    } else if (hl.parentNode !== overlay) {
+      overlay.appendChild(hl);
+    }
+    return hl;
   }
 
   function findByNativeId(id) {
@@ -342,20 +365,56 @@
     }
     if (!r) {
       el.style.display = "none";
+      var hl0 = document.getElementById("hy-qcf-hl");
+      if (hl0) hl0.style.display = "none";
       return;
     }
     var letterNode = findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + li);
-    var rowNode = letterNode && letterNode.closest && (letterNode.closest(".hy-qcf-line") || letterNode.closest('[id^="hy-row-"]'));
-    if (!rowNode && active.row != null) rowNode = findByNativeId("hy-row-" + active.row);
-    el.style.display = "block";
-    el.style.left = r.left + r.width / 2 + "px";
-    // Glyph boxes overflow the 15-line band; pin the tip inside the row, not onto the next ayah.
-    var tip = r.bottom - 8;
+    var rowNode =
+      letterNode &&
+      letterNode.closest &&
+      (letterNode.closest(".hy-qcf-linebox") || letterNode.closest(".hy-qcf-line") || letterNode.closest('[id^="hy-row-"]'));
+    if (!rowNode && active.row != null) {
+      rowNode = document.getElementById("hy-qcf-row-" + (active.row + 1)) || findByNativeId("hy-row-" + active.row);
+    }
+    var overlay = document.getElementById("hy-qcf-overlay");
+    var tipRect = { left: r.left, top: r.top, width: r.width, height: r.height, bottom: r.bottom };
     if (rowNode) {
       var band = rowNode.getBoundingClientRect();
-      if (band.height) tip = band.top + band.height * 0.62;
+      if (band.height) {
+        tipRect.top = band.top + band.height * 0.62;
+        tipRect.height = 0;
+        tipRect.bottom = tipRect.top;
+      }
+    } else {
+      tipRect.top = r.bottom - 8;
+      tipRect.height = 0;
     }
-    el.style.top = tip + "px";
+    el.style.display = "block";
+    if (overlay && el.parentNode === overlay && global.hyQcfMushaf && global.hyQcfMushaf.toDesignRect) {
+      var dArrow = global.hyQcfMushaf.toDesignRect({
+        left: r.left + r.width / 2,
+        top: tipRect.top,
+        width: 0,
+        height: 0,
+      });
+      var dHl = global.hyQcfMushaf.toDesignRect(r);
+      if (dArrow) {
+        el.style.left = dArrow.left + "px";
+        el.style.top = dArrow.top + "px";
+      }
+      var hl = ensureHighlight();
+      if (hl && dHl) {
+        hl.style.display = "block";
+        hl.style.left = dHl.left + "px";
+        hl.style.top = dHl.top + "px";
+        hl.style.width = Math.max(10, dHl.width) + "px";
+        hl.style.height = Math.max(24, dHl.height) + "px";
+      }
+    } else {
+      el.style.left = r.left + r.width / 2 + "px";
+      el.style.top = tipRect.top + "px";
+    }
   }
 
   function setActive(hit) {
@@ -371,6 +430,8 @@
 
   function hideArrow() {
     if (arrowEl) arrowEl.style.display = "none";
+    var hl = document.getElementById("hy-qcf-hl");
+    if (hl) hl.style.display = "none";
   }
 
   function onKuran() {

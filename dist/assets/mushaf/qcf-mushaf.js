@@ -12,6 +12,7 @@
   var LINE_N = 15;
   var LINE_H = 98;
   var FONT_BASE = "https://verses.quran.foundation/fonts/quran/hafs/v2/woff2";
+  var FONT_LOCAL = "/assets/mushaf/fonts/qcf";
   var API =
     "https://api.qurancdn.com/api/qdc/verses/by_page/{page}?words=true&word_fields=code_v2,text_uthmani,line_number,char_type_name";
   var BISMILLAH = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
@@ -93,7 +94,8 @@
       });
     return {
       page: page,
-      font: FONT_BASE + "/p" + page + ".woff2",
+      font: FONT_LOCAL + "/p" + page + ".woff2",
+      fontRemote: FONT_BASE + "/p" + page + ".woff2",
       juz: (verses[0] && verses[0].juz) || 1,
       lines: lineNos.map(function (n) {
         return { n: n, words: lines[n] };
@@ -131,7 +133,15 @@
     return "QCF_P" + page;
   }
 
-  function injectFace(page, url) {
+  function fontLocal(page) {
+    return FONT_LOCAL + "/p" + page + ".woff2";
+  }
+
+  function fontRemote(page, url) {
+    return url && url.indexOf("http") === 0 ? url : FONT_BASE + "/p" + page + ".woff2";
+  }
+
+  function injectFace(page, local, remote) {
     var id = "hy-qcf-ff-" + page;
     if (document.getElementById(id)) return;
     var st = document.createElement("style");
@@ -140,37 +150,87 @@
       '@font-face{font-family:"' +
       fontName(page) +
       '";src:url("' +
-      (url || FONT_BASE + "/p" + page + ".woff2") +
-      '") format("woff2");font-display:block;}';
+      local +
+      '") format("woff2"),url("' +
+      remote +
+      '") format("woff2");font-display:block;font-style:normal;font-weight:400;}';
     document.head.appendChild(st);
   }
 
-  function loadFont(page, url) {
+  function pageSample(data) {
+    var out = "";
+    var lines = (data && data.lines) || [];
+    for (var i = 0; i < lines.length; i++) {
+      var words = lines[i].words || [];
+      for (var j = 0; j < words.length; j++) {
+        if (words[j].code) out += words[j].code;
+        if (out.length >= 8) return out;
+      }
+    }
+    return out || "\uFC41";
+  }
+
+  function measureApplied(name, sample) {
+    var el = document.createElement("span");
+    el.textContent = sample || "\uFC41";
+    el.style.cssText =
+      "position:absolute;left:-99999px;top:0;font-size:200px;font-synthesis:none;visibility:hidden;white-space:nowrap;";
+    document.body.appendChild(el);
+    el.style.fontFamily = "serif";
+    var serif = el.getBoundingClientRect().width;
+    el.style.fontFamily = '"' + name + '"';
+    var qcf = el.getBoundingClientRect().width;
+    document.body.removeChild(el);
+    return { serif: serif, qcf: qcf, ok: qcf > 0 && Math.abs(qcf - serif) > 6 };
+  }
+
+  function waitApplied(name, sample) {
+    return new Promise(function (resolve) {
+      var tries = 0;
+      function tick() {
+        var check = !document.fonts || document.fonts.check('46px "' + name + '"');
+        var m = measureApplied(name, sample);
+        if (check && m.ok) {
+          resolve(true);
+          return;
+        }
+        if (tries++ >= 40) {
+          resolve(false);
+          return;
+        }
+        setTimeout(tick, 80);
+      }
+      tick();
+    });
+  }
+
+  function loadFaceUrl(name, href) {
+    if (typeof FontFace === "undefined") return Promise.resolve();
+    var face = new FontFace(name, "url(" + href + ")", { display: "block", style: "normal", weight: "400" });
+    return face.load().then(function (f) {
+      document.fonts.add(f);
+    });
+  }
+
+  function loadFont(page, url, sample) {
     var name = fontName(page);
     if (fontReady[name]) return fontReady[name];
-    injectFace(page, url);
-    var href = url || FONT_BASE + "/p" + page + ".woff2";
-    var tasks = [];
-    if (typeof FontFace !== "undefined") {
-      var face = new FontFace(name, "url(" + href + ")", { display: "block", style: "normal", weight: "400" });
-      tasks.push(
-        face.load().then(function (f) {
-          document.fonts.add(f);
-        })
-      );
-    }
-    fontReady[name] = Promise.all(tasks)
+    var local = fontLocal(page);
+    var remote = fontRemote(page, url);
+    injectFace(page, local, remote);
+    fontReady[name] = loadFaceUrl(name, local)
+      .catch(function () {
+        return loadFaceUrl(name, remote);
+      })
       .then(function () {
         return document.fonts ? document.fonts.load('46px "' + name + '"') : null;
       })
       .then(function () {
-        var ok = document.fonts && document.fonts.check('46px "' + name + '"');
-        if (!ok) return new Promise(function (res) { setTimeout(res, 80); });
+        return waitApplied(name, sample);
       })
-      .then(function () {
-        return name;
-      })
-      .catch(function () {
+      .then(function (ok) {
+        var checked = document.fonts && document.fonts.check('46px "' + name + '"');
+        if (!ok && !checked) throw new Error("qcf-font-not-applied");
         return name;
       });
     return fontReady[name];
@@ -180,7 +240,7 @@
     [page - 1, page + 1].forEach(function (p) {
       if (p < 1 || p > 604) return;
       loadPage(p).then(function (d) {
-        if (d) loadFont(p, d.font);
+        if (d) loadFont(p, d.fontRemote || d.font, pageSample(d));
       });
     });
   }
@@ -243,13 +303,15 @@
     }
     surahsStartingOn(data.page, data).forEach(function (s) {
       var line = s.firstLine || 1;
-      var slot = line - 1;
-      while (slot >= 1 && used[slot]) slot -= 1;
-      if (slot >= 1) headerAt[slot] = { ch: s.ch, kind: "header" };
-      if (s.ch && s.ch.bismillah) {
-        var b = slot + 1;
-        if (b < line && !used[b] && !headerAt[b]) headerAt[b] = { ch: s.ch, kind: "bismillah" };
+      var empties = [];
+      for (var i = line - 1; i >= 1; i--) {
+        if (used[i] || headerAt[i]) break;
+        empties.unshift(i);
       }
+      var need = s.ch && s.ch.bismillah ? 2 : 1;
+      var take = empties.slice(-need);
+      if (take.length >= 1) headerAt[take[0]] = { ch: s.ch, kind: "header" };
+      if (take.length >= 2) headerAt[take[1]] = { ch: s.ch, kind: "bismillah" };
     });
     return headerAt;
   }
@@ -368,7 +430,7 @@
             extra +
             ' style="font-family:\'' +
             name +
-            "';font-synthesis:none\">" +
+            "',local('Hafizyol-QCF-Missing');font-synthesis:none\">" +
             esc(w.code) +
             "</span>" +
             (wi < line.words.length - 1 ? " " : "");
@@ -382,23 +444,19 @@
     paintedFont = name;
     document.body.classList.add("hy-kuran", "hy-qcf-on");
     scheduleFit();
-    loadFont(data.page, data.font).then(function () {
-      if (paintedPage !== data.page) return;
-      var tries = 0;
-      function reveal() {
-        var ok = !document.fonts || document.fonts.check('46px "' + name + '"');
-        if (!ok && tries < 20) {
-          tries += 1;
-          setTimeout(reveal, 100);
-          return;
-        }
+    loadFont(data.page, data.fontRemote || data.font, pageSample(data))
+      .then(function () {
+        if (paintedPage !== data.page) return;
+        var applied = measureApplied(name, pageSample(data));
+        if (!applied.ok && !(document.fonts && document.fonts.check('46px "' + name + '"'))) return;
         stage.classList.remove("hy-waiting");
         scheduleFit();
         placeHits(data);
         prefetchNear(data.page);
-      }
-      reveal();
-    });
+      })
+      .catch(function () {
+        /* Keep hy-waiting — never paint fallback glyphs. */
+      });
   }
 
   function localWordStream() {
@@ -502,7 +560,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf1";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf2";
       document.head.appendChild(link);
     }
     paint();
@@ -527,10 +585,25 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 
+  function toDesignRect(r) {
+    var stage = document.getElementById("hy-qcf-stage");
+    if (!stage || !r) return null;
+    var sr = stage.getBoundingClientRect();
+    var scale = sr.width / DESIGN_W || 1;
+    return {
+      left: (r.left - sr.left) / scale,
+      top: (r.top - sr.top) / scale,
+      width: r.width / scale,
+      height: r.height / scale,
+      scale: scale,
+    };
+  }
+
   global.hyQcfMushaf = {
     paint: paint,
     loadPage: loadPage,
     pageFromUi: pageFromUi,
+    toDesignRect: toDesignRect,
     DESIGN_W: DESIGN_W,
     DESIGN_H: DESIGN_H,
   };
