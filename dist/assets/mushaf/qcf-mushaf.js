@@ -22,23 +22,167 @@
   var fontReady = {};
   var host = null;
   var paintedPage = 0;
+  var paintedData = null;
   var paintedFont = "";
+  var chromeVerse = null;
   var fitRaf = 0;
+  var lastReactPage = 0;
+  var bootPinned = false;
+  var SURAH_TR = [
+    "",
+    "Fâtiha",
+    "Bakara",
+    "Âl-i İmrân",
+    "Nisâ",
+    "Mâide",
+    "En‘âm",
+    "A‘râf",
+    "Enfâl",
+    "Tevbe",
+    "Yûnus",
+    "Hûd",
+    "Yûsuf",
+    "Ra‘d",
+    "İbrâhîm",
+    "Hicr",
+    "Nahl",
+    "İsrâ",
+    "Kehf",
+    "Meryem",
+    "Tâhâ",
+    "Enbiyâ",
+    "Hac",
+    "Mü’minûn",
+    "Nûr",
+    "Furkân",
+    "Şuarâ",
+    "Neml",
+    "Kasas",
+    "Ankebût",
+    "Rûm",
+    "Lokmân",
+    "Secde",
+    "Ahzâb",
+    "Sebe’",
+    "Fâtır",
+    "Yâsîn",
+    "Sâffât",
+    "Sâd",
+    "Zümer",
+    "Mü’min",
+    "Fussilet",
+    "Şûrâ",
+    "Zuhruf",
+    "Duhân",
+    "Câsiye",
+    "Ahkâf",
+    "Muhammed",
+    "Fetih",
+    "Hucurât",
+    "Kâf",
+    "Zâriyât",
+    "Tûr",
+    "Necm",
+    "Kamer",
+    "Rahmân",
+    "Vâkıa",
+    "Hadîd",
+    "Mücâdele",
+    "Haşr",
+    "Mümtehine",
+    "Saff",
+    "Cuma",
+    "Münâfikûn",
+    "Teğâbün",
+    "Talâk",
+    "Tahrîm",
+    "Mülk",
+    "Kalem",
+    "Hâkka",
+    "Meâric",
+    "Nûh",
+    "Cin",
+    "Müzzemmil",
+    "Müddessir",
+    "Kıyâme",
+    "İnsân",
+    "Mürselât",
+    "Nebe",
+    "Nâziât",
+    "Abese",
+    "Tekvîr",
+    "İnfitâr",
+    "Mutaffifîn",
+    "İnşikâk",
+    "Bürûc",
+    "Târık",
+    "A‘lâ",
+    "Gâşiye",
+    "Fecr",
+    "Beled",
+    "Şems",
+    "Leyl",
+    "Duhâ",
+    "İnşirah",
+    "Tîn",
+    "Alak",
+    "Kadr",
+    "Beyyine",
+    "Zilzâl",
+    "Âdiyât",
+    "Kâria",
+    "Tekâsür",
+    "Asr",
+    "Hümeze",
+    "Fîl",
+    "Kureyş",
+    "Mâûn",
+    "Kevser",
+    "Kâfirûn",
+    "Nasr",
+    "Tebbet",
+    "İhlâs",
+    "Felak",
+    "Nâs",
+  ];
 
   function onKuran() {
     return /kuran/i.test(location.pathname + location.hash + location.search) || !!document.querySelector('[aria-label="Sonraki sayfa"]');
   }
 
-  function pageFromUi() {
-    var q = /[?&]page=(\d+)/.exec(location.search);
-    if (q) return Math.max(1, Math.min(604, Number(q[1])));
+  function clampPage(n) {
+    n = Number(n);
+    if (!n || n < 1) return 1;
+    if (n > 604) return 604;
+    return n;
+  }
+
+  function reactPageLabel() {
     var nodes = document.querySelectorAll("div,span");
     for (var i = 0; i < nodes.length; i++) {
-      var t = (nodes[i].textContent || "").trim();
-      var m = /^Sayfa\s+(\d+)$/.exec(t);
-      if (m) return Number(m[1]);
+      var t = (nodes[i].textContent || "").replace(/\s+/g, " ").trim();
+      if (!t || t.length > 48) continue;
+      var m = /^Sayfa\s+(\d+)\b/.exec(t);
+      if (m) return clampPage(m[1]);
     }
-    return 1;
+    return 0;
+  }
+
+  function pageFromUi() {
+    var q = /[?&]page=(\d+)/.exec(location.search);
+    if (q) return clampPage(q[1]);
+    var react = reactPageLabel();
+    if (!bootPinned) {
+      bootPinned = true;
+      lastReactPage = react || 1;
+      return paintedPage || 1;
+    }
+    if (react && lastReactPage && react !== lastReactPage) {
+      lastReactPage = react;
+      return react;
+    }
+    if (react && !lastReactPage) lastReactPage = react;
+    return paintedPage || react || 1;
   }
 
   function fetchJson(url) {
@@ -321,6 +465,71 @@
     return null;
   }
 
+  function packSpecialTops(data, headers) {
+    if (!data || data.page > 2) return null;
+    var items = [];
+    for (var n = 1; n <= LINE_N; n++) {
+      if (headers[n] || lineByN(data, n)) items.push(n);
+    }
+    if (!items.length) return null;
+    var extra = 0;
+    for (var i = 0; i < items.length; i++) if (headers[items[i]]) extra += 18;
+    var block = items.length * LINE_H + extra;
+    var start = Math.round((1470 - block) / 2);
+    if (start < 36) start = 36;
+    var tops = {};
+    var y = start;
+    for (var j = 0; j < items.length; j++) {
+      tops[items[j]] = y;
+      y += LINE_H;
+      if (headers[items[j]]) y += 18;
+    }
+    return tops;
+  }
+
+  function surahNameTr(id) {
+    return SURAH_TR[id] || "Sure " + id;
+  }
+
+  function syncChrome(data, verse) {
+    data = data || paintedData;
+    if (!data) return;
+    var v = verse || chromeVerse || data.verses[0];
+    if (!v) return;
+    chromeVerse = { surah: v.surah, ayah: v.ayah };
+    var title = surahNameTr(v.surah) + " Suresi " + v.ayah + ". Ayet";
+    var sub = "Sayfa " + data.page + " Cüz " + (data.juz || 1);
+    var nodes = document.querySelectorAll("div,span");
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      if (el.closest && (el.closest("#hy-qcf-host") || el.closest("#hy-player-dock") || el.closest("#hy-timing-source"))) {
+        continue;
+      }
+      if (el.children && el.children.length) continue;
+      var t = (el.textContent || "").replace(/\s+/g, " ").trim();
+      if (!t || t.length > 48) continue;
+      if (/Suresi/.test(t) && t !== title) el.textContent = title;
+      else if (/^Sayfa\s+\d+/.test(t) && t !== sub) el.textContent = sub;
+    }
+  }
+
+  function alignReactTo(page) {
+    var steps = 0;
+    function step() {
+      var cur = reactPageLabel();
+      if (!cur || cur === page || steps++ > 24) {
+        lastReactPage = page;
+        syncChrome(paintedData, chromeVerse);
+        return;
+      }
+      var sel = cur > page ? '[aria-label="Önceki sayfa"]' : '[aria-label="Sonraki sayfa"]';
+      var btn = document.querySelector(sel);
+      if (btn) btn.click();
+      setTimeout(step, 140);
+    }
+    setTimeout(step, 200);
+  }
+
   function toIndic(n) {
     return String(n).replace(/\d/g, function (d) {
       return "٠١٢٣٤٥٦٧٨٩"[d];
@@ -387,16 +596,20 @@
     meta.innerHTML = "<span>الجزء " + toIndic(data.juz || 1) + "</span><span>" + esc((data.verses[0] && data.verses[0].key) || "") + "</span>";
     pnum.textContent = toIndic(data.page);
 
+    paintedData = data;
+    chromeVerse = data.verses && data.verses[0] ? { surah: data.verses[0].surah, ayah: data.verses[0].ayah } : null;
     var used = {};
     (data.lines || []).forEach(function (l) {
       used[l.n] = l;
     });
     var headers = headerAtMap(data);
+    var tops = packSpecialTops(data, headers);
     var html = "";
     for (var n = 1; n <= LINE_N; n++) {
-      var top = (n - 1) * LINE_H;
       var line = used[n];
       var header = headers[n];
+      if (tops && !line && !header) continue;
+      var top = tops ? tops[n] : (n - 1) * LINE_H;
       html +=
         '<div class="hy-qcf-linebox" data-hy-qcf-row="' +
         n +
@@ -452,6 +665,8 @@
         stage.classList.remove("hy-waiting");
         scheduleFit();
         placeHits(data);
+        syncChrome(data, chromeVerse);
+        if (data.page === 1) alignReactTo(1);
         prefetchNear(data.page);
       })
       .catch(function () {
@@ -497,37 +712,76 @@
     return 1;
   }
 
+  function voicedGlyphs(uth) {
+    var hy = global.hyQuranTiming;
+    var gs = hy && hy.glyphs ? hy.glyphs(uth) : [{ i: 0, skip: false, ch: uth || " " }];
+    var out = [];
+    for (var i = 0; i < gs.length; i++) {
+      if (gs[i] && !gs[i].skip && String(gs[i].ch || "").replace(/\s/g, "")) out.push(gs[i]);
+    }
+    if (!out.length) out.push({ i: 0, skip: false, ch: " " });
+    return out;
+  }
+
   function placeHits(data) {
     var overlay = document.getElementById("hy-qcf-overlay");
-    if (!overlay) return;
+    var stageEl = document.getElementById("hy-qcf-stage");
+    if (!overlay || !stageEl) return;
     var hl = document.getElementById("hy-qcf-hl");
     overlay.querySelectorAll("[data-hy-qcf]").forEach(function (n) {
       n.parentNode.removeChild(n);
     });
-    var locals = localWordStream();
-    var qcfs = qcfContentWords(data);
-    var map = {};
-    var n = Math.min(locals.length, qcfs.length);
-    for (var i = 0; i < n; i++) map[qcfs[i].surah + ":" + qcfs[i].ayah + ":" + qcfs[i].pos] = locals[i];
+    var verseIndex = {};
+    (data.verses || []).forEach(function (v, i) {
+      verseIndex[v.surah + ":" + v.ayah] = i;
+    });
     var words = document.querySelectorAll("#hy-qcf-glyphs [data-hy-qcf-word]");
-    var stage = document.getElementById("hy-qcf-stage").getBoundingClientRect();
+    var stage = stageEl.getBoundingClientRect();
     var scale = stage.width / DESIGN_W || 1;
     for (var w = 0; w < words.length; w++) {
       var el = words[w];
-      var loc = map[el.getAttribute("data-hy-qcf-word")];
-      if (!loc) continue;
-      el.setAttribute("data-hy-local", loc.ayahIndex + "-" + loc.wordIndex);
+      var key = el.getAttribute("data-hy-qcf-word") || "";
+      var parts = key.split(":");
+      var surah = +parts[0];
+      var ayah = +parts[1];
+      var pos = +parts[2];
+      var ayahIndex = verseIndex[surah + ":" + ayah];
+      if (ayahIndex == null) ayahIndex = Math.max(0, ayah - 1);
+      var wordIndex = Math.max(0, pos - 1);
+      var verse = data.verses && data.verses[ayahIndex];
+      if (verse) {
+        var wi = 0;
+        for (var k = 0; k < verse.words.length; k++) {
+          if (verse.words[k].type === "end") continue;
+          if (verse.words[k].pos === pos) {
+            wordIndex = wi;
+            break;
+          }
+          wi += 1;
+        }
+      }
+      el.setAttribute("data-hy-local", ayahIndex + "-" + wordIndex);
+      var voiced = voicedGlyphs(el.getAttribute("data-uth") || "");
+      var count = voiced.length;
       var r = el.getBoundingClientRect();
-      var count = letterCount(el.getAttribute("data-uth") || "");
-      for (var li = 0; li < count; li++) {
+      var top = (r.top - stage.top) / scale;
+      var left0 = (r.left - stage.left) / scale;
+      var width = r.width / scale;
+      var height = r.height / scale;
+      var slot = width / count;
+      for (var vi = 0; vi < count; vi++) {
+        var li = voiced[vi].i;
         var hit = document.createElement("span");
-        hit.setAttribute("data-hy-qcf", loc.ayahIndex + "-" + loc.wordIndex + "-" + li);
+        hit.setAttribute("data-hy-qcf", ayahIndex + "-" + wordIndex + "-" + li);
+        hit.setAttribute("data-hy-ayah", String(ayahIndex));
+        hit.setAttribute("data-hy-word", String(wordIndex));
+        hit.setAttribute("data-hy-letter", String(li));
         hit.style.position = "absolute";
         hit.style.pointerEvents = "none";
-        hit.style.top = (r.top - stage.top) / scale + "px";
-        hit.style.left = (r.left - stage.left) / scale + (li / count) * (r.width / scale) + "px";
-        hit.style.width = r.width / scale / count + "px";
-        hit.style.height = r.height / scale + "px";
+        hit.style.top = top + "px";
+        hit.style.left = left0 + width - (vi + 1) * slot + "px";
+        hit.style.width = slot + "px";
+        hit.style.height = height + "px";
         overlay.appendChild(hit);
       }
     }
@@ -539,6 +793,7 @@
     if (!onKuran()) {
       document.body.classList.remove("hy-kuran", "hy-qcf-on");
       paintedPage = 0;
+      paintedData = null;
       return;
     }
     var frame = findFrame();
@@ -561,7 +816,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf4";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf5";
       document.head.appendChild(link);
     }
     paint();
@@ -576,9 +831,12 @@
       if (!onKuran()) return;
       var p = pageFromUi();
       if (p !== paintedPage) paint();
-      else if (Date.now() - last > 800) {
-        last = Date.now();
-        scheduleFit();
+      else {
+        syncChrome(paintedData, chromeVerse);
+        if (Date.now() - last > 800) {
+          last = Date.now();
+          scheduleFit();
+        }
       }
     }, 240);
   }
@@ -605,6 +863,14 @@
     loadPage: loadPage,
     pageFromUi: pageFromUi,
     toDesignRect: toDesignRect,
+    syncChrome: syncChrome,
+    setChromeVerse: function (verse) {
+      chromeVerse = verse;
+      syncChrome(paintedData, verse);
+    },
+    paintedPage: function () {
+      return paintedPage;
+    },
     DESIGN_W: DESIGN_W,
     DESIGN_H: DESIGN_H,
   };

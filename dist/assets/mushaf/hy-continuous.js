@@ -114,6 +114,9 @@
       now.textContent = item.key;
       now.setAttribute("data-key", item.key);
     }
+    if (global.hyQcfMushaf && global.hyQcfMushaf.setChromeVerse) {
+      global.hyQcfMushaf.setChromeVerse({ surah: item.surah, ayah: item.ayah });
+    }
   }
 
   function prefetchNext() {

@@ -272,7 +272,7 @@
       arrowEl.id = "hy-track-arrow";
       arrowEl.setAttribute("aria-hidden", "true");
       arrowEl.innerHTML =
-        '<span style="display:block;font-size:34px;line-height:28px;color:#97FF0A;text-shadow:0 0 8px #14532d,0 2px 0 #052e16">\u25B2</span>';
+        '<span style="display:block;font-size:18px;line-height:16px;color:#97FF0A;text-shadow:0 0 6px #14532d,0 1px 0 #052e16">\u25B2</span>';
     }
     if (overlay) {
       arrowEl.style.cssText = "position:absolute;z-index:2;pointer-events:none;transform:translate(-50%,0);display:none;";
@@ -348,72 +348,53 @@
     return { left: minL, width: maxR - minL, bottom: bottom, top: top, height: bottom - top };
   }
 
+  function findLetterHit(ayahIndex, wordIndex, letterIndex) {
+    var li = letterIndex || 0;
+    var i;
+    for (i = 0; i < 8; i++) {
+      var hit = document.querySelector('[data-hy-qcf="' + ayahIndex + "-" + wordIndex + "-" + (li + i) + '"]');
+      if (hit) return hit;
+    }
+    for (i = li; i >= 0; i--) {
+      hit = document.querySelector('[data-hy-qcf="' + ayahIndex + "-" + wordIndex + "-" + i + '"]');
+      if (hit) return hit;
+    }
+    return (
+      document.querySelector('[data-hy-qcf^="' + ayahIndex + "-" + wordIndex + '-"]') ||
+      document.querySelector('[data-hy-qcf-word][data-hy-local="' + ayahIndex + "-" + wordIndex + '"]')
+    );
+  }
+
   function placeArrow() {
     if (typeof document === "undefined") return;
     var el = ensureArrow();
-    var r = null;
-    var li = active.letterIndex || 0;
-    for (var k = 0; k < 6 && !r; k++) {
-      r = usableRect(findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + (li + k)));
-    }
-    if (!r && typeof active.startoffset === "number" && active.row != null) {
-      var box = textBoxForRow(active.row);
-      if (box) {
-        var mid = (active.startoffset + (typeof active.endoffset === "number" ? active.endoffset : active.startoffset)) / 2;
-        r = { left: box.left + mid * box.width, width: 0, bottom: box.bottom, top: box.top, height: box.height };
-      }
-    }
+    var node = findLetterHit(active.ayahIndex, active.wordIndex, active.letterIndex);
+    var r = usableRect(node);
     if (!r) {
       el.style.display = "none";
       var hl0 = document.getElementById("hy-qcf-hl");
       if (hl0) hl0.style.display = "none";
       return;
     }
-    var letterNode = findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + li);
-    var rowNode =
-      letterNode &&
-      letterNode.closest &&
-      (letterNode.closest(".hy-qcf-linebox") || letterNode.closest(".hy-qcf-line") || letterNode.closest('[id^="hy-row-"]'));
-    if (!rowNode && active.row != null) {
-      rowNode = document.getElementById("hy-qcf-row-" + (active.row + 1)) || findByNativeId("hy-row-" + active.row);
-    }
     var overlay = document.getElementById("hy-qcf-overlay");
-    var tipRect = { left: r.left, top: r.top, width: r.width, height: r.height, bottom: r.bottom };
-    if (rowNode) {
-      var band = rowNode.getBoundingClientRect();
-      if (band.height) {
-        tipRect.top = band.top + band.height * 0.62;
-        tipRect.height = 0;
-        tipRect.bottom = tipRect.top;
-      }
-    } else {
-      tipRect.top = r.bottom - 8;
-      tipRect.height = 0;
-    }
     el.style.display = "block";
     if (overlay && el.parentNode === overlay && global.hyQcfMushaf && global.hyQcfMushaf.toDesignRect) {
-      var dArrow = global.hyQcfMushaf.toDesignRect({
-        left: r.left + r.width / 2,
-        top: tipRect.top,
-        width: 0,
-        height: 0,
-      });
-      var dHl = global.hyQcfMushaf.toDesignRect(r);
-      if (dArrow) {
-        el.style.left = dArrow.left + "px";
-        el.style.top = dArrow.top + "px";
+      var d = global.hyQcfMushaf.toDesignRect(r);
+      if (d) {
+        el.style.left = d.left + d.width / 2 + "px";
+        el.style.top = d.top + d.height * 0.82 + "px";
       }
       var hl = ensureHighlight();
-      if (hl && dHl) {
+      if (hl && d) {
         hl.style.display = "block";
-        hl.style.left = dHl.left + "px";
-        hl.style.top = dHl.top + "px";
-        hl.style.width = Math.max(10, dHl.width) + "px";
-        hl.style.height = Math.max(24, dHl.height) + "px";
+        hl.style.left = d.left + "px";
+        hl.style.top = d.top + "px";
+        hl.style.width = Math.max(8, d.width) + "px";
+        hl.style.height = Math.max(20, d.height) + "px";
       }
     } else {
       el.style.left = r.left + r.width / 2 + "px";
-      el.style.top = tipRect.top + "px";
+      el.style.top = r.top + r.height * 0.82 + "px";
     }
   }
 

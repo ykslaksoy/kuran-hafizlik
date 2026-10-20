@@ -278,6 +278,7 @@ body.hy-qcf-on .hy-native-hide {
   pointer-events: none;
   transform: translate(-50%, 0);
   display: none;
+  line-height: 0;
 }
 
 /* Native React bar is kept for click-through only; dock is the visible player */
