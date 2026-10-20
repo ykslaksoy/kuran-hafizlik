@@ -1,6 +1,6 @@
 /* medine-mushaf-2026-10-19 */
 /* Hafız Yol shell SW — 2026-09-06T09:58:39.416Z */
-const BUILD = 'fatiha4';
+const BUILD = 'qcf1';
 const SHELL = 'hafiz-shell-' + BUILD;
 
 self.addEventListener('install', (event) => {

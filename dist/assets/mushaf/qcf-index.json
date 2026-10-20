@@ -1,0 +1,19 @@
+{
+  "mushaf": "qcf-v2",
+  "pages": 604,
+  "special": [
+    1,
+    2
+  ],
+  "lineCount": 15,
+  "fontBase": "https://verses.quran.foundation/fonts/quran/hafs/v2/woff2",
+  "api": "https://api.qurancdn.com/api/qdc/verses/by_page/{page}?words=true&word_fields=code_v2,text_uthmani,line_number,char_type_name",
+  "baked": [
+    1,
+    2,
+    3,
+    50,
+    604
+  ],
+  "license": "QCF V2 page fonts: King Fahd Glorious Quran Printing Complex (KFGQPC), served by Quran Foundation / quran.com. Page-line-word layout: quran.com QDC / QUL. Hafızyol does not copy Ezan Vakti PNG or assets."
+}

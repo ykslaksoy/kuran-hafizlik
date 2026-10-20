@@ -1,0 +1,310 @@
+/* Locked Medine page: no reflow, no FOUT, scale-only. */
+
+:root {
+  --hy-player-h: 64px;
+  --hy-ink: #141414;
+  --hy-paper: #f6efdc;
+  --hy-gold: #c4a35a;
+  --hy-design-w: 1000px;
+  --hy-design-h: 1610px;
+}
+
+html, body { height: 100%; }
+
+body.hy-kuran {
+  background: #3d3224 !important;
+  overflow: hidden;
+}
+
+body.hy-kuran #root {
+  padding-bottom: var(--hy-player-h);
+  box-sizing: border-box;
+}
+
+/* Native unicode mushaf never paints once QCF owns the page */
+body.hy-qcf-on [id^="hy-row-"],
+body.hy-qcf-on [nativeid^="hy-row-"],
+body.hy-qcf-on [nativeID^="hy-row-"] {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+body.hy-qcf-on .hy-native-hide {
+  display: none !important;
+}
+
+#hy-qcf-host {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #3d3224;
+}
+
+#hy-qcf-fit {
+  position: relative;
+  overflow: hidden;
+}
+
+#hy-qcf-stage {
+  width: 1000px;
+  height: 1610px;
+  position: relative;
+  transform-origin: top left;
+  background: var(--hy-paper);
+  color: var(--hy-ink);
+  contain: strict;
+}
+
+#hy-qcf-stage.hy-waiting #hy-qcf-glyphs {
+  visibility: hidden;
+}
+
+#hy-qcf-wait {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--hy-paper);
+  color: #6b5438;
+  font: 16px/1.3 system-ui, sans-serif;
+  z-index: 3;
+}
+
+#hy-qcf-stage.hy-waiting #hy-qcf-wait { display: flex; }
+
+#hy-qcf-ornament {
+  position: absolute;
+  inset: 18px;
+  border: 4px solid var(--hy-gold);
+  box-shadow:
+    inset 0 0 0 2px #8b6914,
+    inset 0 0 0 8px rgba(196, 163, 90, 0.28),
+    inset 0 0 0 12px #1e4d3d;
+  pointer-events: none;
+}
+
+#hy-qcf-special-frame {
+  display: none;
+  position: absolute;
+  inset: 70px 70px 90px;
+  border: 3px solid rgba(196, 163, 90, 0.65);
+  border-radius: 48% / 10%;
+  background: radial-gradient(ellipse at 50% 50%, #fbf6e8, #f3e6c4 74%, #efe0b2);
+  pointer-events: none;
+}
+
+#hy-qcf-stage.hy-special #hy-qcf-special-frame { display: block; }
+
+#hy-qcf-meta {
+  position: absolute;
+  top: 28px;
+  left: 40px;
+  right: 40px;
+  height: 28px;
+  display: flex;
+  justify-content: space-between;
+  direction: rtl;
+  font: 18px/28px "Scheherazade New", serif;
+  color: #6b5438;
+  pointer-events: none;
+}
+
+#hy-qcf-pagenum {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font: 20px/1 "Scheherazade New", serif;
+  color: #6b5438;
+  pointer-events: none;
+}
+
+/* Fixed 15 line boxes — never wrap, never grow */
+#hy-qcf-glyphs {
+  position: absolute;
+  top: 72px;
+  left: 56px;
+  width: 888px;
+  height: 1470px;
+}
+
+.hy-qcf-linebox {
+  position: absolute;
+  left: 0;
+  width: 888px;
+  height: 98px;
+  display: block;
+  direction: rtl;
+  text-align: justify;
+  text-align-last: justify;
+  text-justify: inter-word;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  line-height: 98px;
+}
+
+#hy-qcf-stage.hy-special .hy-qcf-linebox,
+.hy-qcf-linebox[data-empty="1"],
+.hy-qcf-linebox[data-kind="header"],
+.hy-qcf-linebox[data-kind="bismillah"] {
+  text-align: center;
+  text-align-last: center;
+}
+
+.hy-qcf-linebox[data-empty="1"] {
+  justify-content: center;
+}
+
+.hy-qcf-word,
+.hy-qcf-end,
+.hy-qcf-header,
+.hy-qcf-bismillah {
+  display: inline;
+  color: #141414 !important;
+  white-space: nowrap;
+  font-style: normal;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hy-qcf-word,
+.hy-qcf-end {
+  font-size: 46px;
+  font-synthesis: none;
+  font-variant-ligatures: none;
+}
+
+#hy-qcf-stage.hy-special .hy-qcf-word,
+#hy-qcf-stage.hy-special .hy-qcf-end {
+  font-size: 54px;
+}
+
+.hy-qcf-header {
+  font: 700 34px/1 "UthmanicHafs", "Scheherazade New", serif;
+  color: #f7f1e3 !important;
+  background: #1e4d3d;
+  border: 2px solid #e8d48a;
+  padding: 8px 22px;
+}
+
+#hy-qcf-stage.hy-special .hy-qcf-header {
+  font-size: 40px;
+  padding: 12px 28px;
+}
+
+.hy-qcf-bismillah {
+  font: 28px/1 "UthmanicHafs", "Scheherazade New", serif;
+}
+
+.hy-qcf-margin {
+  position: absolute;
+  left: -36px;
+  font-size: 22px;
+  color: #1b4332;
+  pointer-events: none;
+}
+
+/* Highlight + arrow live in a layer above glyphs and never change text metrics */
+#hy-qcf-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+#hy-qcf-hl {
+  position: absolute;
+  background: #8097ff0a;
+  border-radius: 4px;
+  display: none;
+}
+
+/* Player */
+#hy-player-bar,
+#hy-player-dock {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 99990 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #0f2418 !important;
+  color: #e8f5e9 !important;
+  border-top: 1px solid #2d6a4f !important;
+  min-height: var(--hy-player-h);
+  padding: 6px 8px 8px !important;
+  box-sizing: border-box;
+}
+
+#hy-player-dock .hy-player-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+#hy-player-dock button {
+  background: #1b4332;
+  color: #f1fff4;
+  border: 1px solid #2d6a4f;
+  border-radius: 8px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 7px;
+  font: 600 12px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+#hy-player-dock button.on,
+#hy-player-dock button.hy-play {
+  background: #2d6a4f;
+  border-color: #97ff0a;
+  color: #97ff0a;
+}
+
+#hy-player-dock .hy-player-label {
+  font: 11px/1.2 system-ui, sans-serif;
+  color: #95d5b2;
+  min-width: 64px;
+  text-align: center;
+}
+
+#hy-timing-source {
+  position: fixed !important;
+  right: 8px !important;
+  left: auto !important;
+  bottom: calc(var(--hy-player-h) + 8px) !important;
+  z-index: 99991 !important;
+  width: auto !important;
+  max-width: min(320px, 92vw);
+}
+
+@media (min-width: 860px) {
+  body.hy-kuran .hy-book-frame {
+    width: min(calc((100vh - 96px) * 0.621), 620px) !important;
+    height: calc(100vh - 96px) !important;
+    max-width: 620px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    align-self: center !important;
+  }
+}
+
+@media (max-width: 700px) {
+  :root { --hy-player-h: 72px; }
+  #hy-player-dock button { min-width: 30px; height: 34px; font-size: 11px; }
+}

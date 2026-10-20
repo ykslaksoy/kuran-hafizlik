@@ -277,12 +277,20 @@
   }
 
   function findByNativeId(id) {
+    var qcf = document.querySelector('[data-hy-qcf="' + id.replace(/^hy-l-/, "") + '"]');
+    if (qcf) return qcf;
+    if (id.indexOf("hy-row-") === 0) {
+      var n = id.slice(7);
+      var qrow = document.getElementById("hy-qcf-row-" + n) || document.querySelector('[data-hy-qcf-row="' + n + '"]');
+      if (qrow) return qrow;
+    }
     return (
       document.getElementById(id) ||
       document.querySelector('[id="' + id + '"]') ||
       document.querySelector('[nativeID="' + id + '"]') ||
       document.querySelector('[nativeid="' + id + '"]') ||
-      document.querySelector('[data-nativeid="' + id + '"]')
+      document.querySelector('[data-nativeid="' + id + '"]') ||
+      document.querySelector('[data-hy-qcf="' + id.replace(/^hy-l-/, "") + '"]')
     );
   }
 
@@ -336,11 +344,9 @@
       el.style.display = "none";
       return;
     }
-    var rowNode = active.row != null ? findByNativeId("hy-row-" + active.row) : null;
-    if (!rowNode) {
-      var letterNode = findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + li);
-      rowNode = letterNode && letterNode.closest && letterNode.closest('[id^="hy-row-"]');
-    }
+    var letterNode = findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + li);
+    var rowNode = letterNode && letterNode.closest && (letterNode.closest(".hy-qcf-line") || letterNode.closest('[id^="hy-row-"]'));
+    if (!rowNode && active.row != null) rowNode = findByNativeId("hy-row-" + active.row);
     el.style.display = "block";
     el.style.left = r.left + r.width / 2 + "px";
     // Glyph boxes overflow the 15-line band; pin the tip inside the row, not onto the next ayah.
@@ -374,22 +380,31 @@
     return /kuran/i.test(location.pathname + location.hash + location.search);
   }
 
+  var pickerOpen = false;
+
   function paintPicker() {
     if (!pickerEl) return;
-    var html = '<div class="hy-src-title">Fatiha demo · takip kaynağı</div>';
-    SOURCES.forEach(function (s) {
-      var on = s.id === sourceId;
-      html +=
-        '<button type="button" data-hy-src="' +
-        s.id +
-        '" class="hy-src-btn' +
-        (on ? " on" : "") +
-        '">' +
-        s.label +
-        (on ? " ✓" : "") +
-        "</button>";
-    });
+    var html =
+      '<button type="button" class="hy-src-toggle" data-hy-src-toggle="1">' +
+      (pickerOpen ? "Kaynak ▴" : "Kaynak ▾") +
+      "</button>";
+    if (pickerOpen) {
+      html += '<div class="hy-src-title">Fatiha demo · takip kaynağı</div>';
+      SOURCES.forEach(function (s) {
+        var on = s.id === sourceId;
+        html +=
+          '<button type="button" data-hy-src="' +
+          s.id +
+          '" class="hy-src-btn' +
+          (on ? " on" : "") +
+          '">' +
+          s.label +
+          (on ? " ✓" : "") +
+          "</button>";
+      });
+    }
     pickerEl.innerHTML = html;
+    pickerEl.className = pickerOpen ? "" : "hy-src-collapsed";
     pickerEl.style.display = onKuran() ? "flex" : "none";
   }
 
@@ -403,10 +418,11 @@
       var st = document.createElement("style");
       st.id = "hy-src-style";
       st.textContent =
-        "#hy-timing-source{position:fixed;left:8px;right:8px;bottom:56px;z-index:99998;display:none;flex-wrap:wrap;gap:4px;align-items:center;background:#0f2418f2;color:#e8f5e9;border:1px solid #2e7d32;border-radius:10px;padding:6px 8px;font:11px/1.3 system-ui,sans-serif;box-shadow:0 4px 16px #0006;max-height:28vh;overflow:auto}" +
-        "#hy-timing-source .hy-src-title{width:100%;font-weight:700;color:#97FF0A;font-size:11px}" +
-        "#hy-timing-source .hy-src-btn{background:#1b4332;color:#fff;border:1px solid #2d6a4f;border-radius:8px;padding:4px 7px;cursor:pointer;font-size:11px}" +
-        "#hy-timing-source .hy-src-btn.on{background:#2d6a4f;border-color:#97FF0A;color:#97FF0A;font-weight:700}";
+        "#hy-timing-source{position:fixed;right:8px;bottom:76px;z-index:99991;display:none;flex-direction:column;align-items:flex-end;gap:4px;background:transparent;color:#e8f5e9;border:0;padding:0;font:11px/1.3 system-ui,sans-serif;max-width:min(320px,92vw)}" +
+        "#hy-timing-source .hy-src-title{width:100%;font-weight:700;color:#97FF0A;font-size:11px;background:#0f2418f2;padding:4px 6px;border-radius:6px}" +
+        "#hy-timing-source .hy-src-btn{background:#1b4332;color:#fff;border:1px solid #2d6a4f;border-radius:8px;padding:4px 7px;cursor:pointer;font-size:11px;width:100%;text-align:right}" +
+        "#hy-timing-source .hy-src-btn.on{background:#2d6a4f;border-color:#97FF0A;color:#97FF0A;font-weight:700}" +
+        "#hy-timing-source .hy-src-toggle{background:#1b4332;color:#97FF0A;border:1px solid #2d6a4f;border-radius:8px;padding:4px 8px;cursor:pointer;font:600 11px/1.2 system-ui,sans-serif}";
       document.head.appendChild(st);
     }
     pickerEl = document.getElementById("hy-timing-source");
@@ -416,6 +432,11 @@
       document.body.appendChild(pickerEl);
       pickerEl.addEventListener("click", function (e) {
         var t = e.target;
+        if (t && t.getAttribute && t.getAttribute("data-hy-src-toggle")) {
+          pickerOpen = !pickerOpen;
+          paintPicker();
+          return;
+        }
         var id = t && t.getAttribute && t.getAttribute("data-hy-src");
         if (id) setSource(id);
       });
