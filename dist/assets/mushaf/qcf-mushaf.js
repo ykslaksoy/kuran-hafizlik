@@ -516,6 +516,7 @@
       var el = words[w];
       var loc = map[el.getAttribute("data-hy-qcf-word")];
       if (!loc) continue;
+      el.setAttribute("data-hy-local", loc.ayahIndex + "-" + loc.wordIndex);
       var r = el.getBoundingClientRect();
       var count = letterCount(el.getAttribute("data-uth") || "");
       for (var li = 0; li < count; li++) {
@@ -560,7 +561,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf3";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf4";
       document.head.appendChild(link);
     }
     paint();

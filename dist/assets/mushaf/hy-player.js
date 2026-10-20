@@ -105,6 +105,15 @@
     if (act === "prev-page") clickLabel("Önceki sayfa");
     else if (act === "next-page") clickLabel("Sonraki sayfa");
     else if (act === "play") {
+      var cont = global.hyContinuous;
+      if (cont) {
+        cont.toggle().then(function (state) {
+          playing = state === "playing";
+          btn.textContent = playing ? "❚❚" : "▶";
+          btn.classList.toggle("on", playing);
+        });
+        return;
+      }
       if (!nativePlay()) {
         playing = !playing;
         btn.textContent = playing ? "❚❚" : "▶";
@@ -115,17 +124,24 @@
         btn.textContent = playing ? "❚❚" : "▶";
         btn.classList.toggle("on", playing);
       }
-    } else if (act === "prev-ayah") stepAyah(-1);
-    else if (act === "next-ayah") stepAyah(1);
-    else if (act === "speed") cycleSpeed(btn);
+    } else if (act === "prev-ayah") {
+      if (global.hyContinuous) global.hyContinuous.jump(-1);
+      else stepAyah(-1);
+    } else if (act === "next-ayah") {
+      if (global.hyContinuous) global.hyContinuous.jump(1);
+      else stepAyah(1);
+    } else if (act === "speed") cycleSpeed(btn);
     else if (act === "loop") {
       btn.classList.toggle("on");
+      var on = btn.classList.contains("on");
       try {
-        localStorage.setItem("hyLoop", btn.classList.contains("on") ? "1" : "0");
+        localStorage.setItem("hyLoop", on ? "1" : "0");
       } catch (e2) {}
+      if (global.hyContinuous) global.hyContinuous.setLoop(on);
     } else if (act === "reciter") {
       var i = (currentReciterIndex() + 1) % RECITERS.length;
       setReciter(i);
+      if (global.hyContinuous) global.hyContinuous.setReciter(RECITERS[i].id);
     }
   }
 
@@ -138,6 +154,7 @@
     try {
       localStorage.setItem("hySpeed", String(next));
     } catch (e) {}
+    if (global.hyContinuous) global.hyContinuous.setRate(next);
     var native = document.getElementById("hy-player-bar");
     if (native) {
       var cand = native.querySelectorAll("div,span");
@@ -217,6 +234,15 @@
     if (now && !now.getAttribute("data-key")) now.textContent = "Sayfa " + page;
     var rb = reciterBtn();
     if (rb) rb.textContent = RECITERS[currentReciterIndex()].label;
+    var lb = dock.querySelector('[data-act="loop"]');
+    if (lb) {
+      var on = false;
+      try {
+        on = localStorage.getItem("hyLoop") === "1";
+      } catch (e3) {}
+      lb.classList.toggle("on", on);
+      if (global.hyContinuous) global.hyContinuous.setLoop(on);
+    }
   }
 
   function boot() {
