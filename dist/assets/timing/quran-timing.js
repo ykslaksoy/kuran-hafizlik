@@ -143,9 +143,13 @@
 
   function readStoredSource() {
     try {
-      var s = global.localStorage && localStorage.getItem("hyTimingSource");
-      if (isKnownSource(s)) return s;
+      var q = typeof location !== "undefined" && /[?&]src=([^&]+)/.exec(location.search);
+      if (q && isKnownSource(decodeURIComponent(q[1]))) return decodeURIComponent(q[1]);
     } catch (e) {}
+    try {
+      var s = global.localStorage && localStorage.getItem("hyTimingSource");
+      if (isKnownSource(s) && !sourceMeta(s).demoOnly) return s;
+    } catch (e2) {}
     return "hafizyol";
   }
 
@@ -262,9 +266,9 @@
     arrowEl = document.createElement("div");
     arrowEl.id = "hy-track-arrow";
     arrowEl.setAttribute("aria-hidden", "true");
-    arrowEl.textContent = "\u25B2";
+    arrowEl.innerHTML = '<span style="display:block;font-size:42px;line-height:36px;color:#97FF0A;text-shadow:0 0 10px #14532d,0 2px 0 #052e16">\u25B2</span>';
     arrowEl.style.cssText =
-      "position:fixed;z-index:99999;pointer-events:none;color:#97FF0A;font-size:28px;font-weight:900;line-height:24px;transform:translate(-50%,0);text-shadow:0 1px 0 #0a2a12,0 0 8px #14532d;display:none;";
+      "position:fixed;z-index:99999;pointer-events:none;transform:translate(-50%,0);display:none;";
     document.body.appendChild(arrowEl);
     return arrowEl;
   }
@@ -290,15 +294,37 @@
     return null;
   }
 
+  function textBoxForRow(row) {
+    var line = findByNativeId("hy-row-" + row);
+    if (!line) return null;
+    var nodes = line.querySelectorAll('[id^="hy-l-"], [nativeID^="hy-l-"], [nativeid^="hy-l-"]');
+    var minL = Infinity;
+    var maxR = -Infinity;
+    var bottom = 0;
+    var top = 0;
+    for (var i = 0; i < nodes.length; i++) {
+      var rr = nodes[i].getBoundingClientRect();
+      if (!rr.width && !rr.height) continue;
+      if (rr.left < minL) minL = rr.left;
+      if (rr.right > maxR) maxR = rr.right;
+      bottom = rr.bottom;
+      top = rr.top;
+    }
+    if (!isFinite(minL) || maxR <= minL) return null;
+    return { left: minL, width: maxR - minL, bottom: bottom, top: top, height: bottom - top };
+  }
+
   function placeArrow() {
     if (typeof document === "undefined") return;
     var el = ensureArrow();
-    var id = "hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + active.letterIndex;
-    var r = usableRect(findByNativeId(id));
+    var r = null;
+    var li = active.letterIndex || 0;
+    for (var k = 0; k < 6 && !r; k++) {
+      r = usableRect(findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + (li + k)));
+    }
     if (!r && typeof active.startoffset === "number" && active.row != null) {
-      var line = findByNativeId("hy-row-" + active.row);
-      if (line) {
-        var box = line.getBoundingClientRect();
+      var box = textBoxForRow(active.row);
+      if (box) {
         var mid = (active.startoffset + (typeof active.endoffset === "number" ? active.endoffset : active.startoffset)) / 2;
         r = { left: box.left + mid * box.width, width: 0, bottom: box.bottom, top: box.top, height: box.height };
       }
@@ -309,7 +335,7 @@
     }
     el.style.display = "block";
     el.style.left = r.left + r.width / 2 + "px";
-    el.style.top = r.bottom - 4 + "px";
+    el.style.top = r.bottom - 6 + "px";
   }
 
   function setActive(hit) {
