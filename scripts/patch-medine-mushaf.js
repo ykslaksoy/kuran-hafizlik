@@ -106,7 +106,7 @@ replaceOnce(
 replaceOnce(
   "fixed line wrapper height",
   "style:null!=H?{flexGrow:1,justifyContent:'center'}:void 0",
-  "style:{height:d,minHeight:d,maxHeight:d,justifyContent:'center',overflow:'hidden',position:'relative'}"
+  "nativeID:`hy-row-${s}`,style:{height:d,minHeight:d,maxHeight:d,justifyContent:'center',overflow:'hidden',position:'relative'}"
 );
 replaceOnce(
   "compact serlevha in line slot",
@@ -248,24 +248,29 @@ console.log("wrote", ENTRY_OUT, n, "replacements");
 // Cache bust
 let html = fs.readFileSync(INDEX, "utf8");
 html = html
-  .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-10-19-fatiha1"')
-  .replace(/content="2026-10-19-medine604"/g, 'content="2026-10-19-fatiha1"')
-  .replace(/bust: amentu2/, "bust: fatiha1")
-  .replace(/bust: medine604/, "bust: fatiha1")
-  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha1")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha1")
-  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=fatiha1")
-  .replace(/var bust = 'amentu2';/, "var bust = 'fatiha1';")
-  .replace(/var bust = 'medine604';/, "var bust = 'fatiha1';");
-if (!html.includes("fatiha1")) {
+  .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-10-19-fatiha2"')
+  .replace(/content="2026-10-19-medine604"/g, 'content="2026-10-19-fatiha2"')
+  .replace(/content="2026-10-19-fatiha1"/g, 'content="2026-10-19-fatiha2"')
+  .replace(/bust: amentu2/, "bust: fatiha2")
+  .replace(/bust: medine604/, "bust: fatiha2")
+  .replace(/bust: fatiha1/, "bust: fatiha2")
+  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2")
+  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=fatiha2")
+  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=fatiha2")
+  .replace(/var bust = 'amentu2';/, "var bust = 'fatiha2';")
+  .replace(/var bust = 'medine604';/, "var bust = 'fatiha2';")
+  .replace(/var bust = 'fatiha1';/, "var bust = 'fatiha2';");
+if (!html.includes("fatiha2")) {
   console.error("index.html bust failed");
   process.exit(1);
 }
 // swipe helper for mouse + touch (aria-label edge hits)
 if (!html.includes("quran-timing.js")) {
   html = html.replace(
-    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha1" defer></script>',
-    '<script src="/assets/timing/quran-timing.js?v=fatiha1"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha1" defer></script>'
+    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2" defer></script>',
+    '<script src="/assets/timing/quran-timing.js?v=fatiha2"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2" defer></script>'
   );
 }
 if (!html.includes("hyMedineSwipe")) {
@@ -296,7 +301,7 @@ console.log("patched index.html");
 
 if (fs.existsSync(SW)) {
   let sw = fs.readFileSync(SW, "utf8");
-  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'fatiha1';");
+  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'fatiha2';");
   if (!sw.includes("medine-mushaf-2026-10-19")) {
     sw = "/* medine-mushaf-2026-10-19 */\n" + sw;
   }

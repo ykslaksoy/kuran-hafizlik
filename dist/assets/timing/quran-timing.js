@@ -264,31 +264,52 @@
     arrowEl.setAttribute("aria-hidden", "true");
     arrowEl.textContent = "\u25B2";
     arrowEl.style.cssText =
-      "position:fixed;z-index:99999;pointer-events:none;color:#97FF0A;font-size:18px;font-weight:900;line-height:18px;transform:translate(-50%,0);text-shadow:0 0 4px #0a2a12;display:none;";
+      "position:fixed;z-index:99999;pointer-events:none;color:#97FF0A;font-size:28px;font-weight:900;line-height:24px;transform:translate(-50%,0);text-shadow:0 1px 0 #0a2a12,0 0 8px #14532d;display:none;";
     document.body.appendChild(arrowEl);
     return arrowEl;
+  }
+
+  function findByNativeId(id) {
+    return (
+      document.getElementById(id) ||
+      document.querySelector('[id="' + id + '"]') ||
+      document.querySelector('[nativeID="' + id + '"]') ||
+      document.querySelector('[nativeid="' + id + '"]') ||
+      document.querySelector('[data-nativeid="' + id + '"]')
+    );
+  }
+
+  function usableRect(node) {
+    if (!node) return null;
+    var r = node.getBoundingClientRect();
+    if (r.width || r.height) return r;
+    if (node.firstElementChild) {
+      r = node.firstElementChild.getBoundingClientRect();
+      if (r.width || r.height) return r;
+    }
+    return null;
   }
 
   function placeArrow() {
     if (typeof document === "undefined") return;
     var el = ensureArrow();
     var id = "hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + active.letterIndex;
-    var node =
-      document.getElementById(id) ||
-      document.querySelector('[id="' + id + '"]') ||
-      document.querySelector('[nativeID="' + id + '"]');
-    if (!node) {
-      el.style.display = "none";
-      return;
+    var r = usableRect(findByNativeId(id));
+    if (!r && typeof active.startoffset === "number" && active.row != null) {
+      var line = findByNativeId("hy-row-" + active.row);
+      if (line) {
+        var box = line.getBoundingClientRect();
+        var mid = (active.startoffset + (typeof active.endoffset === "number" ? active.endoffset : active.startoffset)) / 2;
+        r = { left: box.left + mid * box.width, width: 0, bottom: box.bottom, top: box.top, height: box.height };
+      }
     }
-    var r = node.getBoundingClientRect();
-    if (!r.width && !r.height) {
+    if (!r) {
       el.style.display = "none";
       return;
     }
     el.style.display = "block";
     el.style.left = r.left + r.width / 2 + "px";
-    el.style.top = r.bottom - 2 + "px";
+    el.style.top = r.bottom - 4 + "px";
   }
 
   function setActive(hit) {
@@ -296,6 +317,9 @@
     active.ayahIndex = hit.ayahIndex;
     active.wordIndex = hit.wordIndex;
     active.letterIndex = hit.letterIndex || 0;
+    active.row = hit.row;
+    active.startoffset = hit.startoffset;
+    active.endoffset = hit.endoffset;
     placeArrow();
   }
 
