@@ -242,6 +242,7 @@ replaceOnce(
   "onAyahProgress:(a,t,q)=>{if(e!==On.current)return;const n=Un.current;if(!n||n.surah!==a.surah||n.ayah!==a.ayah)return;const hy=window.hyQuranTiming;if(!hy||!hy.hasWordTiming(ot.reciterId))return void hy?.setActive({ayahIndex:n.spans[0].ayahIndex,wordIndex:n.spans[0].wordIndex,letterIndex:0});const hit=hy.atTime(ot.reciterId,a.surah,a.ayah,q,n.spans);if(!hit)return;l(hit.ayahIndex,hit.wordIndex,!1);hy.setActive(hit)}"
 );
 
+src = src.replace(/\/assets\/node_modules\//g, "/assets/vendor/");
 fs.writeFileSync(ENTRY_OUT, src);
 console.log("wrote", ENTRY_OUT, n, "replacements");
 
@@ -250,27 +251,33 @@ let html = fs.readFileSync(INDEX, "utf8");
 html = html
   .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-10-19-fatiha2"')
   .replace(/content="2026-10-19-medine604"/g, 'content="2026-10-19-fatiha2"')
-  .replace(/content="2026-10-19-fatiha1"/g, 'content="2026-10-19-fatiha2"')
-  .replace(/bust: amentu2/, "bust: fatiha2")
-  .replace(/bust: medine604/, "bust: fatiha2")
-  .replace(/bust: fatiha1/, "bust: fatiha2")
-  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2")
-  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=fatiha2")
-  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=fatiha2")
-  .replace(/var bust = 'amentu2';/, "var bust = 'fatiha2';")
-  .replace(/var bust = 'medine604';/, "var bust = 'fatiha2';")
-  .replace(/var bust = 'fatiha1';/, "var bust = 'fatiha2';");
-if (!html.includes("fatiha2")) {
+  .replace(/content="2026-10-19-fatiha1"/g, 'content="2026-10-19-fatiha4"')
+  .replace(/content="2026-10-19-fatiha2"/g, 'content="2026-10-19-fatiha4"')
+  .replace(/bust: amentu2/, "bust: fatiha4")
+  .replace(/bust: medine604/, "bust: fatiha4")
+  .replace(/bust: fatiha1/, "bust: fatiha4")
+  .replace(/bust: fatiha2/, "bust: fatiha4")
+  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
+  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=fatiha4")
+  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=fatiha4")
+  .replace(/quran-timing\.js\?v=fatiha2/g, "quran-timing.js?v=fatiha4")
+  .replace(/quran-timing\.js\?v=fatiha3/g, "quran-timing.js?v=fatiha4")
+  .replace(/var bust = 'amentu2';/, "var bust = 'fatiha4';")
+  .replace(/var bust = 'medine604';/, "var bust = 'fatiha4';")
+  .replace(/var bust = 'fatiha1';/, "var bust = 'fatiha4';")
+  .replace(/var bust = 'fatiha2';/, "var bust = 'fatiha4';");
+if (!html.includes("fatiha4")) {
   console.error("index.html bust failed");
   process.exit(1);
 }
 // swipe helper for mouse + touch (aria-label edge hits)
 if (!html.includes("quran-timing.js")) {
   html = html.replace(
-    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2" defer></script>',
-    '<script src="/assets/timing/quran-timing.js?v=fatiha2"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2" defer></script>'
+    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4" defer></script>',
+    '<script src="/assets/timing/quran-timing.js?v=fatiha4"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4" defer></script>'
   );
 }
 if (!html.includes("hyMedineSwipe")) {
@@ -301,7 +308,7 @@ console.log("patched index.html");
 
 if (fs.existsSync(SW)) {
   let sw = fs.readFileSync(SW, "utf8");
-  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'fatiha2';");
+  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'fatiha4';");
   if (!sw.includes("medine-mushaf-2026-10-19")) {
     sw = "/* medine-mushaf-2026-10-19 */\n" + sw;
   }

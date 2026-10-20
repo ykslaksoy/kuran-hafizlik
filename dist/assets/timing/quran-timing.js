@@ -17,21 +17,21 @@
   var SOURCES = [
     {
       id: "hafizyol",
-      label: "Hafızyol hizalama · harf",
+      label: "Hafızyol hizalama · harf (varsayılan)",
       file: "/assets/timing/positions-hafizyol-fatiha.json",
       level: "letter",
       demoOnly: false,
     },
     {
       id: "qurancom",
-      label: "quran.com / QUL · kelime→harf",
+      label: "quran.com / QUL · kelime→harf · kıyas",
       file: "/assets/timing/positions-qurancom-fatiha.json",
       level: "word",
       demoOnly: true,
     },
     {
       id: "qurancom-word",
-      label: "quran.com / QUL · kelime",
+      label: "quran.com / QUL · kelime · kıyas",
       file: "/assets/timing/positions-qurancom-fatiha.json",
       level: "word-only",
       demoOnly: true,
@@ -149,6 +149,9 @@
     try {
       var s = global.localStorage && localStorage.getItem("hyTimingSource");
       if (isKnownSource(s) && !sourceMeta(s).demoOnly) return s;
+      if (isKnownSource(s) && sourceMeta(s).demoOnly) {
+        localStorage.removeItem("hyTimingSource");
+      }
     } catch (e2) {}
     return "hafizyol";
   }
@@ -266,7 +269,7 @@
     arrowEl = document.createElement("div");
     arrowEl.id = "hy-track-arrow";
     arrowEl.setAttribute("aria-hidden", "true");
-    arrowEl.innerHTML = '<span style="display:block;font-size:42px;line-height:36px;color:#97FF0A;text-shadow:0 0 10px #14532d,0 2px 0 #052e16">\u25B2</span>';
+    arrowEl.innerHTML = '<span style="display:block;font-size:34px;line-height:28px;color:#97FF0A;text-shadow:0 0 8px #14532d,0 2px 0 #052e16">\u25B2</span>';
     arrowEl.style.cssText =
       "position:fixed;z-index:99999;pointer-events:none;transform:translate(-50%,0);display:none;";
     document.body.appendChild(arrowEl);
@@ -333,9 +336,20 @@
       el.style.display = "none";
       return;
     }
+    var rowNode = active.row != null ? findByNativeId("hy-row-" + active.row) : null;
+    if (!rowNode) {
+      var letterNode = findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + li);
+      rowNode = letterNode && letterNode.closest && letterNode.closest('[id^="hy-row-"]');
+    }
     el.style.display = "block";
     el.style.left = r.left + r.width / 2 + "px";
-    el.style.top = r.bottom - 6 + "px";
+    // Glyph boxes overflow the 15-line band; pin the tip inside the row, not onto the next ayah.
+    var tip = r.bottom - 8;
+    if (rowNode) {
+      var band = rowNode.getBoundingClientRect();
+      if (band.height) tip = band.top + band.height * 0.62;
+    }
+    el.style.top = tip + "px";
   }
 
   function setActive(hit) {
@@ -413,9 +427,6 @@
   function boot() {
     sourceId = readStoredSource();
     loadSource(sourceId);
-    SOURCES.forEach(function (s) {
-      if (s.id !== sourceId) loadSource(s.id);
-    });
     ensurePicker();
   }
 

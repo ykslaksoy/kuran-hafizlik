@@ -5,6 +5,10 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/assets/node_modules/:path*",
+      "destination": "/assets/vendor/:path*"
+    },
+    {
       "source": "/((?!_expo/|assets/|favicon.ico|manifest.json|sw.js|metadata.json).*)",
       "destination": "/index.html"
     }
