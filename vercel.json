@@ -9,7 +9,7 @@
       "destination": "/assets/vendor/:path*"
     },
     {
-      "source": "/((?!_expo/|assets/|favicon.ico|manifest.json|sw.js|metadata.json).*)",
+      "source": "/((?!_expo/|assets/|favicon.ico|manifest.json|sw.js|metadata.json|robots\\.txt|kullanim-sartlari|terms-of-use).*)",
       "destination": "/index.html"
     }
   ],

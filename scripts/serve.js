@@ -27,6 +27,7 @@ const TYPES = {
   ".woff": "font/woff",
   ".woff2": "font/woff2",
   ".map": "application/json",
+  ".txt": "text/plain; charset=utf-8",
   ".mp3": "audio/mpeg",
   ".m4a": "audio/mp4",
   ".wav": "audio/wav",
