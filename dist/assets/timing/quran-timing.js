@@ -443,13 +443,20 @@
 
   var pickerOpen = false;
 
+  function pickerHost() {
+    return document.getElementById("hy-src-slot") || document.getElementById("hy-player-dock") || document.body;
+  }
+
   function paintPicker() {
     if (!pickerEl) return;
     var html =
-      '<button type="button" class="hy-src-toggle" data-hy-src-toggle="1">' +
+      '<button type="button" class="hy-src-toggle" data-hy-src-toggle="1" aria-expanded="' +
+      (pickerOpen ? "true" : "false") +
+      '" aria-label="Takip kaynağı">' +
       (pickerOpen ? "Kaynak ▴" : "Kaynak ▾") +
       "</button>";
     if (pickerOpen) {
+      html += '<div class="hy-src-menu" role="menu">';
       html += '<div class="hy-src-title">Fatiha demo · takip kaynağı</div>';
       SOURCES.forEach(function (s) {
         var on = s.id === sourceId;
@@ -458,50 +465,48 @@
           s.id +
           '" class="hy-src-btn' +
           (on ? " on" : "") +
-          '">' +
+          '" role="menuitem">' +
           s.label +
           (on ? " ✓" : "") +
           "</button>";
       });
+      html += "</div>";
     }
     pickerEl.innerHTML = html;
-    pickerEl.className = pickerOpen ? "" : "hy-src-collapsed";
+    pickerEl.className = pickerOpen ? "hy-src-open" : "hy-src-collapsed";
     pickerEl.style.display = onKuran() ? "flex" : "none";
+  }
+
+  function bindPicker() {
+    if (!pickerEl || pickerEl.getAttribute("data-hy-bound")) return;
+    pickerEl.setAttribute("data-hy-bound", "1");
+    pickerEl.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var t = e.target;
+      if (t && t.closest && t.closest("[data-hy-src-toggle]")) {
+        pickerOpen = !pickerOpen;
+        paintPicker();
+        return;
+      }
+      var btn = t && t.closest && t.closest("[data-hy-src]");
+      var id = btn && btn.getAttribute("data-hy-src");
+      if (id) {
+        pickerOpen = false;
+        setSource(id);
+      }
+    });
   }
 
   function ensurePicker() {
     if (typeof document === "undefined") return;
-    if (pickerEl && pickerEl.parentNode) {
-      paintPicker();
-      return pickerEl;
-    }
-    if (!document.getElementById("hy-src-style")) {
-      var st = document.createElement("style");
-      st.id = "hy-src-style";
-      st.textContent =
-        "#hy-timing-source{position:fixed;right:8px;bottom:76px;z-index:99991;display:none;flex-direction:column;align-items:flex-end;gap:4px;background:transparent;color:#e8f5e9;border:0;padding:0;font:11px/1.3 system-ui,sans-serif;max-width:min(320px,92vw)}" +
-        "#hy-timing-source .hy-src-title{width:100%;font-weight:700;color:#97FF0A;font-size:11px;background:#0f2418f2;padding:4px 6px;border-radius:6px}" +
-        "#hy-timing-source .hy-src-btn{background:#1b4332;color:#fff;border:1px solid #2d6a4f;border-radius:8px;padding:4px 7px;cursor:pointer;font-size:11px;width:100%;text-align:right}" +
-        "#hy-timing-source .hy-src-btn.on{background:#2d6a4f;border-color:#97FF0A;color:#97FF0A;font-weight:700}" +
-        "#hy-timing-source .hy-src-toggle{background:#1b4332;color:#97FF0A;border:1px solid #2d6a4f;border-radius:8px;padding:4px 8px;cursor:pointer;font:600 11px/1.2 system-ui,sans-serif}";
-      document.head.appendChild(st);
-    }
+    var host = pickerHost();
     pickerEl = document.getElementById("hy-timing-source");
     if (!pickerEl) {
       pickerEl = document.createElement("div");
       pickerEl.id = "hy-timing-source";
-      document.body.appendChild(pickerEl);
-      pickerEl.addEventListener("click", function (e) {
-        var t = e.target;
-        if (t && t.getAttribute && t.getAttribute("data-hy-src-toggle")) {
-          pickerOpen = !pickerOpen;
-          paintPicker();
-          return;
-        }
-        var id = t && t.getAttribute && t.getAttribute("data-hy-src");
-        if (id) setSource(id);
-      });
     }
+    if (pickerEl.parentNode !== host) host.appendChild(pickerEl);
+    bindPicker();
     paintPicker();
     return pickerEl;
   }
@@ -522,9 +527,18 @@
     window.addEventListener("popstate", paintPicker);
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
     else boot();
+    document.addEventListener("click", function (e) {
+      if (!pickerOpen || !pickerEl) return;
+      if (e.target && pickerEl.contains(e.target)) return;
+      pickerOpen = false;
+      paintPicker();
+    });
     setInterval(function () {
-      if (pickerEl && onKuran() && pickerEl.style.display === "none") paintPicker();
-      if (pickerEl && !onKuran() && pickerEl.style.display !== "none") pickerEl.style.display = "none";
+      if (!onKuran()) {
+        if (pickerEl && pickerEl.style.display !== "none") pickerEl.style.display = "none";
+        return;
+      }
+      ensurePicker();
     }, 800);
   }
 

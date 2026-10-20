@@ -560,7 +560,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf2";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf3";
       document.head.appendChild(link);
     }
     paint();

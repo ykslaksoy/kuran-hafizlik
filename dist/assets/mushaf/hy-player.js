@@ -62,6 +62,7 @@
       '<button type="button" data-act="loop" title="Tekrar" aria-label="Tekrar">↺</button>' +
       '<button type="button" data-act="speed" title="Hız" aria-label="Hız">1.0x</button>' +
       '<span class="hy-player-label" id="hy-player-now">Fatiha</span>' +
+      '<span class="hy-src-slot" id="hy-src-slot"></span>' +
       "</div>";
     dock.addEventListener("click", onClick);
     return dock;
