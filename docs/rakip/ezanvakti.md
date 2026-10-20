@@ -64,6 +64,85 @@ Play Store’daki “MushafActivity” adı analitik/navigasyon string’i; ası
   - `StartOffset` / `EndOffset` → satır içi yatay oran (0–1)
   - `Sayfa`, `Sure`, `Ayet`, `Cuz`, `Hizb`
 
+### 3.3 Mushaf kaynağı (Diyanet / MÜİFV / Medine — doğrulanmış bulgular)
+
+Bu bölüm, Hafızyol’un **MÜİFV** veya **Diyanet hafız boy (ayet berkenar, 15 satır)** hedefi için kaynak ve telif özetidir. **Uydurma yok:** yalnızca APK/CDN, `quran.db3`, font metadata ve resmi/kurumsal açıklamalar.
+
+#### Ezan Vakti ne kullanıyor?
+
+| Katman | Kaynak | Kanıt |
+|--------|--------|--------|
+| Sayfa PNG/SVG | `download.ezanvaktipro.com/kuran/v4/{320…1920}.zip`, `svg.zip` | `cr.d`, `UpdateKuranService`; zip içi `1.png`…`604.png` (dosya tarihi ör. **2019-05-17**) |
+| Sayfa–ayet haritası | `quranv4.zip` → `quran.db3` | `ayetler.Sayfa`, `Sira`, `Cuz`, … |
+| Metin modu font | APK `res/font/*.ttf` | FontTools `name` tablosu (KFGQPC adı **yok**) |
+
+**Font adları (APK, doğrulanmış):**
+
+| Dosya | PostScript / aile adı | KFGQPC / Diyanet resmi font? |
+|-------|------------------------|------------------------------|
+| `maviaykuran.ttf` | **Maviay Kuran** (© Maviay) | Hayır — üçüncü taraf |
+| `q.ttf` | **KalemMacit** | Hayır |
+| `ag.ttf` | **Maviay Quran** SemiBold | Hayır |
+| `kk.ttf` | **FF_Quran** | Hayır |
+
+PNG/SVG paketlerinde **EXIF/künye yok** (yalnızca 8-bit palette PNG); telif veya “Diyanet / MÜİFV / KFGQPC” metni **dosya içinde bulunamadı**.
+
+#### Sayfa düzeni: Türkiye ayet berkenar mı, Medine mi?
+
+`quran.db3` (`positionsV21` ile aynı ayet kimlikleri) üzerinden ölçülenler:
+
+| Ölçüt | Ezan Vakti verisi | Diyanet hafız boy (resmi kriter) | KFGQPC Medine (604) | MÜİFV hafız boy (yayın metadata) |
+|--------|-------------------|----------------------------------|---------------------|----------------------------------|
+| Mushaf sayfa sayısı (görsel `1…604`) | **604** PNG | **604** (`yayinsatis.diyanet.gov.tr` hafız boy ürün) | **604** | **624** (ör. ISBN 9789755482439 — satıcı sayfa sayısı) |
+| `Sayfa` alanı aralığı | **0–604** (605 değer; 0 = Fâtiha) | — | — | — |
+| Bakara başlangıcı | `Sayfa=1` → **2:1–2:5**; `Sayfa=2` → 2:6… | Türk mushaf geleneği: 1. mushaf sayfasında Bakara’nın ilk ayetleri sık görülür | **Sayfa 2** farklı satır/ornament düzeni | **Belirsiz** (dijital sayfa eşlemesi doğrulanmadı) |
+| Fâtiha | `Sayfa=0` (7 ayet) | — | Sayfa 1’de Fâtiha (+ Bakara başı) tipik | — |
+| 15 satır grid (UI) | `pageHeight / 15` (`ar.s.e1`) | Yönetmelik: **15 satır** | Sabit 15 satır değil | — |
+| `Sira`/`SiraSayisi` ile satır | `MAX(Sira+SiraSayisi-1)` çoğu sayfada **14** (583/605 sayfa) | 15 satır baskı kuralı | Farklı tipografi | — |
+| Çok sureli sayfa | **55** sayfa | Ayet berkenar’da nadir | Medine’de daha sık | — |
+
+**Görsel karşılaştırma (iç inceleme, repoda değil):** CDN `1920.zip` sayfa **1** ile quran-ws **KFGQPC** `hafs/kfqc` SVG raster karşılaştırmasında EV sayfası **Türk mushaf süslemesi** (sure başlığı bandı, alt şemse, Bakara 1–5, kırmızı tecvid); Medine sayfası **farklı çerçeve ve satır kırılımı**. Örnek dosyalar: `/opt/cursor/artifacts/ezanvakti-mushaf-compare/hires/compare-page-001.png` (ve `002`, `003`, `050`, `604`).
+
+**Sonuç (kanıt düzeyi):**
+
+- Ezan Vakti sayfaları **KFGQPC Medine baskı dosyası değil** (font, ornament, sayfa 1 içeriği, Medine SVG ile piksel düzeyi fark).
+- **604 sayfa + Bakara 1. sayfada 2:1–2:5** ve Türk hat estetiği, **Diyanet/Marmara çizgisindeki Türkiye mushaf geleneği** ile uyumlu; ancak APK/CDN’de **“Diyanet” veya “MÜİFV” künyesi yok** → **resmi baskının aynısı olduğu doğrulanamaz** (muhtemel: özel dizgi / Maviay hat + Türkiye sayfa kırılımı).
+- **MÜİFV hafız boy 624 sayfa** olduğu için EV **604 sayfalık paket**, satışa sunulan MÜİFV hafız boy **sayfa sayımıyla örtüşmüyor** (rahle 604 sayfalık MÜİFV ürünü ayrı ISBN ile var — karışık boylar).
+
+#### (1) Dijital kaynak envanteri
+
+| Kaynak | Sayfa görüntüsü | PDF | Vektör/font | Sayfa–satır–ayet koordinat | Hafızyol için not |
+|--------|-----------------|-----|-------------|----------------------------|-------------------|
+| **kuran.diyanet.gov.tr** (Kur’an Portalı) | Web mushaf görüntüleyici (`/mushaf/`) | Portal üzerinden; toplu indirme şartları siteye bağlı | Resmi mushaf hattı (portal); **API ile üçüncü taraf ürün yasak** | Portal içi; **açık koordinat DB’si kamuya açık değil** | İzinsiz scrape **yapılmamalı** |
+| **acikkaynakkuran.diyanet.gov.tr** | Geliştirici API (yalnızca o proje) | — | — | — | Açık kaynak **kod** var; içerik **bağımsız uygulamada kullanılamaz** ([developers bilgilendirme](https://acikkaynakkuran.diyanet.gov.tr/developers)) |
+| **github.com/diyanet-bid/Kuran** | Repoda mushaf PNG **yok** (placeholder) | — | — | Backend API token ile | Katkı amaçlı; **Hafızyol veri kaynağı değil** |
+| **yayinsatis.diyanet.gov.tr** | — | **Basılı** hafız boy (604 sayfa, 130×200 mm) | Basılı mushaf hattı | — | Dijital yeniden yayın = **Kurul onayı** gerekir |
+| **MÜİFV / ilahiyatvakfi.com** | Kamuya açık HD sayfa paketi **bulunamadı** | Fiziksel mushaf (624/604 sayfa ürüne göre) | Hat: Muhammed Abay vb. (ürün sayfası) | — | **iletisim@marmarailahiyatvakfi.org** |
+| **quran-ws/quran-svg** (`hafs/kfqc`) | SVG 604 sayfa + ayet poligonları | — | KFGQPC sanatı (yayıncı şartları NOTICE’da) | JSON metadata **CC BY 4.0** | **Medine** için uygun; **Diyanet/MÜİFV değil** |
+| **mushafdatabase** (Medine ligature SVG) | 604 SVG | — | KFGQPC kaynaklı (README) | `data-*` kelime/satır | Medine; geniş **kullanım izni** (README) ama baskı ≠ Türkiye mushaf |
+| **Ezan Vakti CDN** | 604 PNG + `svg.zip` | — | `maviaykuran` vb. | `quran.db3` + `positions.db_` | Rakip veri; **telif/iş modeli belirsiz**, Hafızyol için **kaynak olarak önerilmez** |
+
+#### (2) Telif ve izin (özet)
+
+- **633 sayılı kanun + Kur’an-ı Kerim Basım ve Yayım Kriterleri Yönetmeliği:** Basılı mushaf **mühür**, dijital eser **Kurul onayı**; ayet berkenar, **15 satır**, son sayfa **604** (mealsiz mushaf) ([mevzuat.gov.tr yönetmelik](https://www.mevzuat.gov.tr/MevzuatMetin/yonetmelik/7.5.39802.pdf)).
+- **Diyanet açık kaynak geliştirici sayfası:** Kur’an içeriklerinin üçüncü kişilere **toplu aktarımı / kaynak dosya temini talepleri karşılanmıyor**; API yalnızca `diyanet-bid/Kuran` katkısı için ([acikkaynakkuran developers](https://acikkaynakkuran.diyanet.gov.tr/developers)).
+- **Başvuru / izin mercii:**
+  - **Mushafları İnceleme ve Kıraat Kurulu:** [mushaflariinceleme.diyanet.gov.tr/iletisim](https://mushaflariinceleme.diyanet.gov.tr/iletisim) — tel. (0312) 295 79 30/31, **strateji@diyanet.gov.tr**
+  - Dijital yayın / mobil: **mobilhizmetler@diyanet.gov.tr** (Diyanet iletişim rehberi)
+  - Basılı yayın / lisans: **dosim@diyanet.gov.tr**, **diniyayinlar@diyanet.gov.tr**
+  - **MÜİFV:** **iletisim@marmarailahiyatvakfi.org**, +90 216 651 15 06
+- **kuran.diyanet.gov.tr** ve ticari satış sitelerinden **otomatik çekme**, kullanım koşulları izin vermediği sürece **yapılmamalı**.
+
+#### (3) Hafızyol için en temiz yol
+
+1. **Hangi mushaf?** Tek ürün seçin: **Diyanet bilgisayar dizgili hafız boy (604)** *veya* **MÜİFV** (sayfa sayısı 624/604 — ürün SKU’suna göre netleştirin). İkisini aynı `Sayfa` indeksinde birleştirmeyin.
+2. **Yasal zemin:** Seçilen baskının yayıncısından **yazılı lisans** (görsel yeniden yayın + uygulama dağıtımı + türev veri). Diyanet hatları için **Kurul onayı** sürecini planlayın (dijital eser başvurusu — yönetmelik md. 7).
+3. **Sayfa görselleri:** Lisanslı **baskı PDF’i veya yayıncının sağladığı B/W veya renkli plate dosyaları** → 604 (veya 624) sayfa, çoklu çözünürlük (ör. 1920 px genişlik). CDN’den veya rakip APK’dan kopyalama **önerilmez**.
+4. **Metin + grid:** Lisanslı ayet metni + sayfa/satır metadata (`Sayfa`, `Sira`, `StartOffset`/`EndOffset`) — Diyanet onaylı dizgiden veya yayıncı veritabanından.
+5. **Ok / harf takibi:** Ezan Vakti modeli — `positions{reciter}` benzeri tablo: `row`, `startoffset`/`endoffset`, `location`/`lenght`, `duration` + `audioparts`; üretim **forced alignment** (seçilen kâri MP3 + lisanslı metin). Koordinatlar **Medine SVG’den kopyalanamaz** (sayfa kırılımı farklı).
+
+**Örnek görseller (Diyanet / MÜİFV resmi):** Kamuya açık, yeniden dağıtım izni doğrulanmış **HD sayfa arşivi bulunamadı**; bu nedenle artifacts’a **resmi Diyanet/MÜİFV taraması eklenmedi**. Karşılaştırma için yalnızca EV CDN ↔ KFGQPC (quran-ws) dosyaları: `/opt/cursor/artifacts/ezanvakti-mushaf-compare/hires/`.
+
 ---
 
 ## 4. Aktif ayet vurgusu (renk)
