@@ -38,12 +38,22 @@ body.hy-frame-preview #hy-qcf-host {
   inset: 0 !important;
 }
 
-body.hy-frame-preview .hy-book-frame {
+body.hy-frame-preview .hy-book-frame,
+body.hy-frame-preview #hy-qcf-host,
+body.hy-frame-preview #hy-qcf-fit {
   width: 100% !important;
   height: 100% !important;
   max-width: none !important;
   margin: 0 !important;
   align-self: stretch !important;
+}
+
+@media (min-width: 860px) {
+  body.hy-frame-preview.hy-kuran .hy-book-frame {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+  }
 }
 
 /* ——— Ortak: kahverengi dış dolgu yok ——— */
