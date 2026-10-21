@@ -1,0 +1,15 @@
+{
+  "editionId": "diyanet-hafizboy-604",
+  "status": "permission_required",
+  "pages": 604,
+  "lineCount": 15,
+  "pageAssets": null,
+  "pageManifest": null,
+  "coordinateSchema": "hy-page-line-word-v1",
+  "blocker": "Kamuya açık, yeniden dağıtıma uygun Diyanet hafız boy sayfa paketi bulunamadı. acikkaynakkuran.diyanet.gov.tr üçüncü taraf uygulamada toplu kullanıma izin vermez.",
+  "nextSteps": [
+    "Diyanet Kurul başvurusu (mushaflar@diyanet.gov.tr)",
+    "Onaylı sayfa görüntüleri veya hat fontu + sayfa kırılım metadata",
+    "Hafızyol build pipeline: scripts/import-mushaf-edition.js (henüz yok)"
+  ]
+}

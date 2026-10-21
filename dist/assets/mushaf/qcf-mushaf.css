@@ -166,6 +166,19 @@ body.hy-style-tezhip #hy-qcf-host {
   font-weight: 600;
 }
 
+#hy-qcf-source.hy-qcf-source {
+  flex: 0 0 auto;
+  padding: 2px 12px 4px;
+  font: 500 10px/1.2 "Literata", "Georgia", serif;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #3d5c45;
+  background: rgba(45, 106, 79, 0.08);
+  border-bottom: 1px solid rgba(45, 106, 79, 0.18);
+  pointer-events: none;
+  z-index: 6;
+}
+
 #hy-qcf-scroll {
   flex: 1 1 auto;
   min-height: 0;

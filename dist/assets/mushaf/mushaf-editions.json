@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "activeEditionId": "medine604-qcf",
+  "editions": [
+    {
+      "id": "medine604-qcf",
+      "status": "active",
+      "nameTr": "Medine Mushafı (Hafs)",
+      "shortLabelTr": "Basılı mushaf · KFGQPC Medine 604",
+      "publisherTr": "King Fahd Glorious Quran Printing Complex (Medine)",
+      "riwayah": "Hafs an Asim",
+      "pages": 604,
+      "linesPerPage": 15,
+      "render": {
+        "kind": "qcf-page-font",
+        "fontFamily": "KFGQPC QCF V2",
+        "layoutApi": "quran.com QDC / QUL",
+        "index": "/assets/mushaf/qcf-index.json"
+      },
+      "licenseTr": "QCF sayfa fontları KFGQPC; satır–kelime düzeni Quran Foundation / quran.com. Hafızyol Ezan Vakti PNG veya sayfa görüntüsü kullanmaz.",
+      "notesTr": "Türkiye’deki Diyanet hafız boy ile sayfa kırılımı farklı olabilir; basılı Medine mushaf ile uyumlu."
+    },
+    {
+      "id": "diyanet-hafizboy-604",
+      "status": "permission_required",
+      "nameTr": "Diyanet hafız boy Mushaf-ı Şerif",
+      "shortLabelTr": "Diyanet 604 (izin bekleniyor)",
+      "publisherTr": "Diyanet İşleri Başkanlığı",
+      "riwayah": "Hafs",
+      "pages": 604,
+      "linesPerPage": 15,
+      "render": {
+        "kind": "pending",
+        "manifest": "/assets/mushaf/editions/diyanet-hafizboy-604.manifest.json"
+      },
+      "licenseTr": "Yazılı izin ve Mushafları İnceleme ve Kıraat Kurulu onayı gerekir.",
+      "notesTr": "Taslak başvuru: docs/diyanet-izin-taslagi.md (gönderilmedi)."
+    },
+    {
+      "id": "marmara-muifv-hafizboy",
+      "status": "permission_required",
+      "nameTr": "Marmara İlahiyat Vakfı hafız boy",
+      "shortLabelTr": "MÜİFV (izin bekleniyor)",
+      "publisherTr": "Marmara İlahiyat Vakfı",
+      "riwayah": "Hafs",
+      "pages": null,
+      "linesPerPage": 15,
+      "render": {
+        "kind": "pending",
+        "manifest": "/assets/mushaf/editions/marmara-muifv-hafizboy.manifest.json"
+      },
+      "licenseTr": "Yayıncıdan ayrı yazılı lisans gerekir.",
+      "notesTr": "SKU’ya göre 604 veya 624 sayfa; Diyanet mektubundan bağımsız başvuru."
+    }
+  ]
+}
