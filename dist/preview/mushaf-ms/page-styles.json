@@ -1,0 +1,39 @@
+{
+  "styles": [
+    {
+      "id": "mushaf-kadiasker-izzet",
+      "labelTr": "Kadıasker Mustafa İzzet (el yazması)",
+      "kind": "manuscript",
+      "ms": "kadiasker-izzet-gart",
+      "license": "Public domain (Commons PD-Art)"
+    },
+    {
+      "id": "mushaf-mehmed-sevki",
+      "labelTr": "Mehmed Şevki Efendi (el yazması)",
+      "kind": "manuscript",
+      "ms": "mehmed-sevki-gart",
+      "license": "Public domain (Commons PD-Art)"
+    },
+    {
+      "id": "mushaf-hamdullah-w6722",
+      "labelTr": "Şeyh Hamdullah — Walters W6722",
+      "kind": "manuscript",
+      "ms": "walters-w6722",
+      "license": "Public domain (Walters OA / Commons)"
+    },
+    {
+      "id": "mushaf-hamdullah-w6724",
+      "labelTr": "Şeyh Hamdullah — Walters W6724",
+      "kind": "manuscript",
+      "ms": "walters-w6724",
+      "license": "Public domain (Walters OA / Commons)"
+    },
+    {
+      "id": "mushaf-ezan-sade",
+      "labelTr": "Sade (Ezan Vakti sadeliği)",
+      "kind": "vector",
+      "preview": "/preview/mushaf-frames/index.html?alt=D",
+      "license": "Özgün SVG/CSS (Hafızyol)"
+    }
+  ]
+}
