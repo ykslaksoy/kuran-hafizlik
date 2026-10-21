@@ -77,7 +77,17 @@ async function inspect(page) {
       hits: document.querySelectorAll("#hy-qcf-overlay [data-hy-qcf]").length,
       roseBg: roses[0] ? roses[0].slice(0, 90) : "",
       roses: roses.length,
-      ayahNums: document.querySelectorAll(".hy-qcf-ayah-n").length,
+      ayahNums: Array.prototype.map.call(document.querySelectorAll(".hy-qcf-ayah-n"), (n) => n.getAttribute("data-ayah") + ":" + (n.textContent || "")),
+      headerTop: (function () {
+        const box = document.querySelector('.hy-qcf-linebox[data-kind="header"]');
+        return box ? box.style.top : "";
+      })(),
+      firstTextTop: (function () {
+        const box = document.querySelector('.hy-qcf-linebox[data-kind="text"]');
+        return box ? box.style.top : "";
+      })(),
+      headerFont: hs && hs.fontSize,
+      allahUth: Array.prototype.map.call(document.querySelectorAll(".hy-qcf-allah"), (n) => n.getAttribute("data-uth") || ""),
       allah: document.querySelectorAll(".hy-qcf-allah").length,
       allahOn: document.body.classList.contains("hy-allah-on"),
       finial: !!(fin && fin.classList.contains("hy-on") && getComputedStyle(fin).display !== "none"),

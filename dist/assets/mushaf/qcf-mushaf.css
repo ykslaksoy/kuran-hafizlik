@@ -253,22 +253,22 @@ body.hy-style-sade #hy-qcf-pagenum {
 body.hy-style-sade .hy-qcf-end {
   color: transparent !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/ayah-rose-sade.svg?v=qcf11") !important;
+  background-image: url("/assets/mushaf/ayah-rose-sade.svg?v=qcf13") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  background-size: 1.18em 1.18em !important;
+  background-size: 1.42em 1.42em !important;
 }
 
 body.hy-style-sade .hy-qcf-header {
   flex-direction: column;
-  width: 860px;
+  width: 888px;
   max-width: 100%;
-  height: 96px;
-  padding: 4px 72px 6px;
-  gap: 1px;
+  height: 152px;
+  padding: 14px 96px 16px;
+  gap: 6px;
   color: #2c2418 !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/sade-header.svg?v=qcf11") !important;
+  background-image: url("/assets/mushaf/sade-header.svg?v=qcf13") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -277,20 +277,25 @@ body.hy-style-sade .hy-qcf-header {
 }
 
 body.hy-style-sade #hy-qcf-stage.hy-special .hy-qcf-header {
-  font-size: 40px;
-  padding: 4px 72px 6px;
+  font-size: 68px;
+  padding: 14px 96px 16px;
   box-shadow: none;
 }
 
-body.hy-style-sade .hy-qcf-linebox[data-kind="header"] {
+body.hy-style-sade .hy-qcf-linebox[data-kind="header"],
+body.hy-style-altin .hy-qcf-linebox[data-kind="header"] {
+  height: 152px;
   overflow: visible;
 }
 
-body.hy-style-sade .hy-qcf-ayah-n {
+body.hy-style-sade .hy-qcf-ayah-n,
+body.hy-style-altin .hy-qcf-ayah-n {
   display: flex;
-  color: #fff8ee;
-  font: 700 0.28em/1 "Scheherazade New", "Noto Naskh Arabic", serif;
-  text-shadow: 0 0 1px #7a3a0a;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font: 800 0.78em/1 "Noto Naskh Arabic", "Scheherazade New", system-ui, serif;
+  text-shadow: 0 0 1px #2a1a08, 0 1px 0 #2a1a08;
 }
 
 body.hy-style-tezhip .hy-qcf-ayah-n,
@@ -329,22 +334,22 @@ body.hy-style-altin #hy-qcf-finial {
 body.hy-style-altin .hy-qcf-end {
   color: transparent !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/ayah-rose-altin.svg?v=qcf11") !important;
+  background-image: url("/assets/mushaf/ayah-rose-altin.svg?v=qcf13") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  background-size: 1.18em 1.18em !important;
+  background-size: 1.42em 1.42em !important;
 }
 
 body.hy-style-altin .hy-qcf-header {
   flex-direction: column;
-  width: 860px;
+  width: 888px;
   max-width: 100%;
-  height: 96px;
-  padding: 4px 72px 6px;
-  gap: 1px;
+  height: 152px;
+  padding: 14px 96px 16px;
+  gap: 6px;
   color: #2c2418 !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/sade-header-altin.svg?v=qcf11") !important;
+  background-image: url("/assets/mushaf/sade-header-altin.svg?v=qcf13") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -353,20 +358,9 @@ body.hy-style-altin .hy-qcf-header {
 }
 
 body.hy-style-altin #hy-qcf-stage.hy-special .hy-qcf-header {
-  font-size: 40px;
-  padding: 4px 72px 6px;
+  font-size: 68px;
+  padding: 14px 96px 16px;
   box-shadow: none;
-}
-
-body.hy-style-altin .hy-qcf-linebox[data-kind="header"] {
-  overflow: visible;
-}
-
-body.hy-style-altin .hy-qcf-ayah-n {
-  display: flex;
-  color: #fff8ee;
-  font: 700 0.28em/1 "Scheherazade New", "Noto Naskh Arabic", serif;
-  text-shadow: 0 0 1px #4A360C;
 }
 
 body.hy-kuran.hy-allah-on #hy-qcf-glyphs .hy-qcf-word.hy-qcf-allah {
@@ -520,10 +514,20 @@ body.hy-kuran.hy-allah-on #hy-qcf-glyphs .hy-qcf-word.hy-qcf-allah {
 
 .hy-qcf-header-meta {
   display: block;
-  font: 400 15px/1.1 "Scheherazade New", "Amiri", serif;
+  font: 400 22px/1.1 "Scheherazade New", "Amiri", serif;
   color: #6a5340;
   letter-spacing: 0.03em;
   pointer-events: none;
+}
+
+body.hy-style-sade .hy-qcf-ayah-n-2,
+body.hy-style-altin .hy-qcf-ayah-n-2 {
+  font-size: 0.62em;
+}
+
+body.hy-style-sade .hy-qcf-ayah-n-3,
+body.hy-style-altin .hy-qcf-ayah-n-3 {
+  font-size: 0.48em;
 }
 
 #hy-qcf-stage.hy-special .hy-qcf-word,

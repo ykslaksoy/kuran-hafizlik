@@ -327,8 +327,8 @@
 
   function isAllahUth(uth) {
     var t = stripUth(uth);
-    if (t === "الله" || t === "لله" || t === "الرحمن" || t === "الرحيم") return true;
-    if (/^(و|ب|ت|ف|ل)الله$/.test(t)) return true;
+    if (t === "الله" || t === "لله") return true;
+    if (/^(و|ب|ت|ف)الله$/.test(t)) return true;
     if (/^(و|ف)لله$/.test(t)) return true;
     return false;
   }
@@ -588,6 +588,10 @@
     return null;
   }
 
+  function headerPad() {
+    return pageStyle === "tezhip" ? 18 : 68;
+  }
+
   function packSpecialTops(data, headers) {
     if (!data || data.page > 2) return null;
     var items = [];
@@ -595,19 +599,41 @@
       if (headers[n] || lineByN(data, n)) items.push(n);
     }
     if (!items.length) return null;
+    var pad = headerPad();
     var extra = 0;
-    for (var i = 0; i < items.length; i++) if (headers[items[i]]) extra += 18;
+    for (var i = 0; i < items.length; i++) {
+      if (headers[items[i]] && headers[items[i]].kind === "header") extra += pad;
+    }
     var block = items.length * LINE_H + extra;
-    var start = Math.round((1470 - block) / 2);
-    if (start < 36) start = 36;
+    var start;
+    if (data.page <= 2 && pageStyle !== "tezhip") start = 28;
+    else {
+      start = Math.round((1470 - block) / 2);
+      if (start < 28) start = 28;
+    }
     var tops = {};
     var y = start;
     for (var j = 0; j < items.length; j++) {
       tops[items[j]] = y;
       y += LINE_H;
-      if (headers[items[j]]) y += 18;
+      if (headers[items[j]] && headers[items[j]].kind === "header") y += pad;
     }
     return tops;
+  }
+
+  function applySpecialTops(data) {
+    data = data || paintedData;
+    if (!data) return;
+    var headers = headerAtMap(data);
+    var tops = packSpecialTops(data, headers);
+    if (!tops) return;
+    var boxes = document.querySelectorAll("#hy-qcf-glyphs .hy-qcf-linebox");
+    for (var i = 0; i < boxes.length; i++) {
+      var n = boxes[i].getAttribute("data-hy-qcf-row");
+      if (tops[n] != null) boxes[i].style.top = tops[n] + "px";
+    }
+    placeFinial(data);
+    placeHits(data);
   }
 
   function surahNameTr(id) {
@@ -697,7 +723,7 @@
     var orn = document.getElementById("hy-qcf-ornament");
     if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
     orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf11")
+    fetch("/assets/mushaf/tezhip.svg?v=qcf13")
       .then(function (r) {
         return r.ok ? r.text() : "";
       })
@@ -766,7 +792,7 @@
     var btn = document.getElementById("hy-style-btn");
     if (btn) btn.textContent = styleLabel(pageStyle);
     applyAllah(readAllah());
-    if (paintedData) placeFinial(paintedData);
+    if (paintedData) applySpecialTops(paintedData);
   }
 
   function setStyle(style) {
@@ -801,7 +827,7 @@
     fin.setAttribute("aria-hidden", "true");
     var top = lastTop + LINE_H + Math.max(8, Math.min(36, (room - 220) / 2));
     fin.style.top = top + "px";
-    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=qcf11" alt="" width="168" height="214" />';
+    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=qcf13" alt="" width="168" height="214" />';
     glyphs.appendChild(fin);
   }
 
@@ -931,7 +957,11 @@
             esc(w.code);
           if (w.type === "end") {
             html +=
-              '<span class="hy-qcf-ayah-n" aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none">' +
+              '<span class="hy-qcf-ayah-n hy-qcf-ayah-n-' +
+              String(w.ayah).length +
+              '" data-ayah="' +
+              w.ayah +
+              '" aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none">' +
               toIndic(w.ayah) +
               "</span>";
           }
@@ -1113,7 +1143,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf11";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf13";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
