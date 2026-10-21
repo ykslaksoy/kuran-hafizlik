@@ -548,28 +548,47 @@
       host.id = "hy-qcf-host";
       host.innerHTML =
         '<div id="hy-qcf-fit"><div id="hy-qcf-stage" class="hy-waiting">' +
-        '<div id="hy-qcf-ornament"></div>' +
-        '<div id="hy-qcf-special-frame"></div>' +
+        '<div id="hy-qcf-ornament" aria-hidden="true"></div>' +
+        '<div id="hy-qcf-special-frame" aria-hidden="true"></div>' +
         '<div id="hy-qcf-meta"></div>' +
         '<div id="hy-qcf-glyphs"></div>' +
         '<div id="hy-qcf-overlay"><div id="hy-qcf-hl"></div></div>' +
         '<div id="hy-qcf-pagenum"></div>' +
         '<div id="hy-qcf-wait">Sayfa hattı yükleniyor</div>' +
         "</div></div>";
-      frame.appendChild(host);
-    } else if (host.parentElement !== frame) {
-      frame.appendChild(host);
+      document.body.appendChild(host);
+      injectTezhip();
+    } else if (host.parentElement !== document.body) {
+      document.body.appendChild(host);
     }
     return host;
+  }
+
+  function injectTezhip() {
+    var orn = document.getElementById("hy-qcf-ornament");
+    if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
+    orn.setAttribute("data-hy-tezhip", "1");
+    fetch("/assets/mushaf/tezhip.svg?v=qcf7")
+      .then(function (r) {
+        return r.ok ? r.text() : "";
+      })
+      .then(function (svg) {
+        if (!svg || !orn) return;
+        orn.innerHTML = svg;
+        orn.classList.add("hy-tezhip-on");
+      })
+      .catch(function () {});
   }
 
   function fitStage() {
     var fit = document.getElementById("hy-qcf-fit");
     var stage = document.getElementById("hy-qcf-stage");
     if (!fit || !stage || !host) return;
-    var box = host.getBoundingClientRect();
-    var availW = Math.max(120, box.width);
-    var availH = Math.max(160, box.height);
+    var dock = document.getElementById("hy-player-dock");
+    var dockH = dock ? dock.getBoundingClientRect().height : 56;
+    var topChrome = window.innerWidth >= 860 ? 52 : 58;
+    var availW = Math.max(120, window.innerWidth);
+    var availH = Math.max(160, window.innerHeight - dockH - topChrome);
     var s = Math.min(availW / DESIGN_W, availH / DESIGN_H);
     fit.style.width = DESIGN_W * s + "px";
     fit.style.height = DESIGN_H * s + "px";
@@ -792,10 +811,12 @@
   function paint() {
     if (!onKuran()) {
       document.body.classList.remove("hy-kuran", "hy-qcf-on");
+      if (host) host.style.display = "none";
       paintedPage = 0;
       paintedData = null;
       return;
     }
+    if (host) host.style.display = "";
     var frame = findFrame();
     if (!frame) return;
     var page = pageFromUi();
@@ -816,7 +837,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf6";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf7";
       document.head.appendChild(link);
     }
     paint();

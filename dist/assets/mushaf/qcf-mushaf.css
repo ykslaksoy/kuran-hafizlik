@@ -9,12 +9,22 @@
 :root {
   --hy-safe-bottom: env(safe-area-inset-bottom, 0px);
   --hy-player-h: 56px;
-  --hy-player-stack: calc(var(--hy-player-h) + var(--hy-safe-bottom));
+  --hy-player-stack: calc(var(--hy-player-h) + 16px + var(--hy-safe-bottom));
   --hy-ink: #141414;
-  --hy-paper: #f6efdc;
-  --hy-gold: #c4a35a;
+  --hy-paper: #f3e6c8;
+  --hy-paper-deep: #e8d7ad;
+  --hy-gold: #d4af37;
+  --hy-gold-pale: #f4e3a1;
+  --hy-gold-deep: #b88912;
+  --hy-navy: #0b1d4a;
+  --hy-navy-mid: #15305c;
   --hy-design-w: 1000px;
   --hy-design-h: 1610px;
+  --hy-ahar:
+    radial-gradient(ellipse at 50% 18%, rgba(255, 248, 230, 0.55), transparent 52%),
+    radial-gradient(ellipse at 18% 82%, rgba(184, 137, 18, 0.07), transparent 46%),
+    radial-gradient(ellipse at 84% 72%, rgba(11, 29, 74, 0.035), transparent 42%),
+    linear-gradient(180deg, #f7edd4 0%, #f3e6c8 42%, #efe0b6 100%);
 }
 
 html, body {
@@ -24,7 +34,8 @@ html, body {
 }
 
 body.hy-kuran {
-  background: #3d3224 !important;
+  background-color: var(--hy-paper) !important;
+  background-image: var(--hy-ahar) !important;
   overflow: hidden;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -33,6 +44,12 @@ body.hy-kuran {
 body.hy-kuran #root {
   padding-bottom: var(--hy-player-stack);
   box-sizing: border-box;
+  background-color: var(--hy-paper) !important;
+}
+
+body.hy-kuran .hy-book-frame {
+  background-color: var(--hy-paper) !important;
+  padding: 0 !important;
 }
 
 /* Native unicode mushaf never paints once QCF owns the page */
@@ -53,15 +70,23 @@ body.hy-qcf-on .hy-native-hide {
   display: none !important;
 }
 
+body:not(.hy-kuran) #hy-qcf-host {
+  display: none;
+}
+
 #hy-qcf-host {
-  position: absolute;
-  inset: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 58px;
+  bottom: var(--hy-player-stack);
   z-index: 4;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #3d3224;
+  background-color: var(--hy-paper);
+  background-image: var(--hy-ahar);
 }
 
 #hy-qcf-fit {
@@ -74,7 +99,8 @@ body.hy-qcf-on .hy-native-hide {
   height: 1610px;
   position: relative;
   transform-origin: top left;
-  background: var(--hy-paper);
+  background-color: var(--hy-paper);
+  background-image: var(--hy-ahar);
   color: var(--hy-ink);
   contain: strict;
   -webkit-text-size-adjust: 100%;
@@ -102,23 +128,60 @@ body.hy-qcf-on .hy-native-hide {
 
 #hy-qcf-ornament {
   position: absolute;
-  inset: 18px;
-  border: 4px solid var(--hy-gold);
-  box-shadow:
-    inset 0 0 0 2px #8b6914,
-    inset 0 0 0 8px rgba(196, 163, 90, 0.28),
-    inset 0 0 0 12px #1e4d3d;
+  inset: 0;
   pointer-events: none;
+  z-index: 1;
+  border: none;
+  box-shadow: none;
+}
+
+#hy-qcf-ornament::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 2px solid var(--hy-gold);
+  box-shadow:
+    0 0 0 3px var(--hy-navy),
+    0 0 0 5px var(--hy-gold-deep),
+    inset 0 0 0 2px var(--hy-gold-pale),
+    inset 0 0 0 22px var(--hy-navy),
+    inset 0 0 0 24px var(--hy-gold);
+  pointer-events: none;
+}
+
+#hy-qcf-ornament.hy-tezhip-on::before {
+  display: none;
+}
+
+#hy-qcf-ornament svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#hy-qcf-ornament .tezhip-unvan {
+  display: none;
+}
+
+#hy-qcf-stage.hy-special #hy-qcf-ornament #tezhip-std {
+  display: none;
+}
+
+#hy-qcf-stage.hy-special #hy-qcf-ornament .tezhip-unvan {
+  display: block;
 }
 
 #hy-qcf-special-frame {
   display: none;
   position: absolute;
-  inset: 70px 70px 90px;
-  border: 3px solid rgba(196, 163, 90, 0.65);
-  border-radius: 48% / 10%;
-  background: radial-gradient(ellipse at 50% 50%, #fbf6e8, #f3e6c4 74%, #efe0b2);
+  inset: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
   pointer-events: none;
+  z-index: 1;
 }
 
 #hy-qcf-stage.hy-special #hy-qcf-special-frame { display: block; }
@@ -133,8 +196,9 @@ body.hy-qcf-on .hy-native-hide {
   justify-content: space-between;
   direction: rtl;
   font: 18px/28px "Scheherazade New", serif;
-  color: #6b5438;
+  color: var(--hy-navy);
   pointer-events: none;
+  z-index: 3;
 }
 
 #hy-qcf-pagenum {
@@ -144,8 +208,9 @@ body.hy-qcf-on .hy-native-hide {
   right: 0;
   text-align: center;
   font: 20px/1 "Scheherazade New", serif;
-  color: #6b5438;
+  color: var(--hy-navy);
   pointer-events: none;
+  z-index: 3;
 }
 
 /* Fixed 15 line boxes — never wrap, never grow, never reflow */
@@ -155,6 +220,7 @@ body.hy-qcf-on .hy-native-hide {
   left: 56px;
   width: 888px;
   height: 1470px;
+  z-index: 2;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   -webkit-user-select: none;
@@ -200,7 +266,6 @@ body.hy-qcf-on .hy-native-hide {
 .hy-qcf-bismillah {
   display: inline;
   color: #141414 !important;
-  background: transparent !important;
   white-space: nowrap;
   font-style: normal;
   font-weight: 400;
@@ -210,11 +275,24 @@ body.hy-qcf-on .hy-native-hide {
 }
 
 .hy-qcf-word,
+.hy-qcf-bismillah {
+  background: transparent !important;
+}
+
+.hy-qcf-word,
 .hy-qcf-end {
   font-size: 46px;
   font-synthesis: none;
   font-variant-ligatures: none;
   font-family: inherit;
+}
+
+.hy-qcf-end {
+  background-color: transparent !important;
+  background-image: url("/assets/mushaf/ayah-rose.svg?v=qcf7") !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.18em 1.18em;
 }
 
 #hy-qcf-stage.hy-special .hy-qcf-word,
@@ -226,9 +304,16 @@ body.hy-qcf-on .hy-native-hide {
   display: inline-block;
   flex-shrink: 0;
   font: 700 34px/1 "Scheherazade New", "Times New Roman", serif;
-  color: #f7f1e3 !important;
-  background: #1e4d3d !important;
-  border: 2px solid #e8d48a;
+  color: var(--hy-navy) !important;
+  background-color: var(--hy-gold) !important;
+  background-image:
+    linear-gradient(90deg, var(--hy-navy) 0 3px, transparent 3px),
+    linear-gradient(90deg, transparent calc(100% - 3px), var(--hy-navy) 0),
+    linear-gradient(180deg, var(--hy-gold-pale), var(--hy-gold) 40%, var(--hy-gold-deep));
+  border: 2px solid var(--hy-navy);
+  box-shadow:
+    0 0 0 2px var(--hy-gold),
+    0 0 0 3px var(--hy-gold-deep);
   padding: 8px 22px;
   white-space: nowrap;
 }
@@ -236,6 +321,10 @@ body.hy-qcf-on .hy-native-hide {
 #hy-qcf-stage.hy-special .hy-qcf-header {
   font-size: 40px;
   padding: 12px 28px;
+  box-shadow:
+    0 0 0 2px var(--hy-gold-pale),
+    0 0 0 4px var(--hy-navy),
+    0 0 0 6px var(--hy-gold);
 }
 
 .hy-qcf-bismillah {
@@ -453,10 +542,13 @@ body.hy-kuran #hy-player-bar {
 }
 
 @media (min-width: 860px) {
+  body.hy-kuran #hy-qcf-host {
+    top: 52px;
+  }
   body.hy-kuran .hy-book-frame {
-    width: min(calc((100vh - var(--hy-player-stack) - 32px) * 0.621), 620px) !important;
-    height: calc(100vh - var(--hy-player-stack) - 32px) !important;
-    max-width: 620px !important;
+    width: min(100vw, calc((100vh - var(--hy-player-stack) - 8px) * 0.621)) !important;
+    height: calc(100vh - var(--hy-player-stack) - 8px) !important;
+    max-width: none !important;
     margin-left: auto !important;
     margin-right: auto !important;
     align-self: center !important;
