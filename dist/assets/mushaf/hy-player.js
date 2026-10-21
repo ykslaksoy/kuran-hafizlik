@@ -64,6 +64,7 @@
       '<span class="hy-player-label" id="hy-player-now">Fatiha</span>' +
       '<button type="button" data-act="style" id="hy-style-btn" title="Sayfa stili" aria-label="Sayfa stili">Sade</button>' +
       '<button type="button" data-act="allah" id="hy-allah-btn" title="Allah lafzı rengi" aria-label="Allah lafzı rengi" aria-pressed="true">الله</button>' +
+      '<span class="hy-font-slot" id="hy-font-slot"></span>' +
       '<span class="hy-src-slot" id="hy-src-slot"></span>' +
       "</div>";
     dock.addEventListener("click", onClick);
@@ -145,6 +146,11 @@
       setReciter(i);
       if (global.hyContinuous) global.hyContinuous.setReciter(RECITERS[i].id);
     } else if (act === "style") {
+      var fonts = global.hyMushafFonts;
+      if (fonts && fonts.getScript && fonts.getScript().mode !== "qcf") {
+        /* Decoration (Sade / Altın / Tezhip) only apply on QCF Medine script. */
+        if (fonts.setScript) fonts.setScript("qcf-medine");
+      }
       var cur = (global.hyQcfMushaf && global.hyQcfMushaf.getStyle && global.hyQcfMushaf.getStyle()) || "sade";
       var next = global.hyQcfMushaf && global.hyQcfMushaf.nextStyle ? global.hyQcfMushaf.nextStyle(cur) : cur === "sade" ? "altin" : cur === "altin" ? "tezhip" : "sade";
       if (global.hyQcfMushaf && global.hyQcfMushaf.setStyle) global.hyQcfMushaf.setStyle(next);
@@ -276,6 +282,7 @@
       lb.classList.toggle("on", on);
       if (global.hyContinuous) global.hyContinuous.setLoop(on);
     }
+    if (global.hyMushafFonts && global.hyMushafFonts.ensureMenu) global.hyMushafFonts.ensureMenu();
   }
 
   function boot() {

@@ -1,9 +1,10 @@
 /**
- * Gapless page recitation for the Fatiha demo (and baked QCF pages).
+ * Gapless page recitation (default: continue through every ayah on the page).
  * Reuses two Audio elements so iOS Safari does not drop the user gesture
- * between ayahs. Prefetches the next ayah; no silence between files.
- * Default: play through the page, then stop on Fatiha (page 1).
+ * between ayahs. Prefetches the next ayah; advances ~80ms early for seamless handoff.
+ * Default: play through the page without stopping at each ayah.
  * Loop / pause only when the user turns them on.
+ * Page 1 (Fatiha): stop at page end. Later pages: auto-advance to next page.
  */
 (function (global) {
   var FOLDERS = {
@@ -95,6 +96,24 @@
       if (loc.length >= 2) out.push({ ayahIndex: +loc[0], wordIndex: +loc[1] });
       else out.push({ ayahIndex: Math.max(0, ayah - 1), wordIndex: i });
     }
+    if (!out.length) {
+      /* Unicode script mode: native letter nodes hy-l-{ayahIndex}-{wordIndex}-{letter} */
+      var ayahIndex = Math.max(0, ayah - 1);
+      var seen = {};
+      var nodes = document.querySelectorAll('[id^="hy-l-' + ayahIndex + '-"], [nativeID^="hy-l-' + ayahIndex + '-"], [nativeid^="hy-l-' + ayahIndex + '-"]');
+      for (var n = 0; n < nodes.length; n++) {
+        var id = nodes[n].id || nodes[n].getAttribute("nativeID") || nodes[n].getAttribute("nativeid") || "";
+        var parts = id.replace(/^hy-l-/, "").split("-");
+        if (parts.length < 2) continue;
+        var wi = +parts[1];
+        if (seen[wi]) continue;
+        seen[wi] = 1;
+        out.push({ ayahIndex: ayahIndex, wordIndex: wi });
+      }
+      out.sort(function (a, b) {
+        return a.wordIndex - b.wordIndex;
+      });
+    }
     if (!out.length) out.push({ ayahIndex: Math.max(0, ayah - 1), wordIndex: 0 });
     return out;
   }
@@ -135,7 +154,8 @@
       if (myToken !== token || paused) return;
       track();
       var d = el.duration;
-      if (d > 0 && el.currentTime >= d - 0.06) advance(myToken);
+      /* Advance slightly before end so the next ayah buffer can start without a gap. */
+      if (d > 0 && el.currentTime >= d - 0.08) advance(myToken);
     };
     el.onended = function () {
       if (myToken !== token) return;
@@ -328,9 +348,10 @@
   }
 
   if (!tick) {
+    /* ~50ms so the 100ms lead stays ahead of audio even on busy main threads. */
     tick = setInterval(function () {
       if (playing && !paused) track();
-    }, 80);
+    }, 50);
   }
 
   global.hyContinuous = {

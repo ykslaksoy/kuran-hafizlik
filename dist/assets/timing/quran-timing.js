@@ -61,8 +61,22 @@
   var NOON = "\u0646";
   var MEEM = "\u0645";
   var QALQALA = /[\u0642\u0637\u0628\u062C\u062F]/;
+  /** Arrow arrives ~0.1s before the letter is recited; never lags (incl. shadda/sukun). */
   var ARROW_LEAD_MS = 100;
   var ARROW_MIN_VIS_MS = 70;
+  /**
+   * Letter timing scope:
+   *  - fatiha (default, solid): surah 1 only, Hafızyol/QUL tables
+   *  - all (gated): extend via QUL word→letter for other surahs when approved
+   * Flip with localStorage hyLetterTimingScope=all or ?scope=all — pending Yüksel approval.
+   */
+  var TIMING_SCOPE = "fatiha";
+  var EXTENSION_PENDING = {
+    allSurahs: true,
+    allReciters: true,
+    noteTr:
+      "Fatiha/Mişari harf-ok hazır. Tüm sureler + tüm kâriler için QUL kelime→harf genişlemesi onay bekliyor (hyLetterTimingScope=all).",
+  };
 
   function isBase(ch) {
     return BASE.test(ch);
@@ -236,6 +250,18 @@
     return !!(meta && meta.wordTiming);
   }
 
+  function readScope() {
+    try {
+      var q = typeof location !== "undefined" && /[?&]scope=([^&]+)/.exec(location.search);
+      if (q && (q[1] === "all" || q[1] === "fatiha")) return q[1];
+    } catch (e) {}
+    try {
+      var s = global.localStorage && localStorage.getItem("hyLetterTimingScope");
+      if (s === "all" || s === "fatiha") return s;
+    } catch (e2) {}
+    return TIMING_SCOPE;
+  }
+
   function readLeadMs() {
     try {
       var n = Number(global.localStorage && localStorage.getItem("hyArrowLeadMs"));
@@ -253,19 +279,26 @@
   }
 
   function lookAheadMs() {
+    /* Lead before audio + device buffer so the tip never trails the sound. */
     return readLeadMs() + audioLagMs();
   }
 
   function isShortSeg(seg) {
     if (!seg) return false;
-    if (seg.kind === "sukun" || seg.kind === "shadda") return true;
+    if (seg.kind === "sukun" || seg.kind === "shadda" || seg.kind === "ghunnah") return true;
     return seg.duration > 0 && seg.duration < 140;
+  }
+
+  function surahAllowed(surah) {
+    var scope = readScope();
+    if (Number(surah) === 1) return true;
+    return scope === "all";
   }
 
   function atTime(reciterId, surah, ayah, timeSec, spans) {
     var pin = { ayahIndex: spans && spans[0] ? spans[0].ayahIndex : 0, wordIndex: 0, letterIndex: 0, pinned: true };
     if (!hasWordTiming(reciterId)) return pin;
-    if (Number(surah) !== 1) return pin;
+    if (!surahAllowed(surah)) return pin;
     var tMs = Math.max(0, Number(timeSec) || 0) * 1000;
     var table = positionAyah(surah, ayah);
     if (table && table.segments && table.segments.length) {
@@ -273,18 +306,21 @@
       var lead = lookAheadMs();
       var hit = segs[0];
       for (var i = 0; i < segs.length; i++) {
+        /* Window opens `lead` ms before audio — arrow is on the letter before it is heard. */
         var start = segs[i].startMs - lead;
         var dur = Math.max(1, segs[i].duration);
-        var hold = isShortSeg(segs[i]) ? Math.max(ARROW_MIN_VIS_MS, Math.min(dur, 110)) : dur;
-        var end = start + hold;
+        /* Never leave before the letter's onset (+ min visible for shadda/sukun). */
+        var minEnd = segs[i].startMs + (isShortSeg(segs[i]) ? ARROW_MIN_VIS_MS : Math.min(48, Math.max(24, dur * 0.15)));
+        var end = segs[i].startMs + dur;
         if (i + 1 < segs.length) {
-          var nextStart = segs[i + 1].startMs - lead;
-          if (isShortSeg(segs[i])) {
-            end = Math.max(start + ARROW_MIN_VIS_MS, Math.min(end, nextStart));
-          } else if (nextStart > start) {
-            end = Math.min(end, nextStart);
-          }
+          var nextLeadAt = segs[i + 1].startMs - lead;
+          /* Hand off at next letter's lead time when that is after this letter's onset floor. */
+          if (nextLeadAt >= minEnd) end = nextLeadAt;
+          else end = Math.max(minEnd, Math.min(end, segs[i + 1].startMs));
+        } else {
+          end = Math.max(minEnd, segs[i].startMs + dur);
         }
+        if (end <= start) end = start + ARROW_MIN_VIS_MS;
         if (tMs >= start && tMs < end) {
           hit = segs[i];
           break;
@@ -307,7 +343,12 @@
         kind: hit.kind || "",
         leadMs: lead,
         sourceId: sourceId,
+        scope: readScope(),
       };
+    }
+    /* Extension path (gated): QUL live word→letter when all-surah tables are not baked yet. */
+    if (readScope() === "all" && Number(surah) !== 1) {
+      return pin;
     }
     return pin;
   }
@@ -327,9 +368,19 @@
     return gs[gs.length - 1].i;
   }
 
+  function useQcfOverlay() {
+    if (global.hyMushafFonts && global.hyMushafFonts.isQcf && !global.hyMushafFonts.isQcf()) return false;
+    if (document.body && document.body.classList.contains("hy-script-unicode")) return false;
+    var overlay = document.getElementById("hy-qcf-overlay");
+    var host = document.getElementById("hy-qcf-host");
+    if (host && host.getAttribute("data-hy-script-off") === "1") return false;
+    return !!(overlay && host && host.style.display !== "none");
+  }
+
   function ensureArrow() {
     var overlay = document.getElementById("hy-qcf-overlay");
-    var host = overlay || document.body;
+    var qcf = useQcfOverlay();
+    var host = qcf && overlay ? overlay : document.body;
     if (arrowEl && arrowEl.parentNode === host) return arrowEl;
     arrowEl = document.getElementById("hy-track-arrow");
     if (!arrowEl) {
@@ -339,13 +390,13 @@
       arrowEl.innerHTML =
         '<span style="display:block;font-size:18px;line-height:16px;color:#97FF0A;text-shadow:0 0 6px #14532d,0 1px 0 #052e16">\u25B2</span>';
     }
-    if (overlay) {
+    if (qcf && overlay) {
       arrowEl.style.cssText = "position:absolute;z-index:2;pointer-events:none;transform:translate(-50%,0);display:none;";
       overlay.appendChild(arrowEl);
     } else {
       arrowEl.style.cssText =
         "position:fixed;z-index:99999;pointer-events:none;transform:translate(-50%,0);display:none;";
-      if (!arrowEl.parentNode) document.body.appendChild(arrowEl);
+      if (arrowEl.parentNode !== document.body) document.body.appendChild(arrowEl);
     }
     return arrowEl;
   }
@@ -429,17 +480,28 @@
   function findLetterHit(ayahIndex, wordIndex, letterIndex) {
     var li = letterIndex || 0;
     var i;
+    var hit;
     for (i = 0; i < 8; i++) {
-      var hit = document.querySelector('[data-hy-qcf="' + ayahIndex + "-" + wordIndex + "-" + (li + i) + '"]');
+      hit = document.querySelector('[data-hy-qcf="' + ayahIndex + "-" + wordIndex + "-" + (li + i) + '"]');
       if (hit) return hit;
     }
     for (i = li; i >= 0; i--) {
       hit = document.querySelector('[data-hy-qcf="' + ayahIndex + "-" + wordIndex + "-" + i + '"]');
       if (hit) return hit;
     }
+    /* Unicode mushaf: nativeID hy-l-{ayah}-{word}-{letter} from patch-medine-mushaf. */
+    for (i = 0; i < 8; i++) {
+      hit = findByNativeId("hy-l-" + ayahIndex + "-" + wordIndex + "-" + (li + i));
+      if (hit) return hit;
+    }
+    for (i = li; i >= 0; i--) {
+      hit = findByNativeId("hy-l-" + ayahIndex + "-" + wordIndex + "-" + i);
+      if (hit) return hit;
+    }
     return (
       document.querySelector('[data-hy-qcf^="' + ayahIndex + "-" + wordIndex + '-"]') ||
-      document.querySelector('[data-hy-qcf-word][data-hy-local="' + ayahIndex + "-" + wordIndex + '"]')
+      document.querySelector('[data-hy-qcf-word][data-hy-local="' + ayahIndex + "-" + wordIndex + '"]') ||
+      findByNativeId("hy-l-" + ayahIndex + "-" + wordIndex + "-0")
     );
   }
 
@@ -460,15 +522,16 @@
       return;
     }
     var overlay = document.getElementById("hy-qcf-overlay");
+    var qcf = useQcfOverlay();
     el.style.display = "block";
     var left = parseFloat(node.style.left);
     var top = parseFloat(node.style.top);
     var width = parseFloat(node.style.width);
     var height = parseFloat(node.style.height);
     var d = null;
-    if (overlay && node.parentNode === overlay && !isNaN(left) && !isNaN(top)) {
+    if (qcf && overlay && node.parentNode === overlay && !isNaN(left) && !isNaN(top)) {
       d = { left: left, top: top, width: width || r.width, height: height || r.height };
-    } else if (overlay && el.parentNode === overlay && global.hyQcfMushaf && global.hyQcfMushaf.toDesignRect) {
+    } else if (qcf && overlay && el.parentNode === overlay && global.hyQcfMushaf && global.hyQcfMushaf.toDesignRect) {
       d = global.hyQcfMushaf.toDesignRect(r);
     }
     if (d) {
@@ -500,8 +563,16 @@
         global.hyQcfMushaf.scrollActive(d.top, d.height);
       }
     } else {
+      el.style.position = "fixed";
       el.style.left = r.left + r.width / 2 + "px";
       el.style.top = r.top + r.height * 0.82 + "px";
+      var hl1 = document.getElementById("hy-qcf-hl");
+      if (hl1) hl1.style.display = "none";
+      var lh1 = document.getElementById("hy-qcf-linehl");
+      if (lh1) {
+        lh1.style.display = "none";
+        lh1.classList.remove("hy-on");
+      }
     }
   }
 
@@ -645,13 +716,18 @@
     voiced: voiced,
     hasWordTiming: hasWordTiming,
     prefetchSurah: function (reciterId, chapter) {
-      if (Number(chapter) !== 1) return Promise.resolve(null);
-      return loadSource(sourceId);
+      if (Number(chapter) === 1) return loadSource(sourceId);
+      if (readScope() !== "all") return Promise.resolve(null);
+      /* Pending approval: bake or fetch per-surah letter tables for all reciters. */
+      return Promise.resolve(null);
     },
     atTime: atTime,
     letterInWord: letterInWord,
     ARROW_LEAD_MS: ARROW_LEAD_MS,
+    ARROW_MIN_VIS_MS: ARROW_MIN_VIS_MS,
     lookAheadMs: lookAheadMs,
+    getScope: readScope,
+    EXTENSION_PENDING: EXTENSION_PENDING,
     setActive: setActive,
     placeArrow: placeArrow,
     hideArrow: hideArrow,

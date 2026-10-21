@@ -723,7 +723,7 @@
     var orn = document.getElementById("hy-qcf-ornament");
     if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
     orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf13")
+    fetch("/assets/mushaf/tezhip.svg?v=font14")
       .then(function (r) {
         return r.ok ? r.text() : "";
       })
@@ -827,7 +827,7 @@
     fin.setAttribute("aria-hidden", "true");
     var top = lastTop + LINE_H + Math.max(8, Math.min(36, (room - 220) / 2));
     fin.style.top = top + "px";
-    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=qcf13" alt="" width="168" height="214" />';
+    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=font14" alt="" width="168" height="214" />';
     glyphs.appendChild(fin);
   }
 
@@ -884,13 +884,51 @@
     fitRaf = requestAnimationFrame(fitStage);
   }
 
+  function scriptIsQcf() {
+    if (global.hyMushafFonts && global.hyMushafFonts.isQcf) return global.hyMushafFonts.isQcf();
+    return true;
+  }
+
+  function paintUnicode(data) {
+    var frame = findFrame();
+    if (!frame) return;
+    frame.style.position = frame.style.position || "relative";
+    tagBookFrame(frame);
+    var host = document.getElementById("hy-qcf-host");
+    if (host) {
+      host.style.display = "none";
+      host.setAttribute("data-hy-script-off", "1");
+    }
+    Array.prototype.forEach.call(frame.querySelectorAll(".hy-native-hide"), function (ch) {
+      ch.classList.remove("hy-native-hide");
+    });
+    document.body.classList.add("hy-kuran", "hy-script-unicode");
+    document.body.classList.remove("hy-qcf-on");
+    paintedData = data;
+    paintedPage = data.page;
+    chromeVerse = data.verses && data.verses[0] ? { surah: data.verses[0].surah, ayah: data.verses[0].ayah } : null;
+    syncChrome(data, chromeVerse);
+    if (global.hyQuranTiming && global.hyQuranTiming.hideArrow) {
+      /* arrow uses native hy-l-* ids in unicode mode */
+    }
+  }
+
   function paintLocked(data, name) {
     var frame = findFrame();
     if (!frame) return;
     frame.style.position = frame.style.position || "relative";
     tagBookFrame(frame);
+    if (!scriptIsQcf()) {
+      paintUnicode(data);
+      return;
+    }
     hideNative(frame);
     ensureHost(frame);
+    var hostOn = document.getElementById("hy-qcf-host");
+    if (hostOn) {
+      hostOn.style.display = "";
+      hostOn.removeAttribute("data-hy-script-off");
+    }
     var stage = document.getElementById("hy-qcf-stage");
     var glyphs = document.getElementById("hy-qcf-glyphs");
     var meta = document.getElementById("hy-qcf-meta");
@@ -898,6 +936,7 @@
     stage.className = (data.page <= 2 ? "hy-special " : "") + "hy-waiting";
     meta.innerHTML = "<span>الجزء " + toIndic(data.juz || 1) + "</span><span>" + esc((data.verses[0] && data.verses[0].key) || "") + "</span>";
     pnum.textContent = toIndic(data.page);
+    document.body.classList.remove("hy-script-unicode");
 
     paintedData = data;
     chromeVerse = data.verses && data.verses[0] ? { surah: data.verses[0].surah, ayah: data.verses[0].ayah } : null;
@@ -1143,7 +1182,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf13";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=font14";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
@@ -1194,6 +1233,23 @@
     };
   }
 
+  function onScriptChange(script) {
+    paintedPage = 0;
+    if (script && script.mode === "unicode") {
+      document.body.classList.add("hy-script-unicode");
+      document.body.classList.remove("hy-qcf-on");
+      var host = document.getElementById("hy-qcf-host");
+      if (host) {
+        host.style.display = "none";
+        host.setAttribute("data-hy-script-off", "1");
+      }
+      Array.prototype.forEach.call(document.querySelectorAll(".hy-native-hide"), function (ch) {
+        ch.classList.remove("hy-native-hide");
+      });
+    }
+    paint();
+  }
+
   global.hyQcfMushaf = {
     paint: paint,
     loadPage: loadPage,
@@ -1219,5 +1275,7 @@
     currentScale: currentScale,
     DESIGN_W: DESIGN_W,
     DESIGN_H: DESIGN_H,
+    onScriptChange: onScriptChange,
+    isQcfScript: scriptIsQcf,
   };
 })(typeof window !== "undefined" ? window : globalThis);
