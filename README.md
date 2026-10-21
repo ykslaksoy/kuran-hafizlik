@@ -8,7 +8,7 @@ Canlı: https://hafizyol.vercel.app
 
 `dist/` içinde **2026-09-06** tarihli Expo web export’unun birebir kopyası var (`expo export --platform web`). Bu ağaç `npm start` ile yerelde açılır ve Vercel’de statik site olarak yayınlanabilir.
 
-Amentü, ekrandaki metni okur (`آمنت بالله…`, sonra Âl-i İmrân 8 / Mişari). Bakara 285 (Âmenerrasûlü) kullanılmaz. Kur’an tilavet varsayılanı Mişari (`alafasy` / everyayah).
+Amentü, ekrandaki metni okur (`آمنت بالله…`, sonra Âl-i İmrân 8 / Mişari). Bakara 285 (Âmenerrasûlü) kullanılmaz. Kur’an tilavet varsayılanı Mişari (`alafasy` / everyayah). Dualar→Mişari hazırlığı: branch `cursor/duas-mishari-voice-a41f` (flag açık; **main/live merge Amentü onayı ister**).
 
 Kur’an okuyucu **604 sayfa × 15 satır Medine (KFGQPC Uthmanic Hafs)** düzenidir: sabit satır grid, sure serlevhası, yatay sayfa geçişi, açılışta doğrudan hedef sayfa. Aktif ayet Ezan Vakti yeşili (`#97FF0A` / `#8097FF0A`). İlk canlı demo **yalnız Fatiha / Mişari**: ok harf altında, varsayılan **Hafızyol harf hizalaması** (everyayah PCM + QUL çapa + tecvid). quran.com/QUL kıyası demo seçicisinde; ürüne gömülmez. Bakara / Amme / tüm Kur’an henüz yok. Kutu kelime vurgusu yok. Spek: [docs/rakip/ezanvakti.md](./docs/rakip/ezanvakti.md), kâri + Fatiha doğruluk: [docs/rakip/kariler-timing.md](./docs/rakip/kariler-timing.md).
 

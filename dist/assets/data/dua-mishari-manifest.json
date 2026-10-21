@@ -1,0 +1,109 @@
+{
+  "feature": "dua-mishari-voice",
+  "enabledInBundle": true,
+  "mergeGate": "Await Amentü (amentu-v2) approval before merging this branch to main/live.",
+  "reciterId": "alafasy",
+  "reciterNameTr": "Mişari",
+  "source": "everyayah Alafasy_128kbps (Quranic) + existing amentu-v2 hybrid",
+  "duas": [
+    {
+      "id": "amentu",
+      "nameTr": "Amentü",
+      "audio": "/assets/audio/amentu-v2.mp3",
+      "kind": "hybrid",
+      "mishariCoverage": "partial",
+      "note": "İman cümleleri edge-tts (öğrenme temposu); Rabbenâ = Âl-i İmrân 8 Alafasy. Amentü onayı bekleniyor."
+    },
+    {
+      "id": "rabbena",
+      "nameTr": "Rabbenâ âtinâ",
+      "audio": "/assets/audio/duas-mishari/rabbena-002201.mp3",
+      "kind": "quran",
+      "ref": "2:201",
+      "mishariCoverage": "full",
+      "note": "EveryAyah Alafasy 002201.mp3"
+    },
+    {
+      "id": "rabbena-ghfirli",
+      "nameTr": "Allahümme’ğfir lî ve li vâlideyye",
+      "audio": "/assets/audio/duas-mishari/rabbena-ghfirli-014041.mp3",
+      "kind": "quran",
+      "ref": "14:41",
+      "mishariCoverage": "near",
+      "note": "Uygulama metni اللهم ile başlar; Alafasy kaydı رَبَّنَا اغْفِرْ لِي… (14:41)."
+    },
+    {
+      "id": "euzu-besmele",
+      "nameTr": "Eûzü – Besmele",
+      "audio": "/assets/audio/duas-mishari/besmele-001001.mp3",
+      "kind": "quran-partial",
+      "ref": "1:1",
+      "mishariCoverage": "partial",
+      "note": "Yalnız Besmele (1:1). Eûzü Kur’an ayeti değil — everyayah’da Mişari kaydı yok."
+    },
+    {
+      "id": "subhaneke",
+      "nameTr": "Sübhaneke",
+      "audio": null,
+      "kind": "hadith-dua",
+      "mishariCoverage": "none",
+      "note": "Kur’an dışı; everyayah Mişari yok. Flag açıkken TTS fallback."
+    },
+    {
+      "id": "ruku-tesbihi",
+      "nameTr": "Rükû Tesbihi",
+      "audio": null,
+      "kind": "hadith-dua",
+      "mishariCoverage": "none",
+      "note": "Kur’an dışı; TTS fallback."
+    },
+    {
+      "id": "semiallah",
+      "nameTr": "SemiAllahu limen hamideh",
+      "audio": null,
+      "kind": "hadith-dua",
+      "mishariCoverage": "none",
+      "note": "Kur’an dışı; TTS fallback."
+    },
+    {
+      "id": "secde-tesbihi",
+      "nameTr": "Secde Tesbihi",
+      "audio": null,
+      "kind": "hadith-dua",
+      "mishariCoverage": "none",
+      "note": "Kur’an dışı; TTS fallback."
+    },
+    {
+      "id": "tahiyyat",
+      "nameTr": "Tahiyyat",
+      "audio": null,
+      "kind": "hadith-dua",
+      "mishariCoverage": "none",
+      "note": "Kur’an dışı; TTS fallback."
+    },
+    {
+      "id": "salli-barik",
+      "nameTr": "Allahümme salli – bârik",
+      "audio": null,
+      "kind": "hadith-dua",
+      "mishariCoverage": "none",
+      "note": "Kur’an dışı; TTS fallback."
+    },
+    {
+      "id": "selam",
+      "nameTr": "Esselâmü aleyküm",
+      "audio": null,
+      "kind": "hadith-dua",
+      "mishariCoverage": "none",
+      "note": "Kur’an dışı; TTS fallback."
+    },
+    {
+      "id": "kunut",
+      "nameTr": "Kunût Duası",
+      "audio": null,
+      "kind": "hadith-dua",
+      "mishariCoverage": "none",
+      "note": "Kur’an dışı; TTS fallback."
+    }
+  ]
+}
