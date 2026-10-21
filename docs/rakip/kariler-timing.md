@@ -24,7 +24,8 @@ Yalnızca bu oturumda doğrulanan çağrılar:
 
 | Kâri | Ses (açık kaynak) | quran.com / QUL kelime segmenti | Ayet zamanı | Sonuç |
 |---|---|---|---|---|
-| **Davut Kaya** | everyayah `Davut_Kaya_128kbps`, `DavutKaya_128kbps`, `Turkish_DavutKaya_128kbps` → **404**. quran.com `chapter_recitations` 1–199 taramasında `kaya`/`davut` **yok**. | Doğrulanamadı | Doğrulanamadı | Açık kaynak timing **yok**. Ezan Vakti `positions19` telifli; kopyalanmaz. |
+| **Davut Kaya** | everyayah `Davut_Kaya_128kbps`, `DavutKaya_128kbps`, `Turkish_DavutKaya_128kbps` → **404**. quran.com `chapter_recitations` 1–199 taramasında `kaya`/`davut` **yok**. | Doğrulanamadı | Doğrulanamadı | **Telifli sayılır** (hayır/blog ≠ uygulama lisansı). Açık timing yok. Ezan Vakti `positions19` kopyalanmaz. |
+| **Fatih Çollak** | everyayah klasör yok (**404**). Kur’an Işığı / Salkım Ar-Ge. | — | — | **Telifli** — yazılı izinsiz kopya/çoğaltma yasak; ücretli app. Entegre etme. |
 | **Mahir el-Muaykılı** | everyayah `MaherAlMuaiqly128kbps/001001.mp3` **200**. quran.com ses: id **52**, **65**, **159** (`maher_almu3aiqly` / `maher_256`). | id 52/65/159 Fatiha **wordsegs=0** | id **159**: 7 ayet `timestamp_*` var; 52/65 ayet zamanı yok | Ses var; **kelime timing yok**. Ayet zamanı yalnızca id 159. |
 | Abdurrahman Südeys | Zaten uygulamada (`sudais`) | id=3 kelime segmentleri var | Var | — |
 | Husari / Husary | Zaten uygulamada (`husary`) | id=6 var | Var | — |
