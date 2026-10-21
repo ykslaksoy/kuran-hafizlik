@@ -1,0 +1,16 @@
+{
+  "editionId": "marmara-muifv-hafizboy",
+  "status": "permission_required",
+  "pages": null,
+  "lineCount": 15,
+  "pageAssets": null,
+  "pageManifest": null,
+  "coordinateSchema": "hy-page-line-word-v1",
+  "blocker": "MÜİFV mushaf sayfa düzeni için açık dijital paket yok; ayrı yayıncı lisansı gerekir.",
+  "contact": "iletisim@marmarailahiyatvakfi.org",
+  "nextSteps": [
+    "MÜİFV ile yazılı lisans",
+    "Sayfa sayısı (604/624) ve ayet berkenar düzeni netleştirme",
+    "Lisanslı varlıkların dist/assets/mushaf/editions/ altına import"
+  ]
+}

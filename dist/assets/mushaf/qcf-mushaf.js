@@ -36,6 +36,12 @@
   var bootPinned = false;
   var lastFitKey = "";
   var pageStyle = "sade";
+  var editionCatalog = null;
+  var activeEdition = {
+    id: "medine604-qcf",
+    shortLabelTr: "Basılı mushaf · KFGQPC Medine 604",
+    nameTr: "Medine Mushafı (Hafs)",
+  };
   var SURAH_TR = [
     "",
     "Fâtiha",
@@ -652,6 +658,15 @@
     return SURAH_TR[id] || "Sure " + id;
   }
 
+  function syncSourceRibbon() {
+    var el = document.getElementById("hy-qcf-source");
+    if (!el || !activeEdition) return;
+    el.textContent = activeEdition.shortLabelTr || activeEdition.nameTr || "";
+    el.title =
+      (activeEdition.nameTr || "") +
+      " — QCF sayfa fontu, basılı Medine mushaf düzeni (15 satır). Türkiye hafız boy için Diyanet izni ayrı.";
+  }
+
   function syncChrome(data, verse) {
     data = data || paintedData;
     if (!data) return;
@@ -671,6 +686,7 @@
         esc(metaLine) +
         "</span>";
     }
+    syncSourceRibbon();
     var nodes = document.querySelectorAll("div,span");
     for (var i = 0; i < nodes.length; i++) {
       var el = nodes[i];
@@ -720,6 +736,7 @@
       host.id = "hy-qcf-host";
       host.innerHTML =
         '<div id="hy-qcf-chrome"></div>' +
+        '<div id="hy-qcf-source" class="hy-qcf-source" aria-label="Mushaf kaynağı"></div>' +
         '<div id="hy-qcf-scroll"><div id="hy-qcf-fit"><div id="hy-qcf-stage" class="hy-waiting">' +
         '<div id="hy-qcf-ornament" aria-hidden="true"></div>' +
         '<div id="hy-qcf-special-frame" aria-hidden="true"></div>' +
@@ -1136,6 +1153,26 @@
     if (global.hyQuranTiming && global.hyQuranTiming.placeArrow) global.hyQuranTiming.placeArrow();
   }
 
+  function loadEditionCatalog() {
+    return fetch("/assets/mushaf/mushaf-editions.json?v=gercek1")
+      .then(function (r) {
+        return r.ok ? r.json() : null;
+      })
+      .then(function (j) {
+        if (!j || !j.editions) return;
+        editionCatalog = j;
+        var id = j.activeEditionId || activeEdition.id;
+        for (var i = 0; i < j.editions.length; i++) {
+          if (j.editions[i].id === id && j.editions[i].status === "active") {
+            activeEdition = j.editions[i];
+            break;
+          }
+        }
+        syncSourceRibbon();
+      })
+      .catch(function () {});
+  }
+
   function paint() {
     if (!onKuran()) {
       document.body.classList.remove("hy-kuran", "hy-qcf-on");
@@ -1161,11 +1198,12 @@
   }
 
   function boot() {
+    loadEditionCatalog();
     if (!document.getElementById("hy-qcf-style-link")) {
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf15";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=gercek1";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
@@ -1222,6 +1260,12 @@
     pageFromUi: pageFromUi,
     toDesignRect: toDesignRect,
     syncChrome: syncChrome,
+    getActiveEdition: function () {
+      return activeEdition;
+    },
+    getEditionCatalog: function () {
+      return editionCatalog;
+    },
     setChromeVerse: function (verse) {
       chromeVerse = verse;
       syncChrome(paintedData, verse);

@@ -136,6 +136,7 @@ async function main() {
   }));
   fs.writeFileSync(path.join(OUT, "qcf-chapters.json"), JSON.stringify(chapters));
   const index = {
+    editionId: "medine604-qcf",
     mushaf: "qcf-v2",
     pages: 604,
     special: [1, 2],
