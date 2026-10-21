@@ -1,39 +1,24 @@
 {
   "styles": [
     {
-      "id": "mushaf-kadiasker-izzet",
-      "labelTr": "Kadıasker Mustafa İzzet (el yazması)",
-      "kind": "manuscript",
-      "ms": "kadiasker-izzet-gart",
-      "license": "Public domain (Commons PD-Art)"
-    },
-    {
-      "id": "mushaf-mehmed-sevki",
-      "labelTr": "Mehmed Şevki Efendi (el yazması)",
-      "kind": "manuscript",
+      "id": "mushaf-mehmed-sevki-original",
+      "labelTr": "Mehmed Şevki — orijinal el yazısı (görüntüleme)",
+      "kind": "manuscript-original",
       "ms": "mehmed-sevki-gart",
-      "license": "Public domain (Commons PD-Art)"
+      "mode": "original",
+      "preview": "/preview/mushaf-ms/index.html?kuran=1&page=1&ms=mehmed-sevki-gart&mode=original",
+      "license": "Public domain (Commons PD-Art)",
+      "noteTr": "Ok modu harf harf takip yapamaz; yalnızca orijinal sayfa görüntüsü."
     },
     {
-      "id": "mushaf-hamdullah-w6722",
-      "labelTr": "Şeyh Hamdullah — Walters W6722",
-      "kind": "manuscript",
-      "ms": "walters-w6722",
-      "license": "Public domain (Walters OA / Commons)"
-    },
-    {
-      "id": "mushaf-hamdullah-w6724",
-      "labelTr": "Şeyh Hamdullah — Walters W6724",
-      "kind": "manuscript",
-      "ms": "walters-w6724",
-      "license": "Public domain (Walters OA / Commons)"
-    },
-    {
-      "id": "mushaf-ezan-sade",
-      "labelTr": "Sade (Ezan Vakti sadeliği)",
-      "kind": "vector",
-      "preview": "/preview/mushaf-frames/index.html?alt=D",
-      "license": "Özgün SVG/CSS (Hafızyol)"
+      "id": "mushaf-mehmed-sevki-composite",
+      "labelTr": "Mehmed Şevki tezhibi + dijital hat (QCF / lisanslı fontlar)",
+      "kind": "manuscript-composite",
+      "ms": "mehmed-sevki-gart",
+      "mode": "composite",
+      "fonts": ["qcf-v2", "qcf-v1", "digital-khatt-v2"],
+      "preview": "/preview/mushaf-ms/index.html?kuran=1&page=1&ms=mehmed-sevki-gart&mode=composite&font=qcf-v2",
+      "license": "Tezhip: PD-Art; fontlar: KFGQPC / Digital Khatt lisanslarına tabi"
     }
   ]
 }

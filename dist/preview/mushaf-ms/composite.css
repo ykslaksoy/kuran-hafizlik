@@ -20,6 +20,19 @@ body.hy-ms-preview #hy-qcf-host {
   background: transparent !important;
 }
 
+body.hy-ms-original #hy-qcf-host {
+  position: absolute;
+  inset: 0;
+}
+
+body.hy-ms-original #hy-qcf-glyphs,
+body.hy-ms-original #hy-qcf-overlay,
+body.hy-ms-original #hy-qcf-meta,
+body.hy-ms-original #hy-qcf-pagenum,
+body.hy-ms-original #hy-qcf-wait {
+  display: none !important;
+}
+
 #hy-ms-shell {
   position: fixed;
   inset: 0;
@@ -56,11 +69,18 @@ body.hy-ms-preview #hy-qcf-fit {
 #hy-ms-bg {
   position: absolute;
   inset: 0;
-  background-size: cover;
   background-repeat: no-repeat;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
-/* Metin alanı: orijinal kâğıtla hizalı blur + örneklenmiş doku (düz krem blok yok) */
+.hy-ms-original-stage {
+  position: relative;
+  width: 1000px;
+  height: 1610px;
+  overflow: hidden;
+}
+
 #hy-ms-matte {
   position: absolute;
   overflow: hidden;
@@ -75,25 +95,31 @@ body.hy-ms-preview #hy-qcf-fit {
   mask-composite: intersect;
 }
 
-#hy-ms-matte-blur {
+#hy-ms-matte-veil {
   position: absolute;
   left: -56px;
   top: -72px;
   width: 1000px;
   height: 1610px;
-  background-size: cover;
   background-repeat: no-repeat;
-  filter: blur(5px) saturate(1.02) contrast(1.03);
-  transform: scale(1.015);
-  opacity: 0.97;
+  filter: blur(14px) saturate(1.02) brightness(1.06);
+  opacity: 0.38;
+}
+
+#hy-ms-matte-paper {
+  position: absolute;
+  inset: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  filter: contrast(1.02) brightness(1.03);
 }
 
 #hy-ms-matte-grain {
   position: absolute;
   inset: 0;
-  background-size: 160px 160px;
-  background-repeat: repeat;
-  opacity: 0.42;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.22;
   mix-blend-mode: multiply;
   pointer-events: none;
 }

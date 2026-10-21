@@ -1,46 +1,24 @@
 [
   {
-    "id": "kadiasker-izzet-gart",
-    "styleId": "mushaf-kadiasker-izzet",
-    "label": "Kadıasker Mustafa İzzet (el yazması)",
-    "usable": true,
-    "artifact": "ms-original-kadiasker-izzet.jpg",
-    "commons": "https://commons.wikimedia.org/wiki/File:Copied_by_Kad%C4%B1asker_Mustafa_%C4%B0zzet_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/8/89/Copied_by_Kad%C4%B1asker_Mustafa_%C4%B0zzet_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
-    "bgPosition": "50% 38%",
-    "sample": { "x": 0.04, "y": 0.06, "w": 0.1, "h": 0.08 }
-  },
-  {
     "id": "mehmed-sevki-gart",
     "styleId": "mushaf-mehmed-sevki",
-    "label": "Mehmed Şevki Efendi (el yazması)",
+    "label": "Mehmed Şevki Efendi (el yazması mushaf)",
     "usable": true,
     "artifact": "ms-original-mehmed-sevki.jpg",
     "commons": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+    "googleArts": "https://www.google.com/culturalinstitute/asset-viewer/vQHcTkz21kMHsw",
     "download": "https://upload.wikimedia.org/wikipedia/commons/5/59/Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
-    "bgPosition": "50% 36%",
-    "sample": { "x": 0.05, "y": 0.05, "w": 0.09, "h": 0.07 }
-  },
-  {
-    "id": "walters-w6722",
-    "styleId": "mushaf-hamdullah-w6722",
-    "label": "Şeyh Hamdullah — Walters W6722",
-    "usable": true,
-    "artifact": "ms-original-walters-w6722.jpg",
-    "commons": "https://commons.wikimedia.org/wiki/File:Seyh_Hamdullah_-_Page_of_Ottoman_Calligraphy_-_Walters_W6722B_-_Full_Page.jpg",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Seyh_Hamdullah_-_Page_of_Ottoman_Calligraphy_-_Walters_W6722B_-_Full_Page.jpg",
-    "bgPosition": "50% 42%",
-    "sample": { "x": 0.03, "y": 0.04, "w": 0.12, "h": 0.1 }
-  },
-  {
-    "id": "walters-w6724",
-    "styleId": "mushaf-hamdullah-w6724",
-    "label": "Şeyh Hamdullah — Walters W6724",
-    "usable": true,
-    "artifact": "ms-original-walters-w6724.jpg",
-    "commons": "https://commons.wikimedia.org/wiki/File:Seyh_Hamdullah_-_Page_of_Ottoman_Calligraphyi_-_Walters_W6724B_-_Full_Page.jpg",
-    "download": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Seyh_Hamdullah_-_Page_of_Ottoman_Calligraphyi_-_Walters_W6724B_-_Full_Page.jpg",
-    "bgPosition": "48% 40%",
-    "sample": { "x": 0.04, "y": 0.05, "w": 0.11, "h": 0.09 }
+    "license": "Public domain (PD-Art / PD-old-100-expired)",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags#PD-Art",
+    "commercial": "Commons PD-Art: ticari kullanım serbest (ABD); AttributionRequired=false",
+    "credit": "Mehmed Şevki Efendi, ca. 1862 — Sakıp Sabancı Müzesi via Google Arts & Culture (Commons maksimum zoom taraması)",
+    "pixelWidth": 3737,
+    "pixelHeight": 3169,
+    "bytes": 7498981,
+    "matteProfile": "mushaf",
+    "bgPosition": "50% 40%",
+    "bgSizeDesign": { "w": 1904, "h": 1610 },
+    "sample": { "x": 0.06, "y": 0.08, "w": 0.08, "h": 0.06 },
+    "pagesNote": "Commons’ta bu mushaf için yalnızca tek PD tam sayfa taraması (3737×3169) bulundu; Fâtiha ve Bakara önizlemelerinde aynı tezhib çerçevesi kullanılıyor, composite modda metin sayfa 1/2 QCF düzenine göre değişir."
   }
 ]

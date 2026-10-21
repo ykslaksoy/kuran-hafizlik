@@ -213,14 +213,12 @@
     return html;
   }
 
-  function mountStage(stage, def) {
+  function mountStage(stage, def, opts) {
+    opts = opts || {};
     var v0 = pageData.verses && pageData.verses[0];
     var juz = pageData.juz || 1;
     stage.className = pageData.page <= 2 ? "hy-special" : "";
-    stage.innerHTML =
-      '<div id="hy-qcf-ornament" data-hy-frame="D">' +
-      '<div class="hy-frame-deco"><svg class="hy-frame-border-svg" viewBox="0 0 1000 1610" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      '<rect x="18" y="18" width="964" height="1574" fill="none" stroke="#e3e0da" stroke-width="1"/></svg></div></div>' +
+    var inner =
       '<div id="hy-qcf-meta" style="position:absolute;top:20px;left:40px;right:40px;display:flex;justify-content:space-between;direction:rtl;font-size:15px;color:#9a9690"><span>الجزء ' +
       toIndic(juz) +
       '</span><span>' +
@@ -229,10 +227,69 @@
       '<div id="hy-qcf-glyphs">' +
       buildStageHtml(def) +
       "</div>" +
+      '<div id="hy-qcf-overlay"><div id="hy-qcf-hl"></div></div>' +
       '<div id="hy-qcf-pagenum" style="position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:17px;color:#8a8680">' +
       toIndic(pageData.page) +
       "</div>";
+    if (opts.sevki) {
+      stage.innerHTML = inner;
+      return;
+    }
+    stage.innerHTML =
+      '<div id="hy-qcf-ornament" data-hy-frame="D">' +
+      '<div class="hy-frame-deco"><svg class="hy-frame-border-svg" viewBox="0 0 1000 1610" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<rect x="18" y="18" width="964" height="1574" fill="none" stroke="#e3e0da" stroke-width="1"/></svg></div></div>' +
+      inner;
     if (global.hyFrameDeco) global.hyFrameDeco.inject("D");
+  }
+
+  function ensureQcfHost(frame) {
+    frame.style.position = frame.style.position || "relative";
+    var host = document.getElementById("hy-qcf-host");
+    if (!host) {
+      host = document.createElement("div");
+      host.id = "hy-qcf-host";
+      host.innerHTML =
+        '<div id="hy-qcf-fit"><div id="hy-qcf-stage" class="hy-waiting">' +
+        '<div id="hy-qcf-wait">Sayfa hattı yükleniyor</div></div></div>';
+      frame.appendChild(host);
+    } else if (host.parentElement !== frame) {
+      frame.appendChild(host);
+    }
+    return host;
+  }
+
+  function fitQcfHost() {
+    var host = document.getElementById("hy-qcf-host");
+    var fit = document.getElementById("hy-qcf-fit");
+    var stage = document.getElementById("hy-qcf-stage");
+    if (!host || !fit || !stage) return;
+    var box = host.getBoundingClientRect();
+    var s = Math.min(Math.max(120, box.width) / DESIGN_W, Math.max(160, box.height) / DESIGN_H);
+    fit.style.width = DESIGN_W * s + "px";
+    fit.style.height = DESIGN_H * s + "px";
+    stage.style.width = DESIGN_W + "px";
+    stage.style.height = DESIGN_H + "px";
+    stage.style.transform = "scale(" + s + ")";
+    stage.style.transformOrigin = "top left";
+  }
+
+  function renderIntoQcfStage(slug) {
+    var def = resolveDef(slug, pageNum);
+    if (!def || !pageData) return Promise.resolve();
+    return loadFont(def).then(function () {
+      var row = document.getElementById("hy-row-0") || document.querySelector('[id="hy-row-0"]');
+      var frame = row && row.parentElement && row.parentElement.parentElement;
+      if (!frame) return;
+      ensureQcfHost(frame);
+      var stage = document.getElementById("hy-qcf-stage");
+      stage.classList.remove("hy-waiting");
+      var wait = document.getElementById("hy-qcf-wait");
+      if (wait) wait.style.display = "none";
+      mountStage(stage, def, { sevki: true });
+      fitQcfHost();
+      window.addEventListener("resize", fitQcfHost);
+    });
   }
 
   function readyToken(slug) {
@@ -349,5 +406,11 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 
-  global.hyFontPreview = { FONTS: FONTS, resolveDef: resolveDef, renderOne: renderOne };
+  global.hyFontPreview = {
+    FONTS: FONTS,
+    resolveDef: resolveDef,
+    renderOne: renderOne,
+    loadPageData: loadPageData,
+    renderIntoQcfStage: renderIntoQcfStage,
+  };
 })(window);

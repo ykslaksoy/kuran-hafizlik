@@ -3,17 +3,33 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hafızyol — Orijinal çerçeve + QCF</title>
+    <title>Hafızyol — Mehmed Şevki mushaf önizleme</title>
     <link rel="stylesheet" href="/assets/mushaf/qcf-mushaf.css?v=qcf6" />
-    <link rel="stylesheet" href="/preview/mushaf-ms/composite.css?v=1" />
+    <link rel="stylesheet" href="/preview/mushaf-fonts/font-preview.css?v=2" />
+    <link rel="stylesheet" href="/preview/mushaf-ms/composite.css?v=2" />
     <script>
       (function () {
         var q = new URLSearchParams(location.search);
         var page = q.get("page") || "1";
-        var ms = q.get("ms") || "walters-w6722";
+        var ms = q.get("ms") || "mehmed-sevki-gart";
+        var mode = q.get("mode") || "composite";
+        var font = q.get("font") || "qcf-v2";
         if (!/kuran/i.test(location.search)) {
-          history.replaceState(null, "", location.pathname + "?kuran=1&page=" + page + "&ms=" + ms);
+          history.replaceState(
+            null,
+            "",
+            location.pathname +
+              "?kuran=1&page=" +
+              page +
+              "&ms=" +
+              ms +
+              "&mode=" +
+              mode +
+              "&font=" +
+              font
+          );
         }
+        window.__HY_SEVKI = { mode: mode, font: font, page: page };
       })();
     </script>
   </head>
@@ -25,8 +41,19 @@
         </div>
       </div>
     </div>
-    <script src="/assets/timing/quran-timing.js?v=qcf6"></script>
-    <script src="/assets/mushaf/qcf-mushaf.js?v=qcf6"></script>
-    <script src="/preview/mushaf-ms/composite-boot.js?v=1"></script>
+    <script src="/preview/mushaf-ms/composite-boot.js?v=2"></script>
+    <script>
+      (function () {
+        var cfg = window.__HY_SEVKI || {};
+        if (cfg.mode === "original") return;
+        if (cfg.font !== "qcf-v2") return;
+        var t = document.createElement("script");
+        t.src = "/assets/timing/quran-timing.js?v=qcf6";
+        document.body.appendChild(t);
+        var m = document.createElement("script");
+        m.src = "/assets/mushaf/qcf-mushaf.js?v=qcf6";
+        document.body.appendChild(m);
+      })();
+    </script>
   </body>
 </html>
