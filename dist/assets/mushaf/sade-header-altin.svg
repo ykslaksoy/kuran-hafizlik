@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 96" width="860" height="96" fill="none">
+  <title>Hafizyol original Sade Altin surah cartouche</title>
+  <defs>
+    <linearGradient id="gold-v" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6D77A"/>
+      <stop offset="0.45" stop-color="#D4A017"/>
+      <stop offset="1" stop-color="#9C7414"/>
+    </linearGradient>
+    <linearGradient id="gold-d" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6D77A"/>
+      <stop offset="0.5" stop-color="#D4A017"/>
+      <stop offset="1" stop-color="#9C7414"/>
+    </linearGradient>
+    <linearGradient id="gold-hi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF1B0"/>
+      <stop offset="0.35" stop-color="#F6D77A"/>
+      <stop offset="1" stop-color="#D4A017"/>
+    </linearGradient>
+    <path id="rumi" d="M0 0C7.2-12.8 20.4-16.2 26.8-6.4C19.2-6 15.4 2.2 17.6 10.4C24.8 1.6 36.2 0.8 41.2 9.6C28.4 12.8 14.8 20.6 4.2 15.2C9.6 8.4 7.2 2.2 0 0Z"/>
+    <g id="hatayi">
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#F6D77A"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#F6D77A" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#D4A017" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#D4A017" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#9C7414" transform="rotate(22)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#9C7414" transform="rotate(67)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#9C7414" transform="rotate(112)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#9C7414" transform="rotate(157)"/>
+      <circle r="3.4" fill="#FFF1B0"/>
+      <circle r="1.7" fill="#6B4E0E"/>
+      <circle r="0.7" fill="#FFF8D6"/>
+    </g>
+    <g id="corner">
+      <path d="M0 0H86V24H24V86H0Z" fill="url(#gold-d)"/>
+      <path d="M0 0H86V24H24V86H0Z" fill="none" stroke="#4A360C" stroke-width="1.4"/>
+      <path d="M5 5H76V17H17V76H5Z" fill="#8A6410"/>
+      <path d="M5 5H76V17H17V76H5Z" fill="none" stroke="#F6D77A" stroke-width="1.2"/>
+      <use href="#rumi" transform="translate(34 14) rotate(-8) scale(1.05)" fill="url(#gold-hi)"/>
+      <use href="#rumi" transform="translate(14 36) rotate(82) scale(1.05)" fill="url(#gold-hi)"/>
+      <use href="#hatayi" transform="translate(28 28) scale(1.05)"/>
+    </g>
+  </defs>
+  <rect x="10" y="8" width="840" height="80" rx="8" fill="#fbf8f1"/>
+  <rect x="10" y="8" width="840" height="80" rx="8" fill="none" stroke="#4A360C" stroke-width="1.8"/>
+  <rect x="13.2" y="11.2" width="833.6" height="73.6" rx="7" fill="none" stroke="url(#gold-v)" stroke-width="5"/>
+  <rect x="17.8" y="15.8" width="824.4" height="64.4" rx="5" fill="none" stroke="#4A360C" stroke-width="1.4"/>
+  <rect x="20.2" y="18.2" width="819.6" height="59.6" rx="4" fill="none" stroke="url(#gold-hi)" stroke-width="2.2"/>
+  <use href="#corner" transform="translate(10 8)"/>
+  <use href="#corner" transform="translate(850 8) rotate(90)"/>
+  <use href="#corner" transform="translate(850 88) rotate(180)"/>
+  <use href="#corner" transform="translate(10 88) rotate(270)"/>
+</svg>

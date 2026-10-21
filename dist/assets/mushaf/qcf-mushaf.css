@@ -24,6 +24,10 @@
   --hy-sade-paper: #fbf8f1;
   --hy-sade-line: #c9bba0;
   --hy-sade-muted: #6b6356;
+  --hy-gold-hi: #F6D77A;
+  --hy-gold-mid: #D4A017;
+  --hy-gold-lo: #9C7414;
+  --hy-gold-ink: #4A360C;
   --hy-paper: #f3e6c8;
   --hy-paper-deep: #e8d7ad;
   --hy-gold: #d4af37;
@@ -247,15 +251,126 @@ body.hy-style-sade #hy-qcf-pagenum {
 }
 
 body.hy-style-sade .hy-qcf-end {
-  background-image: none !important;
+  color: transparent !important;
+  background-color: transparent !important;
+  background-image: url("/assets/mushaf/ayah-rose-sade.svg?v=qcf11") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 1.18em 1.18em !important;
 }
 
 body.hy-style-sade .hy-qcf-header {
-  color: #3d3428 !important;
-  background: transparent !important;
-  background-image: none !important;
-  border: 1px solid var(--hy-sade-line);
+  flex-direction: column;
+  width: 860px;
+  max-width: 100%;
+  height: 96px;
+  padding: 4px 72px 6px;
+  gap: 1px;
+  color: #2c2418 !important;
+  background-color: transparent !important;
+  background-image: url("/assets/mushaf/sade-header.svg?v=qcf11") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  border: none;
   box-shadow: none;
+}
+
+body.hy-style-sade #hy-qcf-stage.hy-special .hy-qcf-header {
+  font-size: 40px;
+  padding: 4px 72px 6px;
+  box-shadow: none;
+}
+
+body.hy-style-sade .hy-qcf-linebox[data-kind="header"] {
+  overflow: visible;
+}
+
+body.hy-style-sade .hy-qcf-ayah-n {
+  display: flex;
+  color: #fff8ee;
+  font: 700 0.28em/1 "Scheherazade New", "Noto Naskh Arabic", serif;
+  text-shadow: 0 0 1px #7a3a0a;
+}
+
+body.hy-style-tezhip .hy-qcf-ayah-n,
+body.hy-style-tezhip .hy-qcf-header-meta,
+body.hy-style-tezhip #hy-qcf-finial,
+body.hy-style-tezhip #hy-qcf-linehl {
+  display: none !important;
+}
+
+body.hy-style-altin #hy-qcf-ornament {
+  inset: 10px;
+  border: none;
+  background: linear-gradient(165deg, var(--hy-gold-hi) 0%, #E2B31A 34%, var(--hy-gold-mid) 62%, var(--hy-gold-lo) 100%);
+  box-shadow: 0 0 0 2px var(--hy-gold-ink);
+}
+
+body.hy-style-altin #hy-qcf-ornament::before {
+  display: block !important;
+  inset: 11px;
+  border: 2px solid var(--hy-gold-ink);
+  box-shadow:
+    0 0 0 2.6px var(--hy-gold-hi),
+    inset 0 0 0 3.2px var(--hy-gold-mid),
+    inset 0 0 0 5.2px var(--hy-gold-ink);
+  background: var(--hy-sade-paper);
+}
+
+body.hy-style-altin #hy-qcf-ornament svg,
+body.hy-style-altin #hy-qcf-special-frame,
+body.hy-style-altin #hy-qcf-meta,
+body.hy-style-altin #hy-qcf-pagenum,
+body.hy-style-altin #hy-qcf-finial {
+  display: none !important;
+}
+
+body.hy-style-altin .hy-qcf-end {
+  color: transparent !important;
+  background-color: transparent !important;
+  background-image: url("/assets/mushaf/ayah-rose-altin.svg?v=qcf11") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 1.18em 1.18em !important;
+}
+
+body.hy-style-altin .hy-qcf-header {
+  flex-direction: column;
+  width: 860px;
+  max-width: 100%;
+  height: 96px;
+  padding: 4px 72px 6px;
+  gap: 1px;
+  color: #2c2418 !important;
+  background-color: transparent !important;
+  background-image: url("/assets/mushaf/sade-header-altin.svg?v=qcf11") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  border: none;
+  box-shadow: none;
+}
+
+body.hy-style-altin #hy-qcf-stage.hy-special .hy-qcf-header {
+  font-size: 40px;
+  padding: 4px 72px 6px;
+  box-shadow: none;
+}
+
+body.hy-style-altin .hy-qcf-linebox[data-kind="header"] {
+  overflow: visible;
+}
+
+body.hy-style-altin .hy-qcf-ayah-n {
+  display: flex;
+  color: #fff8ee;
+  font: 700 0.28em/1 "Scheherazade New", "Noto Naskh Arabic", serif;
+  text-shadow: 0 0 1px #4A360C;
+}
+
+body.hy-kuran.hy-allah-on #hy-qcf-glyphs .hy-qcf-word.hy-qcf-allah {
+  color: #c2185b !important;
 }
 
 #hy-qcf-special-frame {
@@ -377,11 +492,38 @@ body.hy-style-sade .hy-qcf-header {
 }
 
 .hy-qcf-end {
+  position: relative;
   background-color: transparent !important;
   background-image: url("/assets/mushaf/ayah-rose.svg?v=qcf7") !important;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.18em 1.18em;
+}
+
+.hy-qcf-ayah-n {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hy-qcf-header-name {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.14em;
+  line-height: 1;
+}
+
+.hy-qcf-header-meta {
+  display: block;
+  font: 400 15px/1.1 "Scheherazade New", "Amiri", serif;
+  color: #6a5340;
+  letter-spacing: 0.03em;
+  pointer-events: none;
 }
 
 #hy-qcf-stage.hy-special .hy-qcf-word,
@@ -451,6 +593,40 @@ body.hy-style-sade .hy-qcf-header {
   font-size: 22px;
   color: #1b4332;
   pointer-events: none;
+}
+
+#hy-qcf-linehl {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  z-index: 1;
+  background: rgba(196, 232, 204, 0.62);
+  border-radius: 3px;
+}
+
+body.hy-style-sade #hy-qcf-linehl.hy-on,
+body.hy-style-altin #hy-qcf-linehl.hy-on {
+  display: block;
+}
+
+#hy-qcf-finial {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: none;
+  pointer-events: none;
+  text-align: center;
+  z-index: 1;
+}
+
+body.hy-style-sade #hy-qcf-finial.hy-on {
+  display: block;
+}
+
+#hy-qcf-finial img {
+  width: 168px;
+  height: auto;
+  display: inline-block;
 }
 
 /* Highlight + arrow live in a layer above glyphs and never change text metrics */

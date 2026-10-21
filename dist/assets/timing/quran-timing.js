@@ -364,6 +364,19 @@
     return hl;
   }
 
+  function ensureLineHl() {
+    var el = document.getElementById("hy-qcf-linehl");
+    if (el) return el;
+    var stage = document.getElementById("hy-qcf-stage");
+    var glyphs = document.getElementById("hy-qcf-glyphs");
+    if (!stage) return null;
+    el = document.createElement("div");
+    el.id = "hy-qcf-linehl";
+    if (glyphs && glyphs.parentNode === stage) stage.insertBefore(el, glyphs);
+    else stage.appendChild(el);
+    return el;
+  }
+
   function findByNativeId(id) {
     var qcf = document.querySelector('[data-hy-qcf="' + id.replace(/^hy-l-/, "") + '"]');
     if (qcf) return qcf;
@@ -439,6 +452,11 @@
       el.style.display = "none";
       var hl0 = document.getElementById("hy-qcf-hl");
       if (hl0) hl0.style.display = "none";
+      var lh0 = document.getElementById("hy-qcf-linehl");
+      if (lh0) {
+        lh0.style.display = "none";
+        lh0.classList.remove("hy-on");
+      }
       return;
     }
     var overlay = document.getElementById("hy-qcf-overlay");
@@ -464,6 +482,20 @@
         hl.style.width = Math.max(8, d.width) + "px";
         hl.style.height = Math.max(20, d.height) + "px";
       }
+      var linehl = ensureLineHl();
+      var row = node.getAttribute && node.getAttribute("data-hy-row");
+      var box = row ? document.getElementById("hy-qcf-row-" + row) : null;
+      if (linehl && box && global.hyQcfMushaf && global.hyQcfMushaf.toDesignRect) {
+        var ld = global.hyQcfMushaf.toDesignRect(box.getBoundingClientRect());
+        if (ld) {
+          linehl.classList.add("hy-on");
+          linehl.style.display = "block";
+          linehl.style.left = ld.left + "px";
+          linehl.style.top = ld.top + "px";
+          linehl.style.width = ld.width + "px";
+          linehl.style.height = ld.height + "px";
+        }
+      }
       if (global.hyQcfMushaf && global.hyQcfMushaf.scrollActive) {
         global.hyQcfMushaf.scrollActive(d.top, d.height);
       }
@@ -488,6 +520,11 @@
     if (arrowEl) arrowEl.style.display = "none";
     var hl = document.getElementById("hy-qcf-hl");
     if (hl) hl.style.display = "none";
+    var linehl = document.getElementById("hy-qcf-linehl");
+    if (linehl) {
+      linehl.style.display = "none";
+      linehl.classList.remove("hy-on");
+    }
   }
 
   function onKuran() {

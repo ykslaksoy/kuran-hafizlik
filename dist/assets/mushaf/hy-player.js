@@ -63,6 +63,7 @@
       '<button type="button" data-act="speed" title="Hız" aria-label="Hız">1.0x</button>' +
       '<span class="hy-player-label" id="hy-player-now">Fatiha</span>' +
       '<button type="button" data-act="style" id="hy-style-btn" title="Sayfa stili" aria-label="Sayfa stili">Sade</button>' +
+      '<button type="button" data-act="allah" id="hy-allah-btn" title="Allah lafzı rengi" aria-label="Allah lafzı rengi" aria-pressed="true">الله</button>' +
       '<span class="hy-src-slot" id="hy-src-slot"></span>' +
       "</div>";
     dock.addEventListener("click", onClick);
@@ -145,9 +146,24 @@
       if (global.hyContinuous) global.hyContinuous.setReciter(RECITERS[i].id);
     } else if (act === "style") {
       var cur = (global.hyQcfMushaf && global.hyQcfMushaf.getStyle && global.hyQcfMushaf.getStyle()) || "sade";
-      var next = cur === "sade" ? "tezhip" : "sade";
+      var next = global.hyQcfMushaf && global.hyQcfMushaf.nextStyle ? global.hyQcfMushaf.nextStyle(cur) : cur === "sade" ? "altin" : cur === "altin" ? "tezhip" : "sade";
       if (global.hyQcfMushaf && global.hyQcfMushaf.setStyle) global.hyQcfMushaf.setStyle(next);
-      btn.textContent = next === "sade" ? "Sade" : "Tezhip";
+      btn.textContent =
+        global.hyQcfMushaf && global.hyQcfMushaf.styleLabel
+          ? global.hyQcfMushaf.styleLabel(next)
+          : next === "tezhip"
+            ? "Tezhip"
+            : next === "altin"
+              ? "Altın"
+              : "Sade";
+    } else if (act === "allah") {
+      var onAllah = true;
+      if (global.hyQcfMushaf && global.hyQcfMushaf.getAllah) onAllah = !global.hyQcfMushaf.getAllah();
+      else onAllah = !document.body.classList.contains("hy-allah-on");
+      if (global.hyQcfMushaf && global.hyQcfMushaf.setAllah) global.hyQcfMushaf.setAllah(onAllah);
+      else document.body.classList.toggle("hy-allah-on", onAllah);
+      btn.classList.toggle("on", onAllah);
+      btn.setAttribute("aria-pressed", onAllah ? "true" : "false");
     }
   }
 
@@ -242,7 +258,14 @@
     if (rb) rb.textContent = RECITERS[currentReciterIndex()].label;
     var sb = document.getElementById("hy-style-btn");
     if (sb && global.hyQcfMushaf && global.hyQcfMushaf.getStyle) {
-      sb.textContent = global.hyQcfMushaf.getStyle() === "tezhip" ? "Tezhip" : "Sade";
+      var st = global.hyQcfMushaf.getStyle();
+      sb.textContent = global.hyQcfMushaf.styleLabel ? global.hyQcfMushaf.styleLabel(st) : st === "tezhip" ? "Tezhip" : st === "altin" ? "Altın" : "Sade";
+    }
+    var ab = document.getElementById("hy-allah-btn");
+    if (ab) {
+      var allahOn = global.hyQcfMushaf && global.hyQcfMushaf.getAllah ? global.hyQcfMushaf.getAllah() : true;
+      ab.classList.toggle("on", allahOn);
+      ab.setAttribute("aria-pressed", allahOn ? "true" : "false");
     }
     var lb = dock.querySelector('[data-act="loop"]');
     if (lb) {

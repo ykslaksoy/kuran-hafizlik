@@ -153,6 +153,16 @@
     "Felak",
     "Nâs",
   ];
+  var AYAHS = [
+    0, 7, 286, 200, 176, 120, 165, 206, 75, 129, 109, 123, 111, 43, 52, 99, 128, 111, 110, 98, 135, 112, 78, 118, 64, 77,
+    227, 93, 88, 69, 60, 34, 30, 73, 54, 45, 83, 182, 88, 75, 85, 54, 53, 89, 59, 37, 35, 38, 29, 18, 45, 60, 49, 62, 55,
+    78, 96, 29, 22, 24, 13, 14, 11, 11, 18, 12, 12, 30, 52, 52, 44, 28, 28, 20, 56, 40, 31, 50, 40, 46, 42, 29, 19, 36,
+    25, 22, 17, 19, 26, 30, 20, 15, 21, 11, 8, 8, 19, 5, 8, 8, 11, 11, 8, 3, 9, 5, 4, 7, 3, 6, 3, 5, 4, 5, 6,
+  ];
+  var MADANI = {
+    2: 1, 3: 1, 4: 1, 5: 1, 8: 1, 9: 1, 24: 1, 33: 1, 47: 1, 48: 1, 49: 1, 57: 1, 58: 1, 59: 1, 60: 1, 61: 1, 62: 1,
+    63: 1, 64: 1, 65: 1, 66: 1, 76: 1, 98: 1, 99: 1, 110: 1,
+  };
 
   function onKuran() {
     return /kuran/i.test(location.pathname + location.hash + location.search) || !!document.querySelector('[aria-label="Sonraki sayfa"]');
@@ -309,9 +319,38 @@
     return html;
   }
 
+  function stripUth(s) {
+    return String(s || "")
+      .replace(/[\u0640\u064B-\u065F\u0670\u06D6-\u06ED]/g, "")
+      .replace(/[ٱأإآ]/g, "ا");
+  }
+
+  function isAllahUth(uth) {
+    var t = stripUth(uth);
+    if (t === "الله" || t === "لله" || t === "الرحمن" || t === "الرحيم") return true;
+    if (/^(و|ب|ت|ف|ل)الله$/.test(t)) return true;
+    if (/^(و|ف)لله$/.test(t)) return true;
+    return false;
+  }
+
+  function headerMeta(id) {
+    var n = AYAHS[id] || 0;
+    var rev = MADANI[id] ? "مدنية" : "مكية";
+    var unit = n === 1 ? "آية" : "آيات";
+    return rev + " · " + toIndic(n) + " " + unit;
+  }
+
   function headerHtml(ch) {
     var id = ch && ch.id ? ch.id : 0;
-    return '<span class="hy-qcf-header">' + bsmlSpan([BSML_SURA, surahNameCode(id)]) + "</span>";
+    return (
+      '<span class="hy-qcf-header">' +
+      '<span class="hy-qcf-header-name">' +
+      bsmlSpan([BSML_SURA, surahNameCode(id)]) +
+      "</span>" +
+      '<span class="hy-qcf-header-meta">' +
+      esc(headerMeta(id)) +
+      "</span></span>"
+    );
   }
 
   function bismillahHtml(page) {
@@ -640,6 +679,7 @@
         '<div id="hy-qcf-ornament" aria-hidden="true"></div>' +
         '<div id="hy-qcf-special-frame" aria-hidden="true"></div>' +
         '<div id="hy-qcf-meta"></div>' +
+        '<div id="hy-qcf-linehl"></div>' +
         '<div id="hy-qcf-glyphs"></div>' +
         '<div id="hy-qcf-overlay"><div id="hy-qcf-hl"></div></div>' +
         '<div id="hy-qcf-pagenum"></div>' +
@@ -657,7 +697,7 @@
     var orn = document.getElementById("hy-qcf-ornament");
     if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
     orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf9")
+    fetch("/assets/mushaf/tezhip.svg?v=qcf11")
       .then(function (r) {
         return r.ok ? r.text() : "";
       })
@@ -669,20 +709,64 @@
       .catch(function () {});
   }
 
+  function normalizeStyle(style) {
+    if (style === "tezhip" || style === "altin") return style;
+    return "sade";
+  }
+
+  function styleLabel(style) {
+    if (style === "tezhip") return "Tezhip";
+    if (style === "altin") return "Altın";
+    return "Sade";
+  }
+
+  function nextStyle(style) {
+    if (style === "sade") return "altin";
+    if (style === "altin") return "tezhip";
+    return "sade";
+  }
+
   function readStyle() {
     try {
       var s = global.localStorage && localStorage.getItem("hyPageStyle");
-      if (s === "tezhip" || s === "sade") return s;
+      if (s === "tezhip" || s === "sade" || s === "altin") return s;
     } catch (e) {}
     return "sade";
   }
 
+  function readAllah() {
+    try {
+      var s = global.localStorage && localStorage.getItem("hyAllahColor");
+      if (s === "0") return false;
+    } catch (e) {}
+    return true;
+  }
+
+  function applyAllah(on) {
+    document.body.classList.toggle("hy-allah-on", !!on);
+    var btn = document.getElementById("hy-allah-btn");
+    if (btn) {
+      btn.classList.toggle("on", !!on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    }
+  }
+
+  function setAllah(on) {
+    applyAllah(!!on);
+    try {
+      localStorage.setItem("hyAllahColor", on ? "1" : "0");
+    } catch (e3) {}
+  }
+
   function applyStyle(style) {
-    pageStyle = style === "tezhip" ? "tezhip" : "sade";
+    pageStyle = normalizeStyle(style);
     document.body.classList.toggle("hy-style-sade", pageStyle === "sade");
+    document.body.classList.toggle("hy-style-altin", pageStyle === "altin");
     document.body.classList.toggle("hy-style-tezhip", pageStyle === "tezhip");
     var btn = document.getElementById("hy-style-btn");
-    if (btn) btn.textContent = pageStyle === "sade" ? "Sade" : "Tezhip";
+    if (btn) btn.textContent = styleLabel(pageStyle);
+    applyAllah(readAllah());
+    if (paintedData) placeFinial(paintedData);
   }
 
   function setStyle(style) {
@@ -692,6 +776,33 @@
     } catch (e2) {}
     lastFitKey = "";
     scheduleFit();
+  }
+
+  function placeFinial(data) {
+    var glyphs = document.getElementById("hy-qcf-glyphs");
+    if (!glyphs) return;
+    var old = document.getElementById("hy-qcf-finial");
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    if (!data || pageStyle !== "sade") return;
+    var verses = data.verses || [];
+    if (!verses.length) return;
+    var last = verses[verses.length - 1];
+    var total = AYAHS[last.surah] || 0;
+    if (!total || last.ayah !== total) return;
+    var boxes = glyphs.querySelectorAll(".hy-qcf-linebox");
+    var lastBox = boxes.length ? boxes[boxes.length - 1] : null;
+    if (!lastBox) return;
+    var lastTop = parseFloat(lastBox.style.top) || 0;
+    var room = 1470 - (lastTop + LINE_H + 24);
+    if (room < 140) return;
+    var fin = document.createElement("div");
+    fin.id = "hy-qcf-finial";
+    fin.className = "hy-on";
+    fin.setAttribute("aria-hidden", "true");
+    var top = lastTop + LINE_H + Math.max(8, Math.min(36, (room - 220) / 2));
+    fin.style.top = top + "px";
+    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=qcf11" alt="" width="168" height="214" />';
+    glyphs.appendChild(fin);
   }
 
   function currentScale() {
@@ -724,7 +835,9 @@
     var availH = Math.max(120, box.height);
     var landscape = window.innerWidth > window.innerHeight;
     var s =
-      pageStyle === "sade" || landscape ? availW / DESIGN_W : Math.min(availW / DESIGN_W, availH / DESIGN_H);
+      pageStyle === "sade" || pageStyle === "altin" || landscape
+        ? availW / DESIGN_W
+        : Math.min(availW / DESIGN_W, availH / DESIGN_H);
     var key = pageStyle + ":" + s.toFixed(4) + ":" + Math.round(availW) + "x" + Math.round(availH);
     if (key === lastFitKey) return;
     lastFitKey = key;
@@ -796,10 +909,17 @@
         });
         line.words.forEach(function (w, wi) {
           var cls = w.type === "end" ? "hy-qcf-end" : "hy-qcf-word";
-          var extra =
-            w.type === "word"
-              ? ' data-hy-qcf-word="' + w.surah + ":" + w.ayah + ":" + w.pos + '" data-uth="' + esc(w.uth) + '"'
-              : "";
+          var extra = "";
+          if (w.type === "word") {
+            extra =
+              ' data-hy-qcf-word="' + w.surah + ":" + w.ayah + ":" + w.pos + '" data-uth="' + esc(w.uth) + '"';
+            if (isAllahUth(w.uth)) {
+              cls += " hy-qcf-allah";
+              extra += ' data-hy-allah="1"';
+            }
+          } else {
+            extra = ' data-hy-ayah-end="' + w.surah + ":" + w.ayah + '"';
+          }
           html +=
             '<span class="' +
             cls +
@@ -808,9 +928,14 @@
             ' style="font-family:\'' +
             name +
             "',local('Hafizyol-QCF-Missing');font-synthesis:none\">" +
-            esc(w.code) +
-            "</span>" +
-            (wi < line.words.length - 1 ? " " : "");
+            esc(w.code);
+          if (w.type === "end") {
+            html +=
+              '<span class="hy-qcf-ayah-n" aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none">' +
+              toIndic(w.ayah) +
+              "</span>";
+          }
+          html += "</span>" + (wi < line.words.length - 1 ? " " : "");
         });
       }
       html += "</div>";
@@ -820,6 +945,7 @@
     paintedPage = data.page;
     paintedFont = name;
     document.body.classList.add("hy-kuran", "hy-qcf-on");
+    placeFinial(data);
     scheduleFit();
     Promise.all([loadFont(data.page, data.fontRemote || data.font, pageSample(data)), loadBsml()])
       .then(function () {
@@ -927,6 +1053,8 @@
         }
       }
       el.setAttribute("data-hy-local", ayahIndex + "-" + wordIndex);
+      var rowEl = el.closest ? el.closest(".hy-qcf-linebox") : el.parentElement;
+      var row = rowEl && (rowEl.getAttribute("data-hy-qcf-row") || "");
       var voiced = voicedGlyphs(el.getAttribute("data-uth") || "");
       var count = voiced.length;
       var r = el.getBoundingClientRect();
@@ -942,6 +1070,7 @@
         hit.setAttribute("data-hy-ayah", String(ayahIndex));
         hit.setAttribute("data-hy-word", String(wordIndex));
         hit.setAttribute("data-hy-letter", String(li));
+        if (row) hit.setAttribute("data-hy-row", row);
         hit.style.position = "absolute";
         hit.style.pointerEvents = "none";
         hit.style.top = top + "px";
@@ -984,11 +1113,12 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf9";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf11";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
     applyStyle(pageStyle);
+    applyAllah(readAllah());
     paint();
     window.addEventListener("resize", scheduleFit);
     window.addEventListener("orientationchange", function () {
@@ -1051,6 +1181,10 @@
     getStyle: function () {
       return pageStyle;
     },
+    styleLabel: styleLabel,
+    nextStyle: nextStyle,
+    setAllah: setAllah,
+    getAllah: readAllah,
     scrollActive: scrollActive,
     currentScale: currentScale,
     DESIGN_W: DESIGN_W,

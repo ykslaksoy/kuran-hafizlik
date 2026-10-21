@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 96" width="860" height="96" fill="none">
+  <title>Hafizyol original sade surah cartouche</title>
+  <defs>
+    <linearGradient id="g-leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3aa36a"/>
+      <stop offset="1" stop-color="#145a3a"/>
+    </linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3c45a"/>
+      <stop offset="1" stop-color="#c88812"/>
+    </linearGradient>
+    <path id="rumi" d="M0 0C7.2-12.8 20.4-16.2 26.8-6.4C19.2-6 15.4 2.2 17.6 10.4C24.8 1.6 36.2 0.8 41.2 9.6C28.4 12.8 14.8 20.6 4.2 15.2C9.6 8.4 7.2 2.2 0 0Z"/>
+    <g id="hatayi">
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#e39b16"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#e39b16" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#e39b16" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#e39b16" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#c88812" transform="rotate(22)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#c88812" transform="rotate(67)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#c88812" transform="rotate(112)"/>
+      <ellipse cx="0" cy="-7.2" rx="2.6" ry="6.4" fill="#c88812" transform="rotate(157)"/>
+      <circle r="3.4" fill="#f4e3a1"/>
+      <circle r="1.7" fill="#8a2a22"/>
+      <circle r="0.7" fill="#fff6d6"/>
+    </g>
+    <g id="corner">
+      <path d="M0 0H86V24H24V86H0Z" fill="#1b6b4a"/>
+      <path d="M5 5H76V17H17V76H5Z" fill="#0f4a32"/>
+      <path d="M5 5H76V17H17V76H5Z" fill="none" stroke="#f3c45a" stroke-width="1.1"/>
+      <use href="#rumi" transform="translate(34 14) rotate(-8) scale(1.05)" fill="url(#g-gold)"/>
+      <use href="#rumi" transform="translate(14 36) rotate(82) scale(1.05)" fill="url(#g-gold)"/>
+      <use href="#hatayi" transform="translate(28 28) scale(1.05)"/>
+    </g>
+  </defs>
+  <rect x="10" y="8" width="840" height="80" rx="12" fill="#fbf6e8"/>
+  <rect x="10" y="8" width="840" height="80" rx="12" fill="none" stroke="#c9a24a" stroke-width="1.6"/>
+  <rect x="14" y="12" width="832" height="72" rx="9" fill="none" stroke="#2f8f62" stroke-width="1.15"/>
+  <rect x="18" y="16" width="824" height="64" rx="7" fill="none" stroke="#e8c56a" stroke-width="0.7" opacity="0.85"/>
+  <use href="#corner" transform="translate(10 8)"/>
+  <use href="#corner" transform="translate(850 8) rotate(90)"/>
+  <use href="#corner" transform="translate(850 88) rotate(180)"/>
+  <use href="#corner" transform="translate(10 88) rotate(270)"/>
+</svg>
