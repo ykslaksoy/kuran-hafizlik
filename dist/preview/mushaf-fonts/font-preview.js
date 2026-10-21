@@ -218,18 +218,30 @@
     var v0 = pageData.verses && pageData.verses[0];
     var juz = pageData.juz || 1;
     stage.className = pageData.page <= 2 ? "hy-special" : "";
+    var metaEl = document.getElementById("hy-qcf-meta");
+    var glyphsEl = document.getElementById("hy-qcf-glyphs");
+    var overlayEl = document.getElementById("hy-qcf-overlay");
+    var pnumEl = document.getElementById("hy-qcf-pagenum");
+    var metaHtml =
+      '<span>الجزء ' + toIndic(juz) + '</span><span>' + esc(v0 && v0.key ? v0.key : "") + "</span>";
+    var glyphsHtml = buildStageHtml(def);
+    var pnumHtml = toIndic(pageData.page);
+    if (opts.sevki && glyphsEl) {
+      if (metaEl) metaEl.innerHTML = metaHtml;
+      glyphsEl.innerHTML = glyphsHtml;
+      if (pnumEl) pnumEl.textContent = pnumHtml;
+      return;
+    }
     var inner =
-      '<div id="hy-qcf-meta" style="position:absolute;top:20px;left:40px;right:40px;display:flex;justify-content:space-between;direction:rtl;font-size:15px;color:#9a9690"><span>الجزء ' +
-      toIndic(juz) +
-      '</span><span>' +
-      esc(v0 && v0.key ? v0.key : "") +
-      "</span></div>" +
+      '<div id="hy-qcf-meta" style="position:absolute;top:20px;left:40px;right:40px;display:flex;justify-content:space-between;direction:rtl;font-size:15px;color:#9a9690">' +
+      metaHtml +
+      "</div>" +
       '<div id="hy-qcf-glyphs">' +
-      buildStageHtml(def) +
+      glyphsHtml +
       "</div>" +
       '<div id="hy-qcf-overlay"><div id="hy-qcf-hl"></div></div>' +
       '<div id="hy-qcf-pagenum" style="position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:17px;color:#8a8680">' +
-      toIndic(pageData.page) +
+      pnumHtml +
       "</div>";
     if (opts.sevki) {
       stage.innerHTML = inner;
@@ -244,18 +256,26 @@
   }
 
   function ensureQcfHost(frame) {
-    frame.style.position = frame.style.position || "relative";
+    var shell = document.body.classList.contains("hy-ms-composite") ? document.getElementById("hy-ms-shell") : null;
+    var parent = shell || frame;
+    if (frame) frame.style.position = frame.style.position || "relative";
     var host = document.getElementById("hy-qcf-host");
     if (!host) {
       host = document.createElement("div");
       host.id = "hy-qcf-host";
       host.innerHTML =
         '<div id="hy-qcf-fit"><div id="hy-qcf-stage" class="hy-waiting">' +
+        '<div id="hy-qcf-meta" style="position:absolute;top:20px;left:40px;right:40px;display:flex;justify-content:space-between;direction:rtl;font-size:15px;color:#9a9690"></div>' +
+        '<div id="hy-qcf-glyphs"></div>' +
+        '<div id="hy-qcf-overlay"><div id="hy-qcf-hl"></div></div>' +
+        '<div id="hy-qcf-pagenum" style="position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:17px;color:#8a8680"></div>' +
         '<div id="hy-qcf-wait">Sayfa hattı yükleniyor</div></div></div>';
-      frame.appendChild(host);
-    } else if (host.parentElement !== frame) {
-      frame.appendChild(host);
+      parent.appendChild(host);
+    } else if (host.parentElement !== parent) {
+      parent.appendChild(host);
     }
+    host.style.position = "absolute";
+    host.style.inset = "0";
     return host;
   }
 
@@ -264,7 +284,10 @@
     var fit = document.getElementById("hy-qcf-fit");
     var stage = document.getElementById("hy-qcf-stage");
     if (!host || !fit || !stage) return;
-    var box = host.getBoundingClientRect();
+    host.style.position = "absolute";
+    host.style.inset = "0";
+    var shell = document.getElementById("hy-ms-shell") || host.parentElement;
+    var box = shell ? shell.getBoundingClientRect() : host.getBoundingClientRect();
     var s = Math.min(Math.max(120, box.width) / DESIGN_W, Math.max(160, box.height) / DESIGN_H);
     fit.style.width = DESIGN_W * s + "px";
     fit.style.height = DESIGN_H * s + "px";
@@ -287,7 +310,13 @@
       var wait = document.getElementById("hy-qcf-wait");
       if (wait) wait.style.display = "none";
       mountStage(stage, def, { sevki: true });
-      fitQcfHost();
+      var fitTries = 0;
+      function refit() {
+        fitQcfHost();
+        fitTries++;
+        if (fitTries < 30) requestAnimationFrame(refit);
+      }
+      refit();
       window.addEventListener("resize", fitQcfHost);
     });
   }
@@ -406,11 +435,19 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 
+  function bootSevki(slug, n) {
+    pageNum = n || 1;
+    return loadPageData(pageNum).then(function () {
+      return renderIntoQcfStage(slug);
+    });
+  }
+
   global.hyFontPreview = {
     FONTS: FONTS,
     resolveDef: resolveDef,
     renderOne: renderOne,
     loadPageData: loadPageData,
     renderIntoQcfStage: renderIntoQcfStage,
+    bootSevki: bootSevki,
   };
 })(window);

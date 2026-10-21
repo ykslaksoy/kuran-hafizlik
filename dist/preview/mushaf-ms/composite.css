@@ -33,12 +33,31 @@ body.hy-ms-original #hy-qcf-wait {
   display: none !important;
 }
 
+body.hy-ms-composite #hy-qcf-meta {
+  display: none !important;
+}
+
+body.hy-ms-composite .hy-qcf-header {
+  background: transparent !important;
+  border: none !important;
+  color: #1a1208 !important;
+  font-weight: 600 !important;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.35);
+  padding: 10px 24px !important;
+}
+
 #hy-ms-shell {
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+body.hy-ms-composite #hy-qcf-host {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
 }
 
 .hy-qcf-frame-mount {
@@ -70,8 +89,7 @@ body.hy-ms-preview #hy-qcf-fit {
   position: absolute;
   inset: 0;
   background-repeat: no-repeat;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+  image-rendering: auto;
 }
 
 .hy-ms-original-stage {
@@ -81,55 +99,11 @@ body.hy-ms-preview #hy-qcf-fit {
   overflow: hidden;
 }
 
-#hy-ms-matte {
-  position: absolute;
-  overflow: hidden;
-  z-index: 2;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 36px, #000 calc(100% - 36px), transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 36px, #000 calc(100% - 36px), transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 36px, #000 calc(100% - 36px), transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 36px, #000 calc(100% - 36px), transparent 100%);
-  mask-composite: intersect;
-}
-
-#hy-ms-matte-veil {
-  position: absolute;
-  left: -56px;
-  top: -72px;
-  width: 1000px;
-  height: 1610px;
-  background-repeat: no-repeat;
-  filter: blur(14px) saturate(1.02) brightness(1.06);
-  opacity: 0.38;
-}
-
-#hy-ms-matte-paper {
-  position: absolute;
-  inset: 0;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  filter: contrast(1.02) brightness(1.03);
-}
-
-#hy-ms-matte-grain {
-  position: absolute;
-  inset: 0;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  opacity: 0.22;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
 #hy-qcf-glyphs {
   position: absolute;
   z-index: 4;
 }
 
-#hy-qcf-meta,
 #hy-qcf-pagenum {
   z-index: 3;
 }

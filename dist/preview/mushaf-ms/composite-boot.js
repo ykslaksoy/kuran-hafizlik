@@ -8,18 +8,19 @@
 
   var DESIGN_W = 1000;
   var DESIGN_H = 1610;
-  var TEXT = { left: 56, top: 72, w: 888, h: 1470 };
 
   document.body.classList.add("hy-ms-preview", "hy-frame-preview", "hy-kuran");
   document.body.setAttribute("data-hy-sevki-mode", mode);
   document.body.setAttribute("data-hy-sevki-font", font);
   if (mode === "original") document.body.classList.add("hy-ms-original");
+  else document.body.classList.add("hy-ms-composite");
 
   var meta = null;
   var imgUrl = "";
-  var matteReady = false;
+  var frameReady = false;
+  var glyphsReady = false;
 
-  function bgStyle() {
+  function bgStyleOriginal() {
     var sizeW = (meta && meta.bgSizeDesign && meta.bgSizeDesign.w) || DESIGN_W;
     var sizeH = (meta && meta.bgSizeDesign && meta.bgSizeDesign.h) || DESIGN_H;
     return {
@@ -30,13 +31,12 @@
     };
   }
 
-  function applyBg(el) {
+  function applyBg(el, style) {
     if (!el) return;
-    var s = bgStyle();
-    el.style.backgroundImage = s.backgroundImage;
-    el.style.backgroundSize = s.backgroundSize;
-    el.style.backgroundRepeat = s.backgroundRepeat;
-    el.style.backgroundPosition = s.backgroundPosition;
+    el.style.backgroundImage = style.backgroundImage;
+    el.style.backgroundSize = style.backgroundSize;
+    el.style.backgroundRepeat = style.backgroundRepeat;
+    el.style.backgroundPosition = style.backgroundPosition;
   }
 
   function findFrame() {
@@ -45,105 +45,54 @@
     return row.parentElement && row.parentElement.parentElement;
   }
 
-  function buildPaperFill(dataUrl, cb) {
-    if (!meta || !meta.sample) return cb(null);
-    var img = new Image();
-    img.onload = function () {
-      var sx = Math.floor(meta.sample.x * img.width);
-      var sy = Math.floor(meta.sample.y * img.height);
-      var sw = Math.max(24, Math.floor(meta.sample.w * img.width));
-      var sh = Math.max(24, Math.floor(meta.sample.h * img.height));
-      var fill = document.createElement("canvas");
-      fill.width = TEXT.w;
-      fill.height = TEXT.h;
-      var ctx = fill.getContext("2d");
-      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, TEXT.w, TEXT.h);
-      cb(fill.toDataURL("image/jpeg", 0.93));
-    };
-    img.onerror = function () {
-      cb(null);
-    };
-    img.src = dataUrl;
-  }
-
-  function buildGrain(dataUrl, cb) {
-    if (!meta || !meta.sample) return cb(null);
-    var img = new Image();
-    img.onload = function () {
-      var sx = Math.floor(meta.sample.x * img.width);
-      var sy = Math.floor(meta.sample.y * img.height);
-      var sw = Math.max(8, Math.floor(meta.sample.w * img.width));
-      var sh = Math.max(8, Math.floor(meta.sample.h * img.height));
-      var c = document.createElement("canvas");
-      c.width = 256;
-      c.height = 256;
-      c.getContext("2d").drawImage(img, sx, sy, sw, sh, 0, 0, 256, 256);
-      cb(c.toDataURL("image/jpeg", 0.88));
-    };
-    img.onerror = function () {
-      cb(null);
-    };
-    img.src = dataUrl;
-  }
-
-  function matteHtml() {
-    return (
-      '<div id="hy-ms-matte" style="left:' +
-      TEXT.left +
-      "px;top:" +
-      TEXT.top +
-      "px;width:" +
-      TEXT.w +
-      "px;height:" +
-      TEXT.h +
-      'px">' +
-      '<div id="hy-ms-matte-veil"></div>' +
-      '<div id="hy-ms-matte-paper"></div>' +
-      '<div id="hy-ms-matte-grain"></div>' +
-      "</div>"
-    );
-  }
-
-  function applyMatte(paperUrl, grainUrl) {
-    var veil = document.getElementById("hy-ms-matte-veil");
-    var paper = document.getElementById("hy-ms-matte-paper");
-    var grain = document.getElementById("hy-ms-matte-grain");
-    if (veil) applyBg(veil);
-    if (paper && paperUrl) paper.style.backgroundImage = "url(" + paperUrl + ")";
-    if (grain && grainUrl) grain.style.backgroundImage = "url(" + grainUrl + ")";
-  }
-
   function ensureMsLayer(stage) {
     if (!stage || stage.querySelector("#hy-ms-layer")) return;
     var layer = document.createElement("div");
     layer.id = "hy-ms-layer";
-    if (mode === "original") {
-      layer.innerHTML = '<div id="hy-ms-bg"></div>';
-    } else {
-      layer.innerHTML = '<div id="hy-ms-bg"></div>' + matteHtml();
-    }
+    layer.innerHTML = '<div id="hy-ms-bg"></div>';
     stage.insertBefore(layer, stage.firstChild);
-    applyBg(document.getElementById("hy-ms-bg"));
     var orn = document.getElementById("hy-qcf-ornament");
     if (orn) orn.style.display = "none";
   }
 
-  function markReady() {
-    matteReady = true;
-    document.body.setAttribute("data-hy-ms-ready", "1");
+  function buildCompositeFrame(stage) {
+    if (frameReady || !meta || !window.hySevkiComposite) return;
+    var cfg = meta.compositePages && meta.compositePages[String(page)];
+    if (!cfg) return;
+    var img = new Image();
+    img.onload = function () {
+      var dataUrl = window.hySevkiComposite.buildFrame(img, cfg);
+      var bg = document.getElementById("hy-ms-bg");
+      if (bg) {
+        bg.style.backgroundImage = "url(" + dataUrl + ")";
+        bg.style.backgroundSize = DESIGN_W + "px " + DESIGN_H + "px";
+        bg.style.backgroundRepeat = "no-repeat";
+        bg.style.backgroundPosition = "0 0";
+      }
+      frameReady = true;
+      tryMarkReady();
+    };
+    img.onerror = function () {
+      document.body.setAttribute("data-hy-ms-ready", "error");
+    };
+    img.src = imgUrl;
   }
 
-  function finishMatte() {
+  function glyphsPresent() {
+    var g = document.querySelector("#hy-qcf-glyphs");
+    if (!g) return false;
+    return g.querySelector(".hy-qcf-linebox, .hy-qcf-word, .hy-qcf-header");
+  }
+
+  function tryMarkReady() {
     if (mode === "original") {
-      markReady();
+      document.body.setAttribute("data-hy-ms-ready", "1");
       return;
     }
-    buildPaperFill(imgUrl, function (paper) {
-      buildGrain(imgUrl, function (grain) {
-        applyMatte(paper, grain);
-        markReady();
-      });
-    });
+    if (!frameReady) return;
+    if (!glyphsReady && !glyphsPresent()) return;
+    glyphsReady = true;
+    document.body.setAttribute("data-hy-ms-ready", "1");
   }
 
   function ensureOriginalStage() {
@@ -164,11 +113,9 @@
         "</div></div>";
       frame.appendChild(host);
     }
-    var stage = document.getElementById("hy-qcf-stage");
-    stage.classList.remove("hy-waiting");
-    applyBg(document.getElementById("hy-ms-bg"));
+    applyBg(document.getElementById("hy-ms-bg"), bgStyleOriginal());
     fitOriginal();
-    if (!matteReady) markReady();
+    tryMarkReady();
     return true;
   }
 
@@ -191,12 +138,13 @@
     var stage = document.getElementById("hy-qcf-stage");
     if (!stage || stage.classList.contains("hy-waiting") || !meta || !imgUrl) return false;
     ensureMsLayer(stage);
-    if (!matteReady) finishMatte();
-    return matteReady;
+    buildCompositeFrame(stage);
+    tryMarkReady();
+    return frameReady;
   }
 
   function bootCompositeAltFont() {
-    if (!window.hyFontPreview || !window.hyFontPreview.renderIntoQcfStage) return false;
+    if (!window.hyFontPreview || !window.hyFontPreview.renderIntoQcfStage) return;
     window.hyFontPreview
       .loadPageData(page)
       .then(function () {
@@ -204,22 +152,12 @@
       })
       .then(function () {
         ensureCompositeLayer();
+        glyphsReady = true;
+        tryMarkReady();
       })
       .catch(function () {
         document.body.setAttribute("data-hy-ms-ready", "error");
       });
-    return true;
-  }
-
-  function loadScripts() {
-    if (mode === "original") return;
-    if (font === "qcf-v2") return;
-    var s = document.createElement("script");
-    s.src = "/preview/mushaf-fonts/font-preview.js?v=2";
-    s.onload = function () {
-      bootCompositeAltFont();
-    };
-    document.head.appendChild(s);
   }
 
   fetch("/preview/mushaf-ms/manuscripts.json")
@@ -236,7 +174,6 @@
         window.addEventListener("resize", fitOriginal);
         return;
       }
-      if (font !== "qcf-v2") loadScripts();
     });
 
   var tries = 0;
@@ -245,9 +182,18 @@
       ensureOriginalStage();
     } else if (font === "qcf-v2") {
       ensureCompositeLayer();
-    } else if (document.getElementById("hy-qcf-stage") && !document.getElementById("hy-qcf-stage").classList.contains("hy-waiting")) {
-      ensureCompositeLayer();
+      if (glyphsPresent()) {
+        glyphsReady = true;
+        tryMarkReady();
+      }
+    } else if (window.hyFontPreview && !glyphsReady) {
+      if (!document.getElementById("hy-qcf-stage")) bootCompositeAltFont();
+      else ensureCompositeLayer();
+      if (glyphsPresent()) {
+        glyphsReady = true;
+        tryMarkReady();
+      }
     }
-    if (document.body.getAttribute("data-hy-ms-ready") === "1" || tries++ > 250) clearInterval(t);
+    if (document.body.getAttribute("data-hy-ms-ready") === "1" || tries++ > 300) clearInterval(t);
   }, 120);
 })();

@@ -11,14 +11,29 @@
     "license": "Public domain (PD-Art / PD-old-100-expired)",
     "licenseUrl": "https://commons.wikimedia.org/wiki/Commons:Copyright_tags#PD-Art",
     "commercial": "Commons PD-Art: ticari kullanım serbest (ABD); AttributionRequired=false",
-    "credit": "Mehmed Şevki Efendi, ca. 1862 — Sakıp Sabancı Müzesi via Google Arts & Culture (Commons maksimum zoom taraması)",
+    "credit": "Mehmed Şevki Efendi, ca. 1862 — Sakıp Sabancı Müzesi via Google Arts & Culture",
     "pixelWidth": 3737,
     "pixelHeight": 3169,
     "bytes": 7498981,
-    "matteProfile": "mushaf",
     "bgPosition": "50% 40%",
     "bgSizeDesign": { "w": 1904, "h": 1610 },
-    "sample": { "x": 0.06, "y": 0.08, "w": 0.08, "h": 0.06 },
-    "pagesNote": "Commons’ta bu mushaf için yalnızca tek PD tam sayfa taraması (3737×3169) bulundu; Fâtiha ve Bakara önizlemelerinde aynı tezhib çerçevesi kullanılıyor, composite modda metin sayfa 1/2 QCF düzenine göre değişir."
+    "compositePages": {
+      "1": {
+        "pageRect": { "x": 0.518, "y": 0.05, "w": 0.44, "h": 0.9 },
+        "paperAbs": { "x": 0.492, "y": 0.28, "w": 0.018, "h": 0.05 },
+        "headerBand": {
+          "src": { "x": 0.06, "y": 0.138, "w": 0.88, "h": 0.085 },
+          "dest": { "x": 108, "y": 102, "w": 784, "h": 108 }
+        }
+      },
+      "2": {
+        "pageRect": { "x": 0.042, "y": 0.05, "w": 0.44, "h": 0.9 },
+        "paperAbs": { "x": 0.492, "y": 0.28, "w": 0.018, "h": 0.05 },
+        "headerBand": {
+          "src": { "x": 0.06, "y": 0.138, "w": 0.88, "h": 0.085 },
+          "dest": { "x": 108, "y": 102, "w": 784, "h": 108 }
+        }
+      }
+    }
   }
 ]
