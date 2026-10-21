@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hafızyol — Mushaf çerçeve önizleme</title>
+    <link rel="preload" as="font" type="font/woff2" href="/assets/mushaf/fonts/qcf/p1.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/assets/mushaf/fonts/qcf/p50.woff2" crossorigin />
+    <link rel="stylesheet" href="/assets/mushaf/qcf-mushaf.css?v=qcf6" />
+    <link rel="stylesheet" href="/preview/mushaf-frames/frame-themes.css?v=1" />
+    <script>
+      (function () {
+        var q = new URLSearchParams(location.search);
+        var alt = q.get("alt") || "A";
+        var page = q.get("page") || "1";
+        if (!/kuran/i.test(location.search)) {
+          history.replaceState(null, "", location.pathname + "?kuran=1&page=" + page + "&alt=" + alt);
+        }
+      })();
+    </script>
+    <style>
+      html, body { height: 100%; margin: 0; }
+      #root { display: block; height: 100%; }
+      .hy-preview-shell { width: 100%; height: 100%; }
+      .hy-qcf-frame-mount { position: absolute; inset: 0; }
+      .hy-qcf-frame-mount > div { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="hy-preview-shell">
+        <div class="hy-qcf-frame-mount" aria-hidden="true">
+          <div><div><div id="hy-row-0"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <script src="/assets/timing/quran-timing.js?v=qcf6"></script>
+    <script src="/preview/mushaf-frames/deco-svgs.js?v=1"></script>
+    <script src="/assets/mushaf/qcf-mushaf.js?v=qcf6"></script>
+    <script src="/preview/mushaf-frames/preview-boot.js?v=1"></script>
+  </body>
+</html>

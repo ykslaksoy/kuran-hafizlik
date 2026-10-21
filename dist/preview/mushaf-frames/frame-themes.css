@@ -1,0 +1,334 @@
+/**
+ * Hafızyol — mushaf çerçeve önizleme temaları (A/B/C/D).
+ * QCF V2 kilitli tuval (1000×1610) ve #hy-qcf-glyphs yerleşimi değişmez.
+ */
+:root {
+  --hy-preview-ink: #141414;
+}
+
+body.hy-frame-preview {
+  margin: 0;
+  overflow: hidden;
+}
+
+body.hy-frame-preview.hy-kuran {
+  background: #0a1628 !important;
+}
+
+body.hy-frame-preview #hy-player-dock,
+body.hy-frame-preview #hy-timing-source {
+  display: none !important;
+}
+
+body.hy-frame-preview #root {
+  padding-bottom: 0 !important;
+}
+
+body.hy-frame-preview .hy-preview-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+body.hy-frame-preview #hy-qcf-host {
+  position: absolute !important;
+  inset: 0 !important;
+}
+
+body.hy-frame-preview .hy-book-frame {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  align-self: stretch !important;
+}
+
+/* ——— Ortak: kahverengi dış dolgu yok ——— */
+body.hy-frame-preview.hy-frame-alt-a,
+body.hy-frame-preview.hy-frame-alt-b,
+body.hy-frame-preview.hy-frame-alt-c {
+  background: #0a1628 !important;
+}
+
+body.hy-frame-preview.hy-frame-alt-a #hy-qcf-host {
+  background: radial-gradient(ellipse 120% 80% at 50% 20%, #1a3058 0%, #0a1628 55%, #060d18 100%);
+}
+
+body.hy-frame-preview.hy-frame-alt-b #hy-qcf-host {
+  background: linear-gradient(165deg, #e8e4d8 0%, #d4cfc0 45%, #c9c3b2 100%);
+}
+
+body.hy-frame-preview.hy-frame-alt-c #hy-qcf-host {
+  background: radial-gradient(circle at 50% 30%, #1e3a6e 0%, #0c1a33 50%, #050a14 100%);
+}
+
+#hy-qcf-ornament .hy-frame-deco {
+  position: absolute;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+#hy-qcf-ornament .hy-frame-corners {
+  position: absolute;
+  inset: 0;
+}
+
+#hy-qcf-ornament .hy-frame-corners svg {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+}
+
+#hy-qcf-ornament .hy-corner-tl { top: 0; left: 0; }
+#hy-qcf-ornament .hy-corner-tr { top: 0; right: 0; transform: scaleX(-1); }
+#hy-qcf-ornament .hy-corner-bl { bottom: 0; left: 0; transform: scaleY(-1); }
+#hy-qcf-ornament .hy-corner-br { bottom: 0; right: 0; transform: scale(-1, -1); }
+
+#hy-qcf-ornament .hy-frame-border-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ——— A: Klasik Osmanlı ——— */
+body.hy-frame-alt-a {
+  --hy-paper: #f2e8d0;
+  --hy-gold: #c9a227;
+  --hy-ink: #1a1410;
+}
+
+body.hy-frame-alt-a #hy-qcf-stage {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 18%, rgba(255, 252, 245, 0.9) 0%, transparent 55%),
+    radial-gradient(ellipse 120% 100% at 80% 90%, rgba(210, 185, 140, 0.12) 0%, transparent 45%),
+    linear-gradient(180deg, #f8f0dc 0%, #f2e8d0 35%, #ebe0c4 70%, #e5d6b8 100%);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+}
+
+body.hy-frame-alt-a #hy-qcf-ornament {
+  inset: 14px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+body.hy-frame-alt-a #hy-qcf-ornament::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 3px solid #b8860b;
+  box-shadow:
+    inset 0 0 0 1px #f5e6a8,
+    inset 0 0 0 5px #0f2848,
+    inset 0 0 0 7px #c9a227,
+    inset 0 0 0 9px #f0d878,
+    inset 0 0 0 13px rgba(15, 40, 72, 0.85);
+  pointer-events: none;
+}
+
+body.hy-frame-alt-a #hy-qcf-meta,
+body.hy-frame-alt-a #hy-qcf-pagenum {
+  color: #4a3d28;
+}
+
+body.hy-frame-alt-a .hy-qcf-header {
+  background: linear-gradient(180deg, #1a3d5c 0%, #0f2848 100%) !important;
+  border: 2px solid #e8c547 !important;
+  box-shadow:
+    0 0 0 1px #8b6914,
+    0 2px 8px rgba(15, 40, 72, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  padding: 10px 28px !important;
+}
+
+body.hy-frame-alt-a #hy-qcf-special-frame {
+  border-color: rgba(201, 162, 39, 0.55);
+  background: radial-gradient(ellipse at 50% 45%, #fdf8ec, #f0e4c8 72%, #e8d9b0);
+  box-shadow: inset 0 0 0 1px rgba(232, 197, 71, 0.4);
+}
+
+/* ——— B: Sade zarif ——— */
+body.hy-frame-alt-b {
+  --hy-paper: #faf6ec;
+  --hy-gold: #b8963e;
+  --hy-ink: #1c1a16;
+}
+
+body.hy-frame-alt-b #hy-qcf-stage {
+  background:
+    linear-gradient(180deg, #fdfbf7 0%, #faf6ec 50%, #f5f0e4 100%);
+  box-shadow: 0 4px 24px rgba(60, 55, 45, 0.12);
+}
+
+body.hy-frame-alt-b #hy-qcf-ornament {
+  inset: 22px;
+  border: none;
+  box-shadow: none;
+}
+
+body.hy-frame-alt-b #hy-qcf-ornament::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #c9a227;
+  box-shadow: inset 0 0 0 3px #faf6ec, inset 0 0 0 4px #b8963e;
+  pointer-events: none;
+}
+
+body.hy-frame-alt-b #hy-qcf-meta,
+body.hy-frame-alt-b #hy-qcf-pagenum {
+  color: #5c574c;
+}
+
+body.hy-frame-alt-b .hy-qcf-header {
+  background: linear-gradient(135deg, #1b5e3a 0%, #0d3d24 100%) !important;
+  border: 1.5px solid #c9a227 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  padding: 8px 24px !important;
+}
+
+body.hy-frame-alt-b #hy-qcf-special-frame {
+  border: 2px solid rgba(184, 150, 62, 0.35);
+  background: radial-gradient(ellipse at 50% 50%, #fffef9, #f8f4ea 80%);
+}
+
+/* ——— C: Zengin saray mushafı ——— */
+body.hy-frame-alt-c {
+  --hy-paper: #f7f2e6;
+  --hy-gold: #d4af37;
+  --hy-ink: #12100c;
+}
+
+body.hy-frame-alt-c #hy-qcf-stage {
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 0%, rgba(255, 250, 240, 0.95) 0%, transparent 50%),
+    linear-gradient(180deg, #faf6ee 0%, #f3ece0 100%);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+}
+
+body.hy-frame-alt-c #hy-qcf-ornament {
+  inset: 8px;
+  border: none;
+  box-shadow: none;
+  background: rgba(12, 26, 51, 0.92);
+}
+
+body.hy-frame-alt-c #hy-qcf-ornament::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 2px solid #d4af37;
+  box-shadow:
+    inset 0 0 0 4px #0c1a33,
+    inset 0 0 0 6px #c9a227,
+    inset 0 0 24px rgba(212, 175, 55, 0.08);
+  pointer-events: none;
+}
+
+body.hy-frame-alt-c #hy-qcf-meta,
+body.hy-frame-alt-c #hy-qcf-pagenum {
+  color: #8b7355;
+}
+
+body.hy-frame-alt-c .hy-qcf-header {
+  background: linear-gradient(180deg, #162a52 0%, #0c1a33 100%) !important;
+  border: 2px solid #d4af37 !important;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+body.hy-frame-alt-c #hy-qcf-special-frame {
+  border: 2px solid #c9a227;
+  background: radial-gradient(ellipse at 50% 40%, #fff9f0, #f0e6d4 75%);
+}
+
+body.hy-frame-alt-c #hy-qcf-glyphs {
+  /* İç sahne krem; dış bordür lacivert */
+}
+
+/* ——— D: Sade (Ezan Vakti sadeliği — özgün çizim) ——— */
+body.hy-frame-preview.hy-frame-alt-d {
+  background: #f3f2ef !important;
+}
+
+body.hy-frame-preview.hy-frame-alt-d.hy-kuran {
+  background: #f3f2ef !important;
+}
+
+body.hy-frame-alt-d {
+  --hy-paper: #fffef9;
+  --hy-gold: #d8d5ce;
+  --hy-ink: #1a1a1a;
+}
+
+body.hy-frame-preview.hy-frame-alt-d #hy-qcf-host {
+  background: #f3f2ef;
+}
+
+body.hy-frame-alt-d #hy-qcf-stage {
+  background: #fffef9;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+body.hy-frame-alt-d #hy-qcf-ornament {
+  inset: 10px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+body.hy-frame-alt-d #hy-qcf-ornament::before {
+  content: none;
+}
+
+body.hy-frame-alt-d #hy-qcf-meta {
+  top: 20px;
+  color: #9a9690;
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+body.hy-frame-alt-d #hy-qcf-pagenum {
+  bottom: 18px;
+  color: #8a8680;
+  font-size: 17px;
+}
+
+body.hy-frame-alt-d .hy-qcf-header {
+  background: transparent !important;
+  color: #2a2a28 !important;
+  border: none !important;
+  border-bottom: 1px solid #e8e6e1 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: 30px !important;
+  font-weight: 600 !important;
+  padding: 4px 12px 8px !important;
+  letter-spacing: 0.02em;
+}
+
+body.hy-frame-alt-d #hy-qcf-stage.hy-special .hy-qcf-header {
+  font-size: 32px !important;
+}
+
+body.hy-frame-alt-d .hy-qcf-bismillah {
+  color: #3a3a38;
+  font-size: 26px;
+}
+
+body.hy-frame-alt-d #hy-qcf-special-frame {
+  display: none !important;
+}
+
+body.hy-frame-alt-d .hy-qcf-margin {
+  color: #6b8f71;
+  opacity: 0.75;
+}
+
+body.hy-frame-preview.hy-frame-alt-d .hy-preview-shell {
+  padding: 0;
+}
