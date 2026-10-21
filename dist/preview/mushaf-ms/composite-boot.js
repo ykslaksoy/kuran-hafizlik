@@ -61,7 +61,11 @@
     if (!cfg) return;
     var img = new Image();
     img.onload = function () {
-      var dataUrl = window.hySevkiComposite.buildFrame(img, cfg);
+      var built = window.hySevkiComposite.buildFrame(img, cfg, page);
+      var dataUrl = built.dataUrl;
+      if (built.headerBand) {
+        document.body.style.setProperty("--hy-sevki-header-y", built.headerBand.y + "px");
+      }
       var bg = document.getElementById("hy-ms-bg");
       if (bg) {
         bg.style.backgroundImage = "url(" + dataUrl + ")";

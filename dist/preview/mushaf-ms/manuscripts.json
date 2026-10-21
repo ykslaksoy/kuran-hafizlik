@@ -20,18 +20,22 @@
     "compositePages": {
       "1": {
         "pageRect": { "x": 0.518, "y": 0.05, "w": 0.44, "h": 0.9 },
-        "paperAbs": { "x": 0.492, "y": 0.28, "w": 0.018, "h": 0.05 },
+        "marginSample": { "x": 0.01, "y": 0.62, "w": 0.024, "h": 0.014 },
+        "borders": { "top": 64, "bottom": 48, "left": 52, "right": 52, "topFrac": 0.058, "bottomFrac": 0.052, "leftFrac": 0.085, "rightFrac": 0.085 },
         "headerBand": {
-          "src": { "x": 0.06, "y": 0.138, "w": 0.88, "h": 0.085 },
-          "dest": { "x": 108, "y": 102, "w": 784, "h": 108 }
+          "src": { "x": 0.11, "y": 0.204, "w": 0.78, "h": 0.058 },
+          "destW": 800,
+          "destH": 98
         }
       },
       "2": {
         "pageRect": { "x": 0.042, "y": 0.05, "w": 0.44, "h": 0.9 },
-        "paperAbs": { "x": 0.492, "y": 0.28, "w": 0.018, "h": 0.05 },
+        "marginSample": { "x": 0.966, "y": 0.62, "w": 0.024, "h": 0.014 },
+        "borders": { "top": 64, "bottom": 48, "left": 52, "right": 52, "topFrac": 0.058, "bottomFrac": 0.052, "leftFrac": 0.085, "rightFrac": 0.085 },
         "headerBand": {
-          "src": { "x": 0.06, "y": 0.138, "w": 0.88, "h": 0.085 },
-          "dest": { "x": 108, "y": 102, "w": 784, "h": 108 }
+          "src": { "x": 0.11, "y": 0.204, "w": 0.78, "h": 0.058 },
+          "destW": 800,
+          "destH": 98
         }
       }
     }

@@ -40,10 +40,19 @@ body.hy-ms-composite #hy-qcf-meta {
 body.hy-ms-composite .hy-qcf-header {
   background: transparent !important;
   border: none !important;
-  color: #1a1208 !important;
-  font-weight: 600 !important;
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.35);
-  padding: 10px 24px !important;
+  color: #0f0a06 !important;
+  font-weight: 700 !important;
+  font-family: "Scheherazade New", "Amiri Quran", serif !important;
+  font-size: 38px !important;
+  line-height: 1.05 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+  padding: 8px 20px !important;
+  position: relative;
+  z-index: 2;
+}
+
+body.hy-ms-composite #hy-qcf-stage.hy-special .hy-qcf-header {
+  font-size: 40px !important;
 }
 
 #hy-ms-shell {
