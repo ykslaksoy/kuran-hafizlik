@@ -340,6 +340,18 @@
     return rev + " · " + toIndic(n) + " " + unit;
   }
 
+  function headerMetaTr(id) {
+    var n = AYAHS[id] || 0;
+    var rev = MADANI[id] ? "Medine" : "Mekke";
+    return rev + " · " + n + " ayet";
+  }
+
+  function headerMetaLabel(id) {
+    var st = pageStyle || readStyle();
+    if (st === "sade" || st === "altin") return headerMetaTr(id);
+    return headerMeta(id);
+  }
+
   function headerHtml(ch) {
     var id = ch && ch.id ? ch.id : 0;
     return (
@@ -348,7 +360,7 @@
       bsmlSpan([BSML_SURA, surahNameCode(id)]) +
       "</span>" +
       '<span class="hy-qcf-header-meta">' +
-      esc(headerMeta(id)) +
+      esc(headerMetaLabel(id)) +
       "</span></span>"
     );
   }
@@ -646,18 +658,17 @@
     var v = verse || chromeVerse || data.verses[0];
     if (!v) return;
     chromeVerse = { surah: v.surah, ayah: v.ayah };
-    var title = surahNameTr(v.surah) + " Suresi " + v.ayah + ". Ayet";
-    var sub = "Sayfa " + data.page + " Cüz " + (data.juz || 1);
+    var surahLine = surahNameTr(v.surah) + " Suresi";
+    var metaLine =
+      "Cüz " + (data.juz || 1) + " · Sayfa " + data.page + " · Ayet " + toIndic(v.ayah);
     var bar = document.getElementById("hy-qcf-chrome");
     if (bar) {
       bar.innerHTML =
         '<span class="hy-chrome-title">' +
-        esc(title) +
+        esc(surahLine) +
         "</span>" +
-        '<span class="hy-chrome-meta">Cüz ' +
-        (data.juz || 1) +
-        " · Sayfa " +
-        data.page +
+        '<span class="hy-chrome-meta">' +
+        esc(metaLine) +
         "</span>";
     }
     var nodes = document.querySelectorAll("div,span");
@@ -668,9 +679,9 @@
       }
       if (el.children && el.children.length) continue;
       var t = (el.textContent || "").replace(/\s+/g, " ").trim();
-      if (!t || t.length > 48) continue;
-      if (/Suresi/.test(t) && t !== title) el.textContent = title;
-      else if (/^Sayfa\s+\d+/.test(t) && t !== sub) el.textContent = sub;
+      if (!t || t.length > 56) continue;
+      if (/Suresi/.test(t) && t !== surahLine) el.textContent = surahLine;
+      else if (/^Sayfa\s+\d+/.test(t) || /^Cüz\s+\d+/.test(t)) el.textContent = metaLine;
     }
   }
 
@@ -731,7 +742,7 @@
     var orn = document.getElementById("hy-qcf-ornament");
     if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
     orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf14")
+    fetch("/assets/mushaf/tezhip.svg?v=qcf15")
       .then(function (r) {
         return r.ok ? r.text() : "";
       })
@@ -818,6 +829,7 @@
     var old = document.getElementById("hy-qcf-finial");
     if (old && old.parentNode) old.parentNode.removeChild(old);
     if (!data || pageStyle !== "sade") return;
+    if (data.page <= 2) return;
     var verses = data.verses || [];
     if (!verses.length) return;
     var last = verses[verses.length - 1];
@@ -835,7 +847,7 @@
     fin.setAttribute("aria-hidden", "true");
     var top = lastTop + LINE_H + Math.max(8, Math.min(36, (room - 220) / 2));
     fin.style.top = top + "px";
-    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=qcf14" alt="" width="108" height="138" />';
+    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=qcf15" alt="" width="108" height="138" />';
     glyphs.appendChild(fin);
   }
 
@@ -1153,7 +1165,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf14";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf15";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();

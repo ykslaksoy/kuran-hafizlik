@@ -19,7 +19,7 @@
   --hy-safe-bottom: env(safe-area-inset-bottom, 0px);
   --hy-player-h: 88px;
   --hy-player-stack: calc(var(--hy-player-h) + 10px + var(--hy-safe-bottom));
-  --hy-chrome-h: 36px;
+  --hy-chrome-h: 40px;
   --hy-ink: #1a1610;
   --hy-ink-soft: #3d3428;
   --hy-sade-paper: #f7f1e4;
@@ -151,15 +151,19 @@ body.hy-style-tezhip #hy-qcf-host {
 }
 
 #hy-qcf-chrome .hy-chrome-title {
-  font: 600 13px/1.15 "Literata", "Georgia", serif;
+  font: 600 14px/1.2 "Literata", "Georgia", serif;
   color: var(--hy-ink);
 }
 
 #hy-qcf-chrome .hy-chrome-meta {
-  font: 400 10px/1.1 "Literata", "Georgia", serif;
+  font: 400 11px/1.15 "Literata", "Georgia", serif;
   color: var(--hy-sade-muted);
-  letter-spacing: 0.04em;
-  text-transform: none;
+  letter-spacing: 0.03em;
+}
+
+#hy-qcf-chrome .hy-chrome-meta .hy-chrome-ayah {
+  color: #8a6a1c;
+  font-weight: 600;
 }
 
 #hy-qcf-scroll {
@@ -268,15 +272,12 @@ body.hy-style-tezhip #hy-qcf-stage {
 }
 
 body.hy-style-sade #hy-qcf-ornament {
-  inset: 14px;
-  border: none;
-  background:
-    linear-gradient(var(--hy-sade-line), var(--hy-sade-line)) padding-box,
-    linear-gradient(165deg, #e8d9b8, #c4b090 55%, #a8946e) border-box;
-  border: 1px solid transparent;
+  inset: 11px;
+  border: 1.5px solid #c9a24a;
+  background: transparent;
   box-shadow:
-    inset 0 0 0 5px var(--hy-sade-paper),
-    inset 0 0 0 6px rgba(154, 130, 84, 0.45);
+    inset 0 0 0 4px var(--hy-sade-paper),
+    inset 0 0 0 5.5px #b8945a;
 }
 
 body.hy-style-sade #hy-qcf-ornament::before,
@@ -290,10 +291,12 @@ body.hy-style-sade #hy-qcf-pagenum {
 body.hy-style-sade .hy-qcf-end {
   color: transparent !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/ayah-rose-sade.svg?v=qcf14") !important;
+  background-image: url("/assets/mushaf/ayah-rose-sade.svg?v=qcf15") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  background-size: 1.12em 1.12em !important;
+  background-size: 1.08em 1.08em !important;
+  min-width: 1.05em;
+  min-height: 1.05em;
 }
 
 body.hy-style-sade .hy-qcf-header {
@@ -305,7 +308,7 @@ body.hy-style-sade .hy-qcf-header {
   gap: 6px;
   color: #2c2418 !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/sade-header.svg?v=qcf14") !important;
+  background-image: url("/assets/mushaf/sade-header.svg?v=qcf15") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -330,9 +333,16 @@ body.hy-style-altin .hy-qcf-ayah-n {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font: 800 0.72em/1 "Noto Naskh Arabic", "Scheherazade New", system-ui, serif;
-  text-shadow: 0 0 1px #2a1a08, 0 1px 0 #2a1a08;
+  color: #f8f0d8;
+  font: 700 0.58em/1 "Scheherazade New", "Noto Naskh Arabic", serif;
+  text-shadow: 0 0 1px #2a1a08;
+  font-feature-settings: "numr" 1;
+}
+
+body.hy-style-sade .hy-qcf-header-meta {
+  font: 500 20px/1.15 "Literata", "Georgia", serif;
+  color: #5c4a38;
+  letter-spacing: 0.02em;
 }
 
 body.hy-style-tezhip .hy-qcf-ayah-n,
@@ -372,7 +382,7 @@ body.hy-style-altin #hy-qcf-finial {
 body.hy-style-altin .hy-qcf-end {
   color: transparent !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/ayah-rose-altin.svg?v=qcf14") !important;
+  background-image: url("/assets/mushaf/ayah-rose-altin.svg?v=qcf15") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 1.12em 1.12em !important;
@@ -387,7 +397,7 @@ body.hy-style-altin .hy-qcf-header {
   gap: 6px;
   color: #2c2418 !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/sade-header-altin.svg?v=qcf14") !important;
+  background-image: url("/assets/mushaf/sade-header-altin.svg?v=qcf15") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -526,7 +536,7 @@ body.hy-kuran.hy-allah-on #hy-qcf-glyphs .hy-qcf-word.hy-qcf-allah {
 .hy-qcf-end {
   position: relative;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/ayah-rose.svg?v=qcf14") !important;
+  background-image: url("/assets/mushaf/ayah-rose.svg?v=qcf15") !important;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.05em 1.05em;
@@ -793,12 +803,35 @@ body.hy-kuran #hy-player-bar {
   color: var(--hy-gold-hi);
 }
 
+#hy-player-dock .hy-player-row.hy-transport button:not(.hy-play) {
+  border-radius: 50%;
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: #2a2218;
+  border: 1.5px solid #c9a24a;
+  color: #e8d5b0;
+  font-size: 13px;
+}
+
 #hy-player-dock button.hy-play {
-  min-width: 46px;
-  height: 46px;
-  border-radius: 23px;
+  min-width: 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
   font-size: 16px;
-  box-shadow: 0 0 0 1px rgba(246, 215, 122, 0.25);
+  background: linear-gradient(180deg, #f6d77a 0%, #d4a017 100%) !important;
+  border: 2px solid #8a6a1c !important;
+  color: #2a2218 !important;
+  box-shadow: 0 1px 0 rgba(255, 248, 230, 0.35) inset;
+}
+
+body.hy-style-sade #hy-player-dock .hy-player-row.hy-options button,
+body.hy-style-sade #hy-timing-source .hy-src-toggle {
+  border-radius: 10px;
+  border-color: #c9a24a;
+  background: #2f261c;
 }
 
 #hy-player-dock .hy-player-label {
