@@ -16,7 +16,7 @@ Kelime zamanı: `GET https://api.quran.com/api/v4/chapter_recitations/{quranId}/
 | Abdülbasit (Murattal) | `abdulbasit-murattal` | everyayah `Abdul_Basit_Murattal_192kbps/001001.mp3` **200** | **Var** — quran.com **id=2**, Fatiha 29 / Bakara 6381 segment | Var | |
 | Husary | `husary` | everyayah `Husary_128kbps/001001.mp3` **200** | **Var** — quran.com **id=6**, Fatiha 29 / Bakara 6303 segment | Var | quran.com ayet URL: `//mirrors.quranicaudio.com/everyayah/Husary_64kbps/001001.mp3` |
 | Sudais | `sudais` | everyayah `Abdurrahmaan_As-Sudais_192kbps/001001.mp3` **200** (75786 B). Eski klasör `Sudais_128kbps` **404** — düzeltildi. | **Var** — quran.com **id=3**, Fatiha 29 / Bakara 6341 segment | Var | quran.com ayet URL: `Sudais/mp3/001001.mp3` |
-| Hoca (TTS) | `hoca-tts` | **Yok** (`folder: null`) | **Yok** | **Yok** | Listede «kelime timing yok · ok: ayet başı» |
+| ~~Hoca (TTS)~~ | `hoca-tts` | **Kaldırıldı** (2026-10-21) | — | — | Seçilebilir listeden çıkarıldı; tarayıcı TTS kalitesi düşük, kelime timing yok. Talim için **Abdülbasit Murattal** kullan. |
 
 ## 2. Eklenebilecek popüler kâriler (uygulamada yok)
 

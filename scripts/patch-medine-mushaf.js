@@ -214,8 +214,8 @@ replaceOnce(
 // ---------------------------------------------------------------------------
 replaceOnce(
   "reciter list + timing flags",
-  "const a=e.QURAN_RECITERS=[{id:'alafasy',nameTr:'Mi\\u015fari',folder:'Alafasy_128kbps',styleTr:'Murattal \\u2014 varsay\\u0131lan'},{id:'abdulbasit',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Mujawwad_128kbps',styleTr:'Mujawwad (makaml\\u0131)'},{id:'minshawi',nameTr:'Min\\u015fevi',folder:'Minshawy_Mujawwad_64kbps',styleTr:'Mujawwad (makaml\\u0131)'},{id:'abdulbasit-murattal',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Murattal_192kbps',styleTr:'Murattal (talim)'},{id:'husary',nameTr:'Husary',folder:'Husary_128kbps',styleTr:'Murattal'},{id:'sudais',nameTr:'Sudais',folder:'Sudais_128kbps',styleTr:'Murattal'},{id:'hoca-tts',nameTr:'Hoca (TTS)',folder:null,styleTr:'Sentez ses \\u2014 yedek'}];",
-  "const a=e.QURAN_RECITERS=[{id:'alafasy',nameTr:'Mi\\u015fari',folder:'Alafasy_128kbps',styleTr:'Murattal \\u2014 varsay\\u0131lan',quranId:7,wordTiming:!0},{id:'abdulbasit',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Mujawwad_128kbps',styleTr:'Mujawwad (makaml\\u0131)',quranId:1,wordTiming:!0},{id:'minshawi',nameTr:'Min\\u015fevi',folder:'Minshawy_Mujawwad_64kbps',styleTr:'Mujawwad (makaml\\u0131)',quranId:8,wordTiming:!0},{id:'abdulbasit-murattal',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Murattal_192kbps',styleTr:'Murattal (talim)',quranId:2,wordTiming:!0},{id:'husary',nameTr:'Husary',folder:'Husary_128kbps',styleTr:'Murattal',quranId:6,wordTiming:!0},{id:'sudais',nameTr:'Sudais',folder:'Abdurrahmaan_As-Sudais_192kbps',styleTr:'Murattal',quranId:3,wordTiming:!0},{id:'hoca-tts',nameTr:'Hoca (TTS)',folder:null,styleTr:'Sentez ses \\u2014 kelime timing yok',quranId:null,wordTiming:!1}];"
+  "const a=e.QURAN_RECITERS=[{id:'alafasy',nameTr:'Mi\\u015fari',folder:'Alafasy_128kbps',styleTr:'Murattal \\u2014 varsay\\u0131lan'},{id:'abdulbasit',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Mujawwad_128kbps',styleTr:'Mujawwad (makaml\\u0131)'},{id:'minshawi',nameTr:'Min\\u015fevi',folder:'Minshawy_Mujawwad_64kbps',styleTr:'Mujawwad (makaml\\u0131)'},{id:'abdulbasit-murattal',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Murattal_192kbps',styleTr:'Murattal (talim)'},{id:'husary',nameTr:'Husary',folder:'Husary_128kbps',styleTr:'Murattal'},{id:'sudais',nameTr:'Sudais',folder:'Sudais_128kbps',styleTr:'Murattal'}];",
+  "const a=e.QURAN_RECITERS=[{id:'alafasy',nameTr:'Mi\\u015fari',folder:'Alafasy_128kbps',styleTr:'Murattal \\u2014 varsay\\u0131lan',quranId:7,wordTiming:!0},{id:'abdulbasit',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Mujawwad_128kbps',styleTr:'Mujawwad (makaml\\u0131)',quranId:1,wordTiming:!0},{id:'minshawi',nameTr:'Min\\u015fevi',folder:'Minshawy_Mujawwad_64kbps',styleTr:'Mujawwad (makaml\\u0131)',quranId:8,wordTiming:!0},{id:'abdulbasit-murattal',nameTr:'Abd\\xfclbasit',folder:'Abdul_Basit_Murattal_192kbps',styleTr:'Murattal (talim)',quranId:2,wordTiming:!0},{id:'husary',nameTr:'Husary',folder:'Husary_128kbps',styleTr:'Murattal',quranId:6,wordTiming:!0},{id:'sudais',nameTr:'Sudais',folder:'Abdurrahmaan_As-Sudais_192kbps',styleTr:'Murattal',quranId:3,wordTiming:!0}];"
 );
 replaceOnce(
   "picker marks missing word timing",
@@ -252,32 +252,37 @@ html = html
   .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-10-19-fatiha2"')
   .replace(/content="2026-10-19-medine604"/g, 'content="2026-10-19-fatiha2"')
   .replace(/content="2026-10-19-fatiha1"/g, 'content="2026-10-19-fatiha4"')
-  .replace(/content="2026-10-19-fatiha2"/g, 'content="2026-10-19-fatiha4"')
-  .replace(/bust: amentu2/, "bust: fatiha4")
-  .replace(/bust: medine604/, "bust: fatiha4")
-  .replace(/bust: fatiha1/, "bust: fatiha4")
-  .replace(/bust: fatiha2/, "bust: fatiha4")
-  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
-  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=fatiha4")
-  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=fatiha4")
-  .replace(/quran-timing\.js\?v=fatiha2/g, "quran-timing.js?v=fatiha4")
-  .replace(/quran-timing\.js\?v=fatiha3/g, "quran-timing.js?v=fatiha4")
-  .replace(/var bust = 'amentu2';/, "var bust = 'fatiha4';")
-  .replace(/var bust = 'medine604';/, "var bust = 'fatiha4';")
-  .replace(/var bust = 'fatiha1';/, "var bust = 'fatiha4';")
-  .replace(/var bust = 'fatiha2';/, "var bust = 'fatiha4';");
-if (!html.includes("fatiha4")) {
+  .replace(/content="2026-10-19-fatiha2"/g, 'content="2026-10-21-legal1"')
+  .replace(/content="2026-10-19-fatiha4"/g, 'content="2026-10-21-legal1"')
+  .replace(/bust: amentu2/, "bust: legal1")
+  .replace(/bust: medine604/, "bust: legal1")
+  .replace(/bust: fatiha1/, "bust: legal1")
+  .replace(/bust: fatiha2/, "bust: legal1")
+  .replace(/bust: fatiha4/, "bust: legal1")
+  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=legal1")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=legal1")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=legal1")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=legal1")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha4/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=legal1")
+  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=legal1")
+  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=legal1")
+  .replace(/quran-timing\.js\?v=fatiha2/g, "quran-timing.js?v=legal1")
+  .replace(/quran-timing\.js\?v=fatiha3/g, "quran-timing.js?v=legal1")
+  .replace(/quran-timing\.js\?v=fatiha4/g, "quran-timing.js?v=legal1")
+  .replace(/var bust = 'amentu2';/, "var bust = 'legal1';")
+  .replace(/var bust = 'medine604';/, "var bust = 'legal1';")
+  .replace(/var bust = 'fatiha1';/, "var bust = 'legal1';")
+  .replace(/var bust = 'fatiha2';/, "var bust = 'legal1';")
+  .replace(/var bust = 'fatiha4';/, "var bust = 'legal1';");
+if (!html.includes("legal1")) {
   console.error("index.html bust failed");
   process.exit(1);
 }
 // swipe helper for mouse + touch (aria-label edge hits)
 if (!html.includes("quran-timing.js")) {
   html = html.replace(
-    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4" defer></script>',
-    '<script src="/assets/timing/quran-timing.js?v=fatiha4"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4" defer></script>'
+    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=legal1" defer></script>',
+    '<script src="/assets/timing/quran-timing.js?v=legal1"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=legal1" defer></script>'
   );
 }
 if (!html.includes("hyMedineSwipe")) {
@@ -308,7 +313,7 @@ console.log("patched index.html");
 
 if (fs.existsSync(SW)) {
   let sw = fs.readFileSync(SW, "utf8");
-  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'fatiha4';");
+  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'legal1';");
   if (!sw.includes("medine-mushaf-2026-10-19")) {
     sw = "/* medine-mushaf-2026-10-19 */\n" + sw;
   }
