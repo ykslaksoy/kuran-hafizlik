@@ -62,6 +62,7 @@
       '<button type="button" data-act="loop" title="Tekrar" aria-label="Tekrar">↺</button>' +
       '<button type="button" data-act="speed" title="Hız" aria-label="Hız">1.0x</button>' +
       '<span class="hy-player-label" id="hy-player-now">Fatiha</span>' +
+      '<button type="button" data-act="style" id="hy-style-btn" title="Sayfa stili" aria-label="Sayfa stili">Sade</button>' +
       '<span class="hy-src-slot" id="hy-src-slot"></span>' +
       "</div>";
     dock.addEventListener("click", onClick);
@@ -142,6 +143,11 @@
       var i = (currentReciterIndex() + 1) % RECITERS.length;
       setReciter(i);
       if (global.hyContinuous) global.hyContinuous.setReciter(RECITERS[i].id);
+    } else if (act === "style") {
+      var cur = (global.hyQcfMushaf && global.hyQcfMushaf.getStyle && global.hyQcfMushaf.getStyle()) || "sade";
+      var next = cur === "sade" ? "tezhip" : "sade";
+      if (global.hyQcfMushaf && global.hyQcfMushaf.setStyle) global.hyQcfMushaf.setStyle(next);
+      btn.textContent = next === "sade" ? "Sade" : "Tezhip";
     }
   }
 
@@ -234,6 +240,10 @@
     if (now && !now.getAttribute("data-key")) now.textContent = "Sayfa " + page;
     var rb = reciterBtn();
     if (rb) rb.textContent = RECITERS[currentReciterIndex()].label;
+    var sb = document.getElementById("hy-style-btn");
+    if (sb && global.hyQcfMushaf && global.hyQcfMushaf.getStyle) {
+      sb.textContent = global.hyQcfMushaf.getStyle() === "tezhip" ? "Tezhip" : "Sade";
+    }
     var lb = dock.querySelector('[data-act="loop"]');
     if (lb) {
       var on = false;

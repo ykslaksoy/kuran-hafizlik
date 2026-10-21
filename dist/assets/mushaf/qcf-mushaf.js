@@ -28,6 +28,8 @@
   var fitRaf = 0;
   var lastReactPage = 0;
   var bootPinned = false;
+  var lastFitKey = "";
+  var pageStyle = "sade";
   var SURAH_TR = [
     "",
     "Fâtiha",
@@ -499,6 +501,10 @@
     chromeVerse = { surah: v.surah, ayah: v.ayah };
     var title = surahNameTr(v.surah) + " Suresi " + v.ayah + ". Ayet";
     var sub = "Sayfa " + data.page + " Cüz " + (data.juz || 1);
+    var bar = document.getElementById("hy-qcf-chrome");
+    if (bar) {
+      bar.textContent = "Cüz " + (data.juz || 1) + "  Sayfa " + data.page + "  " + title;
+    }
     var nodes = document.querySelectorAll("div,span");
     for (var i = 0; i < nodes.length; i++) {
       var el = nodes[i];
@@ -547,7 +553,8 @@
       host = document.createElement("div");
       host.id = "hy-qcf-host";
       host.innerHTML =
-        '<div id="hy-qcf-fit"><div id="hy-qcf-stage" class="hy-waiting">' +
+        '<div id="hy-qcf-chrome"></div>' +
+        '<div id="hy-qcf-scroll"><div id="hy-qcf-fit"><div id="hy-qcf-stage" class="hy-waiting">' +
         '<div id="hy-qcf-ornament" aria-hidden="true"></div>' +
         '<div id="hy-qcf-special-frame" aria-hidden="true"></div>' +
         '<div id="hy-qcf-meta"></div>' +
@@ -555,7 +562,7 @@
         '<div id="hy-qcf-overlay"><div id="hy-qcf-hl"></div></div>' +
         '<div id="hy-qcf-pagenum"></div>' +
         '<div id="hy-qcf-wait">Sayfa hattı yükleniyor</div>' +
-        "</div></div>";
+        "</div></div></div>";
       document.body.appendChild(host);
       injectTezhip();
     } else if (host.parentElement !== document.body) {
@@ -568,7 +575,7 @@
     var orn = document.getElementById("hy-qcf-ornament");
     if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
     orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf7")
+    fetch("/assets/mushaf/tezhip.svg?v=qcf8")
       .then(function (r) {
         return r.ok ? r.text() : "";
       })
@@ -580,19 +587,75 @@
       .catch(function () {});
   }
 
+  function readStyle() {
+    try {
+      var s = global.localStorage && localStorage.getItem("hyPageStyle");
+      if (s === "tezhip" || s === "sade") return s;
+    } catch (e) {}
+    return "sade";
+  }
+
+  function applyStyle(style) {
+    pageStyle = style === "tezhip" ? "tezhip" : "sade";
+    document.body.classList.toggle("hy-style-sade", pageStyle === "sade");
+    document.body.classList.toggle("hy-style-tezhip", pageStyle === "tezhip");
+    var btn = document.getElementById("hy-style-btn");
+    if (btn) btn.textContent = pageStyle === "sade" ? "Sade" : "Tezhip";
+  }
+
+  function setStyle(style) {
+    applyStyle(style);
+    try {
+      localStorage.setItem("hyPageStyle", pageStyle);
+    } catch (e2) {}
+    lastFitKey = "";
+    scheduleFit();
+  }
+
+  function currentScale() {
+    var stage = document.getElementById("hy-qcf-stage");
+    if (!stage) return 1;
+    return stage.getBoundingClientRect().width / DESIGN_W || 1;
+  }
+
+  function scrollActive(designTop, designH) {
+    var sc = document.getElementById("hy-qcf-scroll");
+    if (!sc || sc.scrollHeight <= sc.clientHeight + 2) return;
+    var scale = currentScale();
+    var y = Number(designTop) * scale;
+    var h = Math.max(20, Number(designH) * scale);
+    var view = sc.clientHeight;
+    var pad = Math.max(20, Math.min(80, view * 0.2));
+    var cur = sc.scrollTop;
+    if (y < cur + pad) sc.scrollTop = Math.max(0, y - pad);
+    else if (y + h > cur + view - pad) sc.scrollTop = y + h - view + pad;
+  }
+
   function fitStage() {
     var fit = document.getElementById("hy-qcf-fit");
     var stage = document.getElementById("hy-qcf-stage");
-    if (!fit || !stage || !host) return;
-    var dock = document.getElementById("hy-player-dock");
-    var dockH = dock ? dock.getBoundingClientRect().height : 56;
-    var topChrome = window.innerWidth >= 860 ? 52 : 58;
-    var availW = Math.max(120, window.innerWidth);
-    var availH = Math.max(160, window.innerHeight - dockH - topChrome);
-    var s = Math.min(availW / DESIGN_W, availH / DESIGN_H);
+    var scroll = document.getElementById("hy-qcf-scroll");
+    if (!fit || !stage || !host || !scroll) return;
+    applyStyle(pageStyle || readStyle());
+    var box = scroll.getBoundingClientRect();
+    var availW = Math.max(120, box.width);
+    var availH = Math.max(120, box.height);
+    var landscape = window.innerWidth > window.innerHeight;
+    var s =
+      pageStyle === "sade" || landscape ? availW / DESIGN_W : Math.min(availW / DESIGN_W, availH / DESIGN_H);
+    var key = pageStyle + ":" + s.toFixed(4) + ":" + Math.round(availW) + "x" + Math.round(availH);
+    if (key === lastFitKey) return;
+    lastFitKey = key;
     fit.style.width = DESIGN_W * s + "px";
     fit.style.height = DESIGN_H * s + "px";
     stage.style.transform = "scale(" + s + ")";
+    host.setAttribute("data-hy-scale", String(s));
+    host.setAttribute("data-hy-land", landscape ? "1" : "0");
+    if (paintedData) {
+      requestAnimationFrame(function () {
+        placeHits(paintedData);
+      });
+    }
   }
 
   function scheduleFit() {
@@ -837,12 +900,20 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf7";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf8";
       document.head.appendChild(link);
     }
+    pageStyle = readStyle();
+    applyStyle(pageStyle);
     paint();
     window.addEventListener("resize", scheduleFit);
-    window.addEventListener("orientationchange", scheduleFit);
+    window.addEventListener("orientationchange", function () {
+      lastFitKey = "";
+      scheduleFit();
+    });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", scheduleFit);
+    }
     window.addEventListener("popstate", function () {
       paintedPage = 0;
       paint();
@@ -892,6 +963,12 @@
     paintedPage: function () {
       return paintedPage;
     },
+    setStyle: setStyle,
+    getStyle: function () {
+      return pageStyle;
+    },
+    scrollActive: scrollActive,
+    currentScale: currentScale,
     DESIGN_W: DESIGN_W,
     DESIGN_H: DESIGN_H,
   };
