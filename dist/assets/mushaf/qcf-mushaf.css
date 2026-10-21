@@ -6,6 +6,15 @@
   font-display: block;
 }
 
+@font-face {
+  font-family: "QCF_BSML";
+  src: url("/assets/mushaf/fonts/qcf/bsml.woff2") format("woff2"),
+    url("/assets/mushaf/fonts/qcf/bsml.ttf") format("truetype");
+  font-display: block;
+  font-style: normal;
+  font-weight: 400;
+}
+
 :root {
   --hy-safe-bottom: env(safe-area-inset-bottom, 0px);
   --hy-player-h: 56px;
@@ -340,7 +349,6 @@ body.hy-style-sade .hy-qcf-header {
 .hy-qcf-end,
 .hy-qcf-header,
 .hy-qcf-bismillah {
-  display: inline;
   color: #141414 !important;
   white-space: nowrap;
   font-style: normal;
@@ -348,6 +356,11 @@ body.hy-style-sade .hy-qcf-header {
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   letter-spacing: 0;
+}
+
+.hy-qcf-word,
+.hy-qcf-end {
+  display: inline;
 }
 
 .hy-qcf-word,
@@ -377,9 +390,13 @@ body.hy-style-sade .hy-qcf-header {
 }
 
 .hy-qcf-header {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  font: 700 34px/1 "Scheherazade New", "Times New Roman", serif;
+  gap: 0.18em;
+  font: 400 52px/1 "QCF_BSML", "Hafizyol-QCF-Missing";
+  font-synthesis: none;
   color: var(--hy-navy) !important;
   background-color: var(--hy-gold) !important;
   background-image:
@@ -390,13 +407,13 @@ body.hy-style-sade .hy-qcf-header {
   box-shadow:
     0 0 0 2px var(--hy-gold),
     0 0 0 3px var(--hy-gold-deep);
-  padding: 8px 22px;
+  padding: 6px 20px;
   white-space: nowrap;
 }
 
 #hy-qcf-stage.hy-special .hy-qcf-header {
-  font-size: 40px;
-  padding: 12px 28px;
+  font-size: 56px;
+  padding: 8px 26px;
   box-shadow:
     0 0 0 2px var(--hy-gold-pale),
     0 0 0 4px var(--hy-navy),
@@ -404,10 +421,28 @@ body.hy-style-sade .hy-qcf-header {
 }
 
 .hy-qcf-bismillah {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  font: 28px/1 "Scheherazade New", "Times New Roman", serif;
+  gap: 0.22em;
+  font: 400 42px/1 "QCF_BSML", "Hafizyol-QCF-Missing";
+  font-synthesis: none;
   white-space: nowrap;
+}
+
+#hy-qcf-stage.hy-special .hy-qcf-bismillah {
+  font-size: 46px;
+}
+
+.hy-qcf-bsml {
+  display: inline-block;
+  font-family: "QCF_BSML", "Hafizyol-QCF-Missing";
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  font-variant-ligatures: none;
+  color: inherit;
 }
 
 .hy-qcf-margin {

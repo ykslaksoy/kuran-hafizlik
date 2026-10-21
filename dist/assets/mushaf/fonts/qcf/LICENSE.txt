@@ -1,7 +1,9 @@
 QCF V2 page fonts (p1.woff2, p2.woff2, p3.woff2, p50.woff2, p604.woff2)
+and QCF_BSML (bsml.woff2 / bsml.ttf, surah-name and bismillah glyphs)
 are the property of King Fahd Glorious Quran Printing Complex (KFGQPC).
-Source copies used here come from Quran Foundation / quran.com
+Page fonts come from Quran Foundation / quran.com
 (https://verses.quran.foundation/fonts/quran/hafs/v2/woff2/).
+QCF_BSML comes from quran.com-images (same KFGQPC family).
 They are bundled same-origin so the Medine page cannot paint a fallback
 typeface (no FOUT / no reflow). Layout of lines and words is from
 quran.com QDC / QUL. Hafızyol does not copy Ezan Vakti PNG or assets.

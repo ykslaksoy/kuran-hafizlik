@@ -13,9 +13,15 @@
   var LINE_H = 98;
   var FONT_BASE = "https://verses.quran.foundation/fonts/quran/hafs/v2/woff2";
   var FONT_LOCAL = "/assets/mushaf/fonts/qcf";
+  var BSML_NAME = "QCF_BSML";
+  var BSML_LOCAL = FONT_LOCAL + "/bsml.woff2";
+  var BSML_LOCAL_TTF = FONT_LOCAL + "/bsml.ttf";
+  var BSML_REMOTE = "https://cdn.jsdelivr.net/gh/quran/quran.com-images@master/res/fonts/QCF_BSML.TTF";
+  var BSML_SURA = 64396;
+  var BSML_BISMILLAH_PAGE2 = [64346, 64347, 64348, 64349];
+  var BSML_BISMILLAH = [64337, 64338, 64339];
   var API =
     "https://api.qurancdn.com/api/qdc/verses/by_page/{page}?words=true&word_fields=code_v2,text_uthmani,line_number,char_type_name";
-  var BISMILLAH = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
   var cache = {};
   var chapters = null;
@@ -279,6 +285,40 @@
     return "QCF_P" + page;
   }
 
+  function bsmlChar(code) {
+    return String.fromCharCode(code);
+  }
+
+  function surahNameCode(id) {
+    id = Number(id) || 0;
+    if (id <= 0) return BSML_SURA;
+    if (id <= 37) return BSML_SURA + id;
+    return 64429 + id;
+  }
+
+  function bsmlSpan(codes) {
+    var html = "";
+    for (var i = 0; i < codes.length; i++) {
+      html +=
+        '<span class="hy-qcf-bsml" style="font-family:\'' +
+        BSML_NAME +
+        "',local('Hafizyol-QCF-Missing');font-synthesis:none\">" +
+        bsmlChar(codes[i]) +
+        "</span>";
+    }
+    return html;
+  }
+
+  function headerHtml(ch) {
+    var id = ch && ch.id ? ch.id : 0;
+    return '<span class="hy-qcf-header">' + bsmlSpan([BSML_SURA, surahNameCode(id)]) + "</span>";
+  }
+
+  function bismillahHtml(page) {
+    var codes = page === 2 ? BSML_BISMILLAH_PAGE2 : BSML_BISMILLAH;
+    return '<span class="hy-qcf-bismillah">' + bsmlSpan(codes) + "</span>";
+  }
+
   function fontLocal(page) {
     return FONT_LOCAL + "/p" + page + ".woff2";
   }
@@ -380,6 +420,48 @@
         return name;
       });
     return fontReady[name];
+  }
+
+  function injectBsmlFace() {
+    if (document.getElementById("hy-qcf-ff-bsml")) return;
+    var st = document.createElement("style");
+    st.id = "hy-qcf-ff-bsml";
+    st.textContent =
+      '@font-face{font-family:"' +
+      BSML_NAME +
+      '";src:url("' +
+      BSML_LOCAL +
+      '") format("woff2"),url("' +
+      BSML_LOCAL_TTF +
+      '") format("truetype"),url("' +
+      BSML_REMOTE +
+      '") format("truetype");font-display:block;font-style:normal;font-weight:400;}';
+    document.head.appendChild(st);
+  }
+
+  function loadBsml() {
+    if (fontReady[BSML_NAME]) return fontReady[BSML_NAME];
+    injectBsmlFace();
+    var sample = bsmlChar(BSML_SURA);
+    fontReady[BSML_NAME] = loadFaceUrl(BSML_NAME, BSML_LOCAL)
+      .catch(function () {
+        return loadFaceUrl(BSML_NAME, BSML_LOCAL_TTF);
+      })
+      .catch(function () {
+        return loadFaceUrl(BSML_NAME, BSML_REMOTE);
+      })
+      .then(function () {
+        return document.fonts ? document.fonts.load('52px "' + BSML_NAME + '"') : null;
+      })
+      .then(function () {
+        return waitApplied(BSML_NAME, sample);
+      })
+      .then(function (ok) {
+        var checked = document.fonts && document.fonts.check('52px "' + BSML_NAME + '"');
+        if (!ok && !checked) throw new Error("qcf-bsml-not-applied");
+        return BSML_NAME;
+      });
+    return fontReady[BSML_NAME];
   }
 
   function prefetchNear(page) {
@@ -575,7 +657,7 @@
     var orn = document.getElementById("hy-qcf-ornament");
     if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
     orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf8")
+    fetch("/assets/mushaf/tezhip.svg?v=qcf9")
       .then(function (r) {
         return r.ok ? r.text() : "";
       })
@@ -705,9 +787,9 @@
         top +
         'px">';
       if (header && header.kind === "header" && header.ch) {
-        html += '<span class="hy-qcf-header">سُورَةُ ' + esc(header.ch.name) + "</span>";
+        html += headerHtml(header.ch);
       } else if (header && header.kind === "bismillah") {
-        html += '<span class="hy-qcf-bismillah">' + BISMILLAH + "</span>";
+        html += bismillahHtml(data.page);
       } else if (line) {
         (data.marks || []).forEach(function (m) {
           if (m.line === n && m.kind === "sajdah") html += '<span class="hy-qcf-margin">۩</span>';
@@ -739,11 +821,13 @@
     paintedFont = name;
     document.body.classList.add("hy-kuran", "hy-qcf-on");
     scheduleFit();
-    loadFont(data.page, data.fontRemote || data.font, pageSample(data))
+    Promise.all([loadFont(data.page, data.fontRemote || data.font, pageSample(data)), loadBsml()])
       .then(function () {
         if (paintedPage !== data.page) return;
         var applied = measureApplied(name, pageSample(data));
+        var bsmlOk = measureApplied(BSML_NAME, bsmlChar(BSML_SURA));
         if (!applied.ok && !(document.fonts && document.fonts.check('46px "' + name + '"'))) return;
+        if (!bsmlOk.ok && !(document.fonts && document.fonts.check('52px "' + BSML_NAME + '"'))) return;
         stage.classList.remove("hy-waiting");
         scheduleFit();
         placeHits(data);
@@ -900,7 +984,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf8";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf9";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
