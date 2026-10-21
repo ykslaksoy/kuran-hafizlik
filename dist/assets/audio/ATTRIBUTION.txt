@@ -12,3 +12,11 @@ Amentü (amentu-v2.mp3) — doğru metin
    EveryAyah Alafasy_128kbps/003008.mp3 — Mishary Rashid Alafasy
 
 scripts/generate-amentu-audio.py
+
+Duas → Mişari (feature branch, awaiting Amentü approval)
+========================================================
+duas-mishari/rabbena-002201.mp3       — EveryAyah Alafasy_128kbps/002201.mp3 (Bakara 201)
+duas-mishari/rabbena-ghfirli-014041.mp3 — EveryAyah Alafasy_128kbps/014041.mp3 (İbrahim 41)
+duas-mishari/besmele-001001.mp3       — EveryAyah Alafasy_128kbps/001001.mp3 (Fatiha 1)
+Flag DUA_MISHARI_ENABLED on this branch; do not merge to main/live without Amentü approval.
+Manifest: /assets/data/dua-mishari-manifest.json
