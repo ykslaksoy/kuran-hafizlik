@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
-    <meta name="hafiz-yol-build" content="2026-10-19-fatiha4" />
-    <meta name="hafiz-yol-push-check" content="2026-10-19-fatiha4" />
+    <meta name="hafiz-yol-build" content="2026-10-21-qcf15" />
+    <meta name="hafiz-yol-push-check" content="2026-10-21-qcf15" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
     <title>Hafız Yol</title>
     <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
     <style id="expo-reset">
@@ -26,9 +26,9 @@
         flex: 1;
       }
     </style>
-  <meta name="theme-color" content="#1b4332">
-<meta name="description" content="Kur’an öğrenme ve hafızlık — Android, iOS ve Windows (web).">
-<link rel="shortcut icon" href="/favicon.ico" />    <!-- build: 2026-09-06T09:58:39.416Z bust: fatiha4 -->
+  <meta name="theme-color" content="#2a2218">
+    <meta name="description" content="Kur’an öğrenme ve hafızlık — Android, iOS ve Windows (web).">
+<link rel="shortcut icon" href="/favicon.ico" />    <!-- build: 2026-09-06T09:58:39.416Z bust: qcf15 -->
       <link rel="manifest" href="/manifest.json" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -41,13 +41,20 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/assets/timing/quran-timing.js?v=fatiha4"></script>
+  <link rel="preload" as="font" type="font/woff2" href="/assets/mushaf/fonts/qcf/p1.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/assets/mushaf/fonts/qcf/p2.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/assets/mushaf/fonts/qcf/bsml.woff2" crossorigin />
+  <link rel="stylesheet" href="/assets/mushaf/qcf-mushaf.css?v=qcf15" />
+  <script src="/assets/timing/quran-timing.js?v=qcf15"></script>
+  <script src="/assets/mushaf/qcf-mushaf.js?v=qcf15"></script>
+  <script src="/assets/mushaf/hy-continuous.js?v=qcf15"></script>
+  <script src="/assets/mushaf/hy-player.js?v=qcf15"></script>
   <script src="/assets/legal-links.js?v=terms1" defer></script>
-  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4" defer></script>
+  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf15" defer></script>
 <script>
 (function(){
   if (!('serviceWorker' in navigator)) return;
-  var bust = 'fatiha4';
+  var bust = 'qcf15';
   window.addEventListener('load', function(){
     navigator.serviceWorker.register('/sw.js?v=' + bust).catch(function(){});
   });

@@ -111,7 +111,7 @@ replaceOnce(
 replaceOnce(
   "compact serlevha in line slot",
   "C?(0,f.jsx)(z,{name:C.name,surahNumber:C.surah,compact:N,fontFamily:b,letterSpacing:p}):null",
-  "C?(0,f.jsx)(z,{name:C.name,surahNumber:C.surah,compact:!0,fontFamily:b,letterSpacing:p}):null"
+  "C?(0,f.jsx)(z,{name:C.name,surahNumber:C.surah,compact:!1,fontFamily:b,letterSpacing:p}):null"
 );
 
 // ---------------------------------------------------------------------------
@@ -242,6 +242,45 @@ replaceOnce(
   "onAyahProgress:(a,t,q)=>{if(e!==On.current)return;const n=Un.current;if(!n||n.surah!==a.surah||n.ayah!==a.ayah)return;const hy=window.hyQuranTiming;if(!hy||!hy.hasWordTiming(ot.reciterId))return void hy?.setActive({ayahIndex:n.spans[0].ayahIndex,wordIndex:n.spans[0].wordIndex,letterIndex:0});const hit=hy.atTime(ot.reciterId,a.surah,a.ayah,q,n.spans);if(!hit)return;l(hit.ayahIndex,hit.wordIndex,!1);hy.setActive(hit)}"
 );
 
+// ---------------------------------------------------------------------------
+// Kontroller her zaman görünür + tam oynatıcı + siyah metin + ayet rakamı
+// ---------------------------------------------------------------------------
+replaceOnce(
+  "chrome starts visible",
+  "[In,En]=(0,a.useState)(!1),Rn=(0,a.useRef)(null)",
+  "[In,En]=(0,a.useState)(!0),Rn=(0,a.useRef)(null)"
+);
+replaceOnce(
+  "chrome never auto-hides",
+  "hr=In,fr=(0,a.useCallback)(()=>{Rn.current&&clearTimeout(Rn.current),Rn.current=setTimeout(()=>{En(!1)},5e3)},[]),gr=(0,a.useCallback)(()=>{En(e=>{const a=!e;return Rn.current&&clearTimeout(Rn.current),a&&(Rn.current=setTimeout(()=>En(!1),5e3)),a})},[]);",
+  "hr=!0,fr=(0,a.useCallback)(()=>{},[]),gr=(0,a.useCallback)(()=>{},[]);"
+);
+replaceOnce(
+  "Allah lafzı düz siyah",
+  "M&&($=b);",
+  "M&&($='#1a1a1a');"
+);
+replaceOnce(
+  "ayet numarası Arap rakamı",
+  "style:[P.ayahMarkerInline,o&&P.ezanAyahMarker,{fontSize:.7*i,lineHeight:i,width:i,height:i,borderRadius:i/2,overflow:'hidden',borderWidth:1.5,borderColor:o?B:F}],children:` ${j(t)} `",
+  "style:[P.ayahMarkerInline,o&&P.ezanAyahMarker,{fontSize:.72*i,lineHeight:i,width:i,height:i,borderRadius:i/2,overflow:'visible',borderWidth:1.5,borderColor:o?B:F,fontFamily:'Tahoma,\"Segoe UI\",system-ui,sans-serif',color:'#1a1a1a',textAlign:'center'}],children:`${j(t)}`"
+);
+replaceOnce(
+  "üst siyah çizgi kalksın",
+  "borderBottomWidth:1,borderBottomColor:'rgba(201, 162, 39, 0.4)'",
+  "borderBottomWidth:0,borderBottomColor:'transparent'"
+);
+replaceOnce(
+  "player bar id",
+  "hr&&!Ga&&null==Ja&&(0,Ce.jsxs)(d.default,{style:Re.bottomBar,children:",
+  "hr&&!Ga&&null==Ja&&(0,Ce.jsxs)(d.default,{nativeID:\"hy-player-bar\",style:Re.bottomBar,children:"
+);
+replaceOnce(
+  "media row full controls",
+  "(0,Ce.jsxs)(d.default,{style:Re.mediaRow,children:[(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:Gr,children:(0,Ce.jsxs)(l.default,{style:Re.mediaSpeed,children:[ot.speed.toFixed(1),\"x\"]})}),(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:io,children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:\"\\u25a0\"})}),(0,Ce.jsx)(n.default,{style:[Re.mediaBtn,Re.mediaPlay,zt&&Re.mediaBtnActive],onPress:uo,children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:zt&&!Et?'\\u275a\\u275a':'\\u25b6'})}),(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:so,accessibilityLabel:\"Sayfay\\u0131 ba\\u015fa al\",children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:\"\\u21bb\"})})]})",
+  "(0,Ce.jsxs)(d.default,{style:Re.mediaRow,children:[(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:()=>{po&&no(Na-1)},accessibilityLabel:\"Önceki sayfa\",children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:\"⟨⟨\"})}),(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:()=>{const seq=(0,Se.getPageAyahSequence)(pt,0),pos=kt.getPosition();let i=0;for(let k=0;k<seq.length;k++)if(seq[k].ayahIndex<=pos.ayahIndex)i=k;const n=seq[Math.max(0,i-1)];n&&(kt.jumpToAyah(n.ayahIndex,0),br())},accessibilityLabel:\"Önceki ayet\",children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:\"⟨\"})}),(0,Ce.jsx)(n.default,{style:[Re.mediaBtn,Re.mediaPlay,zt&&Re.mediaBtnActive],onPress:uo,accessibilityLabel:\"Oynat veya duraklat\",children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:zt&&!Et?'\\u275a\\u275a':'\\u25b6'})}),(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:()=>{const seq=(0,Se.getPageAyahSequence)(pt,0),pos=kt.getPosition();let i=0;for(let k=0;k<seq.length;k++)if(seq[k].ayahIndex<=pos.ayahIndex)i=k;const n=seq[Math.min(seq.length-1,i+1)];n&&(kt.jumpToAyah(n.ayahIndex,0),br())},accessibilityLabel:\"Sonraki ayet\",children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:\"⟩\"})}),(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:()=>{yo&&no(Na+1)},accessibilityLabel:\"Sonraki sayfa\",children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:\"⟩⟩\"})}),(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:()=>{const ids=['alafasy','abdulbasit','minshawi','abdulbasit-murattal','husary','sudais','hoca-tts'];const i=Math.max(0,ids.indexOf(ot.reciterId));lt({reciterId:ids[(i+1)%ids.length]})},accessibilityLabel:\"Kâri seç\",children:(0,Ce.jsx)(l.default,{style:Re.mediaSpeed,children:ot.reciterId==='alafasy'?'Mişari':ot.reciterId})}),(0,Ce.jsx)(n.default,{style:[Re.mediaBtn,ot.loop&&Re.mediaBtnActive],onPress:()=>lt({loop:!ot.loop}),accessibilityLabel:\"Tekrar\",children:(0,Ce.jsx)(l.default,{style:Re.mediaIcon,children:ot.loop?'↺+':'↺'})}),(0,Ce.jsx)(n.default,{style:Re.mediaBtn,onPress:Gr,accessibilityLabel:\"Hız\",children:(0,Ce.jsxs)(l.default,{style:Re.mediaSpeed,children:[ot.speed.toFixed(1),\"x\"]})})]})"
+);
+
 src = src.replace(/\/assets\/node_modules\//g, "/assets/vendor/");
 fs.writeFileSync(ENTRY_OUT, src);
 console.log("wrote", ENTRY_OUT, n, "replacements");
@@ -252,32 +291,47 @@ html = html
   .replace(/content="2026-09-13-amentu-v2"/g, 'content="2026-10-19-fatiha2"')
   .replace(/content="2026-10-19-medine604"/g, 'content="2026-10-19-fatiha2"')
   .replace(/content="2026-10-19-fatiha1"/g, 'content="2026-10-19-fatiha4"')
-  .replace(/content="2026-10-19-fatiha2"/g, 'content="2026-10-19-fatiha4"')
-  .replace(/bust: amentu2/, "bust: fatiha4")
-  .replace(/bust: medine604/, "bust: fatiha4")
-  .replace(/bust: fatiha1/, "bust: fatiha4")
-  .replace(/bust: fatiha2/, "bust: fatiha4")
-  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
-  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4")
-  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=fatiha4")
-  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=fatiha4")
-  .replace(/quran-timing\.js\?v=fatiha2/g, "quran-timing.js?v=fatiha4")
-  .replace(/quran-timing\.js\?v=fatiha3/g, "quran-timing.js?v=fatiha4")
-  .replace(/var bust = 'amentu2';/, "var bust = 'fatiha4';")
-  .replace(/var bust = 'medine604';/, "var bust = 'fatiha4';")
-  .replace(/var bust = 'fatiha1';/, "var bust = 'fatiha4';")
-  .replace(/var bust = 'fatiha2';/, "var bust = 'fatiha4';");
-if (!html.includes("fatiha4")) {
+  .replace(/content="2026-10-19-fatiha2"/g, 'content="2026-10-20-qcf2"')
+  .replace(/content="2026-10-19-fatiha4"/g, 'content="2026-10-20-qcf2"')
+  .replace(/content="2026-10-20-qcf1"/g, 'content="2026-10-20-qcf2"')
+  .replace(/bust: amentu2/, "bust: qcf2")
+  .replace(/bust: medine604/, "bust: qcf2")
+  .replace(/bust: fatiha1/, "bust: qcf2")
+  .replace(/bust: fatiha2/, "bust: qcf2")
+  .replace(/bust: fatiha4/, "bust: qcf2")
+  .replace(/bust: qcf1/, "bust: qcf2")
+  .replace(/entry-a0324b1a9e2452bea2896449b9d2b456\.js\?v=amentu2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=medine604/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha2/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=fatiha4/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/entry-medine604-a0324b1a9e2452bea2896449b9d2b456\.js\?v=qcf1/g, "entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=medine604/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=fatiha1/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=fatiha2/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=fatiha3/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=fatiha4/g, "quran-timing.js?v=qcf2")
+  .replace(/quran-timing\.js\?v=qcf1/g, "quran-timing.js?v=qcf2")
+  .replace(/var bust = 'amentu2';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'medine604';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'fatiha1';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'fatiha2';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'fatiha4';/, "var bust = 'qcf2';")
+  .replace(/var bust = 'qcf1';/, "var bust = 'qcf2';");
+if (!html.includes("qcf2")) {
   console.error("index.html bust failed");
   process.exit(1);
 }
-// swipe helper for mouse + touch (aria-label edge hits)
 if (!html.includes("quran-timing.js")) {
   html = html.replace(
-    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4" defer></script>',
-    '<script src="/assets/timing/quran-timing.js?v=fatiha4"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=fatiha4" defer></script>'
+    '<script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2" defer></script>',
+    '<script src="/assets/timing/quran-timing.js?v=qcf2"></script>\n  <script src="/_expo/static/js/web/entry-medine604-a0324b1a9e2452bea2896449b9d2b456.js?v=qcf2" defer></script>'
+  );
+}
+if (!html.includes("qcf-mushaf.js")) {
+  html = html.replace(
+    '<script src="/assets/timing/quran-timing.js?v=qcf2"></script>',
+    '<link rel="preload" as="font" type="font/woff2" href="/assets/mushaf/fonts/qcf/p1.woff2" crossorigin />\n  <link rel="stylesheet" href="/assets/mushaf/qcf-mushaf.css?v=qcf2" />\n  <script src="/assets/timing/quran-timing.js?v=qcf2"></script>\n  <script src="/assets/mushaf/qcf-mushaf.js?v=qcf2"></script>\n  <script src="/assets/mushaf/hy-player.js?v=qcf2"></script>'
   );
 }
 if (!html.includes("hyMedineSwipe")) {
@@ -308,7 +362,7 @@ console.log("patched index.html");
 
 if (fs.existsSync(SW)) {
   let sw = fs.readFileSync(SW, "utf8");
-  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'fatiha4';");
+  sw = sw.replace(/const BUILD = '[^']+';/, "const BUILD = 'qcf2';");
   if (!sw.includes("medine-mushaf-2026-10-19")) {
     sw = "/* medine-mushaf-2026-10-19 */\n" + sw;
   }

@@ -5,9 +5,10 @@
   "label": "Hafızyol hizalama · harf",
   "level": "letter",
   "audio": "everyayah Alafasy_128kbps/001001–001007.mp3",
-  "source": "forced-alignment-lite: everyayah PCM RMS + QUL word anchors scaled to speech + tajweed letter priors + energy-valley snap",
+  "source": "viterbi+onset FA: everyayah PCM energy/flux + QUL word anchors (±70ms) + tajweed priors (madd/shadda/ghunnah/sukun)",
   "license": "Hafızyol türetilmiş tablo. Ses everyayah (VerseByVerseQuran). Çapa: quran.com/QUL.",
   "schema": "ezanvakti-positions-v1",
+  "leadMs": 100,
   "surahs": [
     1
   ],
@@ -18,8 +19,8 @@
       "page": 1,
       "text": "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
       "audioMs": 6086.5,
-      "speechStartMs": 35,
-      "speechEndMs": 6016.5,
+      "speechStartMs": 38,
+      "speechEndMs": 6030,
       "segments": [
         {
           "no": 0,
@@ -27,13 +28,14 @@
           "page": 1,
           "startoffset": 0.9375,
           "endoffset": 1,
-          "duration": 225,
-          "startMs": 35,
+          "duration": 242,
+          "startMs": 38,
           "location": 0,
           "length": 2,
           "ch": "ب",
           "wordIndex": 0,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 1,
@@ -42,12 +44,13 @@
           "startoffset": 0.875,
           "endoffset": 0.9375,
           "duration": 130,
-          "startMs": 260,
+          "startMs": 280,
           "location": 2,
           "length": 2,
           "ch": "س",
           "wordIndex": 0,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 2,
@@ -55,13 +58,14 @@
           "page": 1,
           "startoffset": 0.8125,
           "endoffset": 0.875,
-          "duration": 210,
-          "startMs": 390,
+          "duration": 250,
+          "startMs": 410,
           "location": 4,
           "length": 2,
           "ch": "م",
           "wordIndex": 0,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 3,
@@ -69,13 +73,14 @@
           "page": 1,
           "startoffset": 0.75,
           "endoffset": 0.8125,
-          "duration": 240,
-          "startMs": 600,
+          "duration": 220,
+          "startMs": 660,
           "location": 7,
           "length": 1,
           "ch": "ل",
           "wordIndex": 1,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 4,
@@ -83,13 +88,14 @@
           "page": 1,
           "startoffset": 0.6875,
           "endoffset": 0.75,
-          "duration": 380,
-          "startMs": 840,
+          "duration": 335.4,
+          "startMs": 880,
           "location": 8,
           "length": 3,
           "ch": "ل",
           "wordIndex": 1,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 5,
@@ -97,13 +103,14 @@
           "page": 1,
           "startoffset": 0.625,
           "endoffset": 0.6875,
-          "duration": 260,
-          "startMs": 1220,
+          "duration": 274.6,
+          "startMs": 1215.4,
           "location": 11,
           "length": 2,
           "ch": "ه",
           "wordIndex": 1,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 6,
@@ -111,13 +118,14 @@
           "page": 1,
           "startoffset": 0.5625,
           "endoffset": 0.625,
-          "duration": 160,
-          "startMs": 1480,
+          "duration": 190,
+          "startMs": 1490,
           "location": 14,
           "length": 1,
           "ch": "ل",
           "wordIndex": 2,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 7,
@@ -125,13 +133,14 @@
           "page": 1,
           "startoffset": 0.5,
           "endoffset": 0.5625,
-          "duration": 360,
-          "startMs": 1640,
+          "duration": 340,
+          "startMs": 1680,
           "location": 15,
           "length": 3,
           "ch": "ر",
           "wordIndex": 2,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 8,
@@ -139,13 +148,14 @@
           "page": 1,
           "startoffset": 0.4375,
           "endoffset": 0.5,
-          "duration": 220,
-          "startMs": 2000,
+          "duration": 90,
+          "startMs": 2020,
           "location": 18,
           "length": 2,
           "ch": "ح",
           "wordIndex": 2,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "sukun"
         },
         {
           "no": 9,
@@ -153,13 +163,14 @@
           "page": 1,
           "startoffset": 0.375,
           "endoffset": 0.4375,
-          "duration": 140,
-          "startMs": 2220,
+          "duration": 230,
+          "startMs": 2110,
           "location": 20,
           "length": 2,
           "ch": "م",
           "wordIndex": 2,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 10,
@@ -168,12 +179,13 @@
           "startoffset": 0.3125,
           "endoffset": 0.375,
           "duration": 210,
-          "startMs": 2360,
+          "startMs": 2340,
           "location": 22,
           "length": 2,
           "ch": "ن",
           "wordIndex": 2,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "plain"
         },
         {
           "no": 11,
@@ -181,13 +193,14 @@
           "page": 1,
           "startoffset": 0.25,
           "endoffset": 0.3125,
-          "duration": 430,
-          "startMs": 2570,
+          "duration": 450,
+          "startMs": 2550,
           "location": 25,
           "length": 1,
           "ch": "ل",
           "wordIndex": 3,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 12,
@@ -195,13 +208,14 @@
           "page": 1,
           "startoffset": 0.1875,
           "endoffset": 0.25,
-          "duration": 900,
+          "duration": 680,
           "startMs": 3000,
           "location": 26,
           "length": 3,
           "ch": "ر",
           "wordIndex": 3,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 13,
@@ -209,13 +223,14 @@
           "page": 1,
           "startoffset": 0.125,
           "endoffset": 0.1875,
-          "duration": 480,
-          "startMs": 3900,
+          "duration": 450,
+          "startMs": 3680,
           "location": 29,
           "length": 2,
           "ch": "ح",
           "wordIndex": 3,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 14,
@@ -223,13 +238,14 @@
           "page": 1,
           "startoffset": 0.0625,
           "endoffset": 0.125,
-          "duration": 1170,
-          "startMs": 4380,
+          "duration": 1430,
+          "startMs": 4130,
           "location": 31,
           "length": 1,
           "ch": "ي",
           "wordIndex": 3,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "madd"
         },
         {
           "no": 15,
@@ -237,13 +253,14 @@
           "page": 1,
           "startoffset": 0,
           "endoffset": 0.0625,
-          "duration": 466.531,
-          "startMs": 5550,
+          "duration": 470,
+          "startMs": 5560,
           "location": 32,
           "length": 2,
           "ch": "م",
           "wordIndex": 3,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "plain"
         }
       ]
     },
@@ -253,8 +270,8 @@
       "page": 1,
       "text": "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ",
       "audioMs": 5590.2,
-      "speechStartMs": 75,
-      "speechEndMs": 5520.2,
+      "speechStartMs": 78,
+      "speechEndMs": 5530.2,
       "segments": [
         {
           "no": 0,
@@ -262,13 +279,14 @@
           "page": 1,
           "startoffset": 0.933333,
           "endoffset": 1,
-          "duration": 245,
-          "startMs": 75,
+          "duration": 122,
+          "startMs": 78,
           "location": 1,
           "length": 2,
           "ch": "ل",
           "wordIndex": 0,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 1,
@@ -276,13 +294,14 @@
           "page": 1,
           "startoffset": 0.866667,
           "endoffset": 0.933333,
-          "duration": 240,
-          "startMs": 320,
+          "duration": 330,
+          "startMs": 200,
           "location": 3,
           "length": 2,
           "ch": "ح",
           "wordIndex": 0,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 2,
@@ -290,13 +309,14 @@
           "page": 1,
           "startoffset": 0.8,
           "endoffset": 0.866667,
-          "duration": 220,
-          "startMs": 560,
+          "duration": 100,
+          "startMs": 530,
           "location": 5,
           "length": 2,
           "ch": "م",
           "wordIndex": 0,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "sukun"
         },
         {
           "no": 3,
@@ -304,13 +324,14 @@
           "page": 1,
           "startoffset": 0.733333,
           "endoffset": 0.8,
-          "duration": 220,
-          "startMs": 780,
+          "duration": 390,
+          "startMs": 630,
           "location": 7,
           "length": 2,
           "ch": "د",
           "wordIndex": 0,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 4,
@@ -318,13 +339,14 @@
           "page": 1,
           "startoffset": 0.666667,
           "endoffset": 0.733333,
-          "duration": 240,
-          "startMs": 1000,
+          "duration": 290,
+          "startMs": 1020,
           "location": 9,
           "length": 2,
           "ch": "ل",
           "wordIndex": 1,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 5,
@@ -332,13 +354,14 @@
           "page": 1,
           "startoffset": 0.6,
           "endoffset": 0.666667,
-          "duration": 380,
-          "startMs": 1240,
+          "duration": 340,
+          "startMs": 1310,
           "location": 11,
           "length": 3,
           "ch": "ل",
           "wordIndex": 1,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "shadda"
         },
         {
           "no": 6,
@@ -346,13 +369,14 @@
           "page": 1,
           "startoffset": 0.533333,
           "endoffset": 0.6,
-          "duration": 200,
-          "startMs": 1620,
+          "duration": 280,
+          "startMs": 1650,
           "location": 14,
           "length": 2,
           "ch": "ه",
           "wordIndex": 1,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 7,
@@ -360,13 +384,14 @@
           "page": 1,
           "startoffset": 0.466667,
           "endoffset": 0.533333,
-          "duration": 240,
-          "startMs": 1820,
+          "duration": 276.5,
+          "startMs": 1930,
           "location": 16,
           "length": 2,
           "ch": "ر",
           "wordIndex": 2,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 8,
@@ -374,13 +399,14 @@
           "page": 1,
           "startoffset": 0.4,
           "endoffset": 0.466667,
-          "duration": 390,
-          "startMs": 2060,
+          "duration": 293.5,
+          "startMs": 2206.5,
           "location": 18,
           "length": 3,
           "ch": "ب",
           "wordIndex": 2,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "shadda"
         },
         {
           "no": 9,
@@ -388,13 +414,14 @@
           "page": 1,
           "startoffset": 0.333333,
           "endoffset": 0.4,
-          "duration": 380,
-          "startMs": 2450,
+          "duration": 110,
+          "startMs": 2500,
           "location": 22,
           "length": 2,
           "ch": "ل",
           "wordIndex": 3,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 10,
@@ -402,13 +429,14 @@
           "page": 1,
           "startoffset": 0.266667,
           "endoffset": 0.333333,
-          "duration": 400,
-          "startMs": 2830,
+          "duration": 390,
+          "startMs": 2610,
           "location": 24,
           "length": 2,
           "ch": "ع",
           "wordIndex": 3,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 11,
@@ -416,13 +444,14 @@
           "page": 1,
           "startoffset": 0.2,
           "endoffset": 0.266667,
-          "duration": 400,
-          "startMs": 3230,
+          "duration": 430,
+          "startMs": 3000,
           "location": 26,
           "length": 2,
           "ch": "ل",
           "wordIndex": 3,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 12,
@@ -430,13 +459,14 @@
           "page": 1,
           "startoffset": 0.133333,
           "endoffset": 0.2,
-          "duration": 430,
-          "startMs": 3630,
+          "duration": 420,
+          "startMs": 3430,
           "location": 28,
           "length": 2,
           "ch": "م",
           "wordIndex": 3,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 13,
@@ -444,13 +474,14 @@
           "page": 1,
           "startoffset": 0.066667,
           "endoffset": 0.133333,
-          "duration": 1080,
-          "startMs": 4060,
+          "duration": 1320,
+          "startMs": 3850,
           "location": 30,
           "length": 1,
           "ch": "ي",
           "wordIndex": 3,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "madd"
         },
         {
           "no": 14,
@@ -458,13 +489,14 @@
           "page": 1,
           "startoffset": 0,
           "endoffset": 0.066667,
-          "duration": 380.204,
-          "startMs": 5140,
+          "duration": 360.204,
+          "startMs": 5170,
           "location": 31,
           "length": 2,
           "ch": "ن",
           "wordIndex": 3,
-          "letterIndex": 6
+          "letterIndex": 6,
+          "kind": "plain"
         }
       ]
     },
@@ -474,8 +506,8 @@
       "page": 1,
       "text": "ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
       "audioMs": 4623.7,
-      "speechStartMs": 55,
-      "speechEndMs": 4553.7,
+      "speechStartMs": 58,
+      "speechEndMs": 4563.7,
       "segments": [
         {
           "no": 0,
@@ -483,13 +515,14 @@
           "page": 1,
           "startoffset": 0.9,
           "endoffset": 1,
-          "duration": 195,
-          "startMs": 55,
+          "duration": 242,
+          "startMs": 58,
           "location": 1,
           "length": 1,
           "ch": "ل",
           "wordIndex": 0,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 1,
@@ -497,13 +530,14 @@
           "page": 1,
           "startoffset": 0.8,
           "endoffset": 0.9,
-          "duration": 440,
-          "startMs": 250,
+          "duration": 390,
+          "startMs": 300,
           "location": 2,
           "length": 3,
           "ch": "ر",
           "wordIndex": 0,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 2,
@@ -511,13 +545,14 @@
           "page": 1,
           "startoffset": 0.7,
           "endoffset": 0.8,
-          "duration": 210,
+          "duration": 120,
           "startMs": 690,
           "location": 5,
           "length": 2,
           "ch": "ح",
           "wordIndex": 0,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "sukun"
         },
         {
           "no": 3,
@@ -525,13 +560,14 @@
           "page": 1,
           "startoffset": 0.6,
           "endoffset": 0.7,
-          "duration": 180,
-          "startMs": 900,
+          "duration": 270,
+          "startMs": 810,
           "location": 7,
           "length": 2,
           "ch": "م",
           "wordIndex": 0,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 4,
@@ -539,13 +575,14 @@
           "page": 1,
           "startoffset": 0.5,
           "endoffset": 0.6,
-          "duration": 230,
+          "duration": 190,
           "startMs": 1080,
           "location": 9,
           "length": 2,
           "ch": "ن",
           "wordIndex": 0,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "plain"
         },
         {
           "no": 5,
@@ -553,13 +590,14 @@
           "page": 1,
           "startoffset": 0.4,
           "endoffset": 0.5,
-          "duration": 440,
-          "startMs": 1310,
+          "duration": 450,
+          "startMs": 1270,
           "location": 12,
           "length": 1,
           "ch": "ل",
           "wordIndex": 1,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 6,
@@ -567,13 +605,14 @@
           "page": 1,
           "startoffset": 0.3,
           "endoffset": 0.4,
-          "duration": 770,
-          "startMs": 1750,
+          "duration": 660,
+          "startMs": 1720,
           "location": 13,
           "length": 3,
           "ch": "ر",
           "wordIndex": 1,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 7,
@@ -581,13 +620,14 @@
           "page": 1,
           "startoffset": 0.2,
           "endoffset": 0.3,
-          "duration": 460,
-          "startMs": 2520,
+          "duration": 410,
+          "startMs": 2380,
           "location": 16,
           "length": 2,
           "ch": "ح",
           "wordIndex": 1,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 8,
@@ -595,13 +635,14 @@
           "page": 1,
           "startoffset": 0.1,
           "endoffset": 0.2,
-          "duration": 1170,
-          "startMs": 2980,
+          "duration": 1380,
+          "startMs": 2790,
           "location": 18,
           "length": 1,
           "ch": "ي",
           "wordIndex": 1,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "madd"
         },
         {
           "no": 9,
@@ -609,13 +650,14 @@
           "page": 1,
           "startoffset": 0,
           "endoffset": 0.1,
-          "duration": 403.673,
-          "startMs": 4150,
+          "duration": 393.673,
+          "startMs": 4170,
           "location": 19,
           "length": 2,
           "ch": "م",
           "wordIndex": 1,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "plain"
         }
       ]
     },
@@ -625,8 +667,8 @@
       "page": 1,
       "text": "مَـٰلِكِ يَوْمِ ٱلدِّينِ",
       "audioMs": 4649.8,
-      "speechStartMs": 25,
-      "speechEndMs": 4579.8,
+      "speechStartMs": 28,
+      "speechEndMs": 4589.8,
       "segments": [
         {
           "no": 0,
@@ -634,13 +676,14 @@
           "page": 1,
           "startoffset": 0.9,
           "endoffset": 1,
-          "duration": 235,
-          "startMs": 25,
+          "duration": 272,
+          "startMs": 28,
           "location": 0,
           "length": 2,
           "ch": "م",
           "wordIndex": 0,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 1,
@@ -648,13 +691,14 @@
           "page": 1,
           "startoffset": 0.9,
           "endoffset": 1,
-          "duration": 190,
-          "startMs": 260,
+          "duration": 260,
+          "startMs": 300,
           "location": 2,
           "length": 2,
           "ch": "ل",
           "wordIndex": 0,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 2,
@@ -662,13 +706,14 @@
           "page": 1,
           "startoffset": 0.8,
           "endoffset": 0.9,
-          "duration": 260,
-          "startMs": 450,
+          "duration": 320,
+          "startMs": 560,
           "location": 4,
           "length": 2,
           "ch": "ك",
           "wordIndex": 0,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 3,
@@ -676,13 +721,14 @@
           "page": 1,
           "startoffset": 0.9,
           "endoffset": 1,
-          "duration": 270,
-          "startMs": 710,
+          "duration": 240,
+          "startMs": 880,
           "location": 6,
           "length": 2,
           "ch": "ي",
           "wordIndex": 1,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 4,
@@ -690,13 +736,14 @@
           "page": 1,
           "startoffset": 0.4,
           "endoffset": 0.5,
-          "duration": 200,
-          "startMs": 980,
+          "duration": 110,
+          "startMs": 1120,
           "location": 8,
           "length": 2,
           "ch": "و",
           "wordIndex": 1,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 5,
@@ -704,13 +751,14 @@
           "page": 1,
           "startoffset": 0.3,
           "endoffset": 0.4,
-          "duration": 300,
-          "startMs": 1180,
+          "duration": 270,
+          "startMs": 1230,
           "location": 10,
           "length": 2,
           "ch": "م",
           "wordIndex": 1,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 6,
@@ -719,12 +767,13 @@
           "startoffset": 0.9,
           "endoffset": 1,
           "duration": 470,
-          "startMs": 1480,
+          "startMs": 1500,
           "location": 13,
           "length": 1,
           "ch": "ل",
           "wordIndex": 2,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 7,
@@ -732,13 +781,14 @@
           "page": 1,
           "startoffset": 0.9,
           "endoffset": 1,
-          "duration": 880,
-          "startMs": 1950,
+          "duration": 730,
+          "startMs": 1970,
           "location": 14,
           "length": 3,
           "ch": "د",
           "wordIndex": 2,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 8,
@@ -746,13 +796,14 @@
           "page": 1,
           "startoffset": 0.9,
           "endoffset": 1,
-          "duration": 1300,
-          "startMs": 2830,
+          "duration": 1440,
+          "startMs": 2700,
           "location": 17,
           "length": 1,
           "ch": "ي",
           "wordIndex": 2,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "madd"
         },
         {
           "no": 9,
@@ -761,12 +812,13 @@
           "startoffset": 0.9,
           "endoffset": 1,
           "duration": 449.796,
-          "startMs": 4130,
+          "startMs": 4140,
           "location": 18,
           "length": 2,
           "ch": "ن",
           "wordIndex": 2,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         }
       ]
     },
@@ -776,8 +828,8 @@
       "page": 1,
       "text": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
       "audioMs": 6713.5,
-      "speechStartMs": 55,
-      "speechEndMs": 6643.5,
+      "speechStartMs": 58,
+      "speechEndMs": 6653.5,
       "segments": [
         {
           "no": 0,
@@ -785,13 +837,14 @@
           "page": 1,
           "startoffset": 0.947368,
           "endoffset": 1,
-          "duration": 145,
-          "startMs": 55,
+          "duration": 92,
+          "startMs": 58,
           "location": 0,
           "length": 2,
           "ch": "إ",
           "wordIndex": 0,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 1,
@@ -799,13 +852,14 @@
           "page": 1,
           "startoffset": 0.894737,
           "endoffset": 0.947368,
-          "duration": 370,
-          "startMs": 200,
+          "duration": 380,
+          "startMs": 150,
           "location": 2,
           "length": 3,
           "ch": "ي",
           "wordIndex": 0,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "shadda"
         },
         {
           "no": 2,
@@ -813,13 +867,14 @@
           "page": 1,
           "startoffset": 0.842105,
           "endoffset": 0.894737,
-          "duration": 310,
-          "startMs": 570,
+          "duration": 380,
+          "startMs": 530,
           "location": 5,
           "length": 1,
           "ch": "ا",
           "wordIndex": 0,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "madd"
         },
         {
           "no": 3,
@@ -827,13 +882,14 @@
           "page": 1,
           "startoffset": 0.789474,
           "endoffset": 0.842105,
-          "duration": 120,
-          "startMs": 880,
+          "duration": 180,
+          "startMs": 910,
           "location": 6,
           "length": 2,
           "ch": "ك",
           "wordIndex": 0,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 4,
@@ -841,13 +897,14 @@
           "page": 1,
           "startoffset": 0.736842,
           "endoffset": 0.789474,
-          "duration": 200,
-          "startMs": 1000,
+          "duration": 180,
+          "startMs": 1090,
           "location": 8,
           "length": 2,
           "ch": "ن",
           "wordIndex": 1,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 5,
@@ -855,13 +912,14 @@
           "page": 1,
           "startoffset": 0.684211,
           "endoffset": 0.736842,
-          "duration": 150,
-          "startMs": 1200,
+          "duration": 110,
+          "startMs": 1270,
           "location": 10,
           "length": 2,
           "ch": "ع",
           "wordIndex": 1,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 6,
@@ -869,13 +927,14 @@
           "page": 1,
           "startoffset": 0.631579,
           "endoffset": 0.684211,
-          "duration": 180,
-          "startMs": 1350,
+          "duration": 200,
+          "startMs": 1380,
           "location": 12,
           "length": 2,
           "ch": "ب",
           "wordIndex": 1,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 7,
@@ -883,13 +942,14 @@
           "page": 1,
           "startoffset": 0.578947,
           "endoffset": 0.631579,
-          "duration": 150,
-          "startMs": 1530,
+          "duration": 230,
+          "startMs": 1580,
           "location": 14,
           "length": 2,
           "ch": "د",
           "wordIndex": 1,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 8,
@@ -897,13 +957,14 @@
           "page": 1,
           "startoffset": 0.526316,
           "endoffset": 0.578947,
-          "duration": 110,
-          "startMs": 1680,
+          "duration": 130,
+          "startMs": 1810,
           "location": 16,
           "length": 2,
           "ch": "و",
           "wordIndex": 2,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 9,
@@ -911,13 +972,14 @@
           "page": 1,
           "startoffset": 0.473684,
           "endoffset": 0.526316,
-          "duration": 150,
-          "startMs": 1790,
+          "duration": 140,
+          "startMs": 1940,
           "location": 18,
           "length": 2,
           "ch": "إ",
           "wordIndex": 2,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 10,
@@ -926,12 +988,13 @@
           "startoffset": 0.421053,
           "endoffset": 0.473684,
           "duration": 430,
-          "startMs": 1940,
+          "startMs": 2080,
           "location": 20,
           "length": 3,
           "ch": "ي",
           "wordIndex": 2,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 11,
@@ -940,12 +1003,13 @@
           "startoffset": 0.368421,
           "endoffset": 0.421053,
           "duration": 350,
-          "startMs": 2370,
+          "startMs": 2510,
           "location": 23,
           "length": 1,
           "ch": "ا",
           "wordIndex": 2,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "madd"
         },
         {
           "no": 12,
@@ -953,13 +1017,14 @@
           "page": 1,
           "startoffset": 0.315789,
           "endoffset": 0.368421,
-          "duration": 160,
-          "startMs": 2720,
+          "duration": 70,
+          "startMs": 2860,
           "location": 24,
           "length": 2,
           "ch": "ك",
           "wordIndex": 2,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 13,
@@ -967,13 +1032,14 @@
           "page": 1,
           "startoffset": 0.263158,
           "endoffset": 0.315789,
-          "duration": 480,
-          "startMs": 2880,
+          "duration": 520,
+          "startMs": 2930,
           "location": 26,
           "length": 2,
           "ch": "ن",
           "wordIndex": 3,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 14,
@@ -981,13 +1047,14 @@
           "page": 1,
           "startoffset": 0.210526,
           "endoffset": 0.263158,
-          "duration": 460,
-          "startMs": 3360,
+          "duration": 110,
+          "startMs": 3450,
           "location": 28,
           "length": 2,
           "ch": "س",
           "wordIndex": 3,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 15,
@@ -995,13 +1062,14 @@
           "page": 1,
           "startoffset": 0.157895,
           "endoffset": 0.210526,
-          "duration": 470,
-          "startMs": 3820,
+          "duration": 490,
+          "startMs": 3560,
           "location": 30,
           "length": 2,
           "ch": "ت",
           "wordIndex": 3,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 16,
@@ -1009,13 +1077,14 @@
           "page": 1,
           "startoffset": 0.105263,
           "endoffset": 0.157895,
-          "duration": 510,
-          "startMs": 4290,
+          "duration": 520,
+          "startMs": 4050,
           "location": 32,
           "length": 2,
           "ch": "ع",
           "wordIndex": 3,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 17,
@@ -1023,13 +1092,14 @@
           "page": 1,
           "startoffset": 0.052632,
           "endoffset": 0.105263,
-          "duration": 1310,
-          "startMs": 4800,
+          "duration": 1580,
+          "startMs": 4570,
           "location": 34,
           "length": 1,
           "ch": "ي",
           "wordIndex": 3,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "madd"
         },
         {
           "no": 18,
@@ -1037,13 +1107,14 @@
           "page": 1,
           "startoffset": 0,
           "endoffset": 0.052632,
-          "duration": 533.469,
-          "startMs": 6110,
+          "duration": 503.469,
+          "startMs": 6150,
           "location": 35,
           "length": 2,
           "ch": "ن",
           "wordIndex": 3,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "plain"
         }
       ]
     },
@@ -1053,8 +1124,8 @@
       "page": 1,
       "text": "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
       "audioMs": 5590.2,
-      "speechStartMs": 35,
-      "speechEndMs": 5520.2,
+      "speechStartMs": 38,
+      "speechEndMs": 5530.2,
       "segments": [
         {
           "no": 0,
@@ -1062,13 +1133,14 @@
           "page": 1,
           "startoffset": 0.894737,
           "endoffset": 0.947368,
-          "duration": 135,
-          "startMs": 35,
+          "duration": 72,
+          "startMs": 38,
           "location": 1,
           "length": 2,
           "ch": "ه",
           "wordIndex": 0,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 1,
@@ -1076,13 +1148,14 @@
           "page": 1,
           "startoffset": 0.842105,
           "endoffset": 0.894737,
-          "duration": 100,
-          "startMs": 170,
+          "duration": 150,
+          "startMs": 110,
           "location": 3,
           "length": 2,
           "ch": "د",
           "wordIndex": 0,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 2,
@@ -1090,13 +1163,14 @@
           "page": 1,
           "startoffset": 0.789474,
           "endoffset": 0.842105,
-          "duration": 140,
-          "startMs": 270,
+          "duration": 150,
+          "startMs": 260,
           "location": 5,
           "length": 2,
           "ch": "ن",
           "wordIndex": 0,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 3,
@@ -1104,13 +1178,14 @@
           "page": 1,
           "startoffset": 0.947368,
           "endoffset": 1,
-          "duration": 340,
+          "duration": 360,
           "startMs": 410,
           "location": 7,
           "length": 1,
           "ch": "ا",
           "wordIndex": 0,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "madd"
         },
         {
           "no": 4,
@@ -1118,13 +1193,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 140,
-          "startMs": 750,
+          "duration": 100,
+          "startMs": 770,
           "location": 9,
           "length": 1,
           "ch": "ل",
           "wordIndex": 1,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 5,
@@ -1132,13 +1208,14 @@
           "page": 1,
           "startoffset": 0.818182,
           "endoffset": 0.909091,
-          "duration": 150,
-          "startMs": 890,
+          "duration": 190,
+          "startMs": 870,
           "location": 10,
           "length": 3,
           "ch": "ص",
           "wordIndex": 1,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 6,
@@ -1146,13 +1223,14 @@
           "page": 1,
           "startoffset": 0.727273,
           "endoffset": 0.818182,
-          "duration": 410,
-          "startMs": 1040,
+          "duration": 500,
+          "startMs": 1060,
           "location": 13,
           "length": 3,
           "ch": "ر",
           "wordIndex": 1,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "madd"
         },
         {
           "no": 7,
@@ -1160,13 +1238,14 @@
           "page": 1,
           "startoffset": 0.636364,
           "endoffset": 0.727273,
-          "duration": 80,
-          "startMs": 1450,
+          "duration": 120,
+          "startMs": 1560,
           "location": 16,
           "length": 2,
           "ch": "ط",
           "wordIndex": 1,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 8,
@@ -1174,13 +1253,14 @@
           "page": 1,
           "startoffset": 0.545455,
           "endoffset": 0.636364,
-          "duration": 390,
-          "startMs": 1530,
+          "duration": 100,
+          "startMs": 1680,
           "location": 19,
           "length": 2,
           "ch": "ل",
           "wordIndex": 2,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 9,
@@ -1189,12 +1269,13 @@
           "startoffset": 0.454545,
           "endoffset": 0.545455,
           "duration": 520,
-          "startMs": 1920,
+          "startMs": 1780,
           "location": 21,
           "length": 2,
           "ch": "م",
           "wordIndex": 2,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 10,
@@ -1202,13 +1283,14 @@
           "page": 1,
           "startoffset": 0.363636,
           "endoffset": 0.454545,
-          "duration": 400,
-          "startMs": 2440,
+          "duration": 130,
+          "startMs": 2300,
           "location": 23,
           "length": 2,
           "ch": "س",
           "wordIndex": 2,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "sukun"
         },
         {
           "no": 11,
@@ -1216,13 +1298,14 @@
           "page": 1,
           "startoffset": 0.272727,
           "endoffset": 0.363636,
-          "duration": 440,
-          "startMs": 2840,
+          "duration": 520,
+          "startMs": 2430,
           "location": 25,
           "length": 2,
           "ch": "ت",
           "wordIndex": 2,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 12,
@@ -1230,13 +1313,14 @@
           "page": 1,
           "startoffset": 0.181818,
           "endoffset": 0.272727,
-          "duration": 480,
-          "startMs": 3280,
+          "duration": 530,
+          "startMs": 2950,
           "location": 27,
           "length": 2,
           "ch": "ق",
           "wordIndex": 2,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "plain"
         },
         {
           "no": 13,
@@ -1244,13 +1328,14 @@
           "page": 1,
           "startoffset": 0.090909,
           "endoffset": 0.181818,
-          "duration": 1310,
-          "startMs": 3760,
+          "duration": 1630,
+          "startMs": 3480,
           "location": 29,
           "length": 1,
           "ch": "ي",
           "wordIndex": 2,
-          "letterIndex": 6
+          "letterIndex": 6,
+          "kind": "madd"
         },
         {
           "no": 14,
@@ -1258,13 +1343,14 @@
           "page": 1,
           "startoffset": 0,
           "endoffset": 0.090909,
-          "duration": 450.204,
-          "startMs": 5070,
+          "duration": 420.204,
+          "startMs": 5110,
           "location": 30,
           "length": 2,
           "ch": "م",
           "wordIndex": 2,
-          "letterIndex": 7
+          "letterIndex": 7,
+          "kind": "plain"
         }
       ]
     },
@@ -1274,8 +1360,8 @@
       "page": 1,
       "text": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
       "audioMs": 13244.1,
-      "speechStartMs": 25,
-      "speechEndMs": 13174.1,
+      "speechStartMs": 28,
+      "speechEndMs": 13184.1,
       "segments": [
         {
           "no": 0,
@@ -1283,13 +1369,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 85,
-          "startMs": 25,
+          "duration": 142,
+          "startMs": 28,
           "location": 0,
           "length": 2,
           "ch": "ص",
           "wordIndex": 0,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 1,
@@ -1297,13 +1384,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 430,
-          "startMs": 110,
+          "duration": 510,
+          "startMs": 170,
           "location": 2,
           "length": 3,
           "ch": "ر",
           "wordIndex": 0,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "madd"
         },
         {
           "no": 2,
@@ -1311,13 +1399,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 90,
-          "startMs": 540,
+          "duration": 150,
+          "startMs": 680,
           "location": 5,
           "length": 2,
           "ch": "ط",
           "wordIndex": 0,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 3,
@@ -1325,13 +1414,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 280,
-          "startMs": 630,
+          "duration": 210,
+          "startMs": 830,
           "location": 8,
           "length": 3,
           "ch": "ل",
           "wordIndex": 1,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "shadda"
         },
         {
           "no": 4,
@@ -1339,13 +1429,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 230,
-          "startMs": 910,
+          "duration": 150,
+          "startMs": 1040,
           "location": 11,
           "length": 2,
           "ch": "ذ",
           "wordIndex": 1,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 5,
@@ -1354,12 +1445,13 @@
           "startoffset": 0.909091,
           "endoffset": 1,
           "duration": 410,
-          "startMs": 1140,
+          "startMs": 1190,
           "location": 13,
           "length": 1,
           "ch": "ي",
           "wordIndex": 1,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "madd"
         },
         {
           "no": 6,
@@ -1367,13 +1459,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 160,
-          "startMs": 1550,
+          "duration": 70,
+          "startMs": 1600,
           "location": 14,
           "length": 2,
           "ch": "ن",
           "wordIndex": 1,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 7,
@@ -1381,13 +1474,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 230,
-          "startMs": 1710,
+          "duration": 240,
+          "startMs": 1670,
           "location": 16,
           "length": 2,
           "ch": "أ",
           "wordIndex": 2,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 8,
@@ -1395,13 +1489,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 140,
-          "startMs": 1940,
+          "duration": 120,
+          "startMs": 1910,
           "location": 18,
           "length": 2,
           "ch": "ن",
           "wordIndex": 2,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 9,
@@ -1409,13 +1504,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 240,
-          "startMs": 2080,
+          "duration": 250,
+          "startMs": 2030,
           "location": 20,
           "length": 2,
           "ch": "ع",
           "wordIndex": 2,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 10,
@@ -1423,13 +1519,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 200,
-          "startMs": 2320,
+          "duration": 100,
+          "startMs": 2280,
           "location": 22,
           "length": 2,
           "ch": "م",
           "wordIndex": 2,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "sukun"
         },
         {
           "no": 11,
@@ -1437,13 +1534,14 @@
           "page": 1,
           "startoffset": 0.909091,
           "endoffset": 1,
-          "duration": 210,
-          "startMs": 2520,
+          "duration": 290,
+          "startMs": 2380,
           "location": 24,
           "length": 2,
           "ch": "ت",
           "wordIndex": 2,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 12,
@@ -1451,13 +1549,14 @@
           "page": 1,
           "startoffset": 0.947368,
           "endoffset": 1,
-          "duration": 180,
-          "startMs": 2730,
+          "duration": 270,
+          "startMs": 2670,
           "location": 26,
           "length": 2,
           "ch": "ع",
           "wordIndex": 3,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 13,
@@ -1465,13 +1564,14 @@
           "page": 1,
           "startoffset": 0.894737,
           "endoffset": 0.947368,
-          "duration": 210,
-          "startMs": 2910,
+          "duration": 280,
+          "startMs": 2940,
           "location": 28,
           "length": 2,
           "ch": "ل",
           "wordIndex": 3,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 14,
@@ -1479,13 +1579,14 @@
           "page": 1,
           "startoffset": 0.842105,
           "endoffset": 0.894737,
-          "duration": 160,
-          "startMs": 3120,
+          "duration": 120,
+          "startMs": 3220,
           "location": 30,
           "length": 2,
           "ch": "ي",
           "wordIndex": 3,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "sukun"
         },
         {
           "no": 15,
@@ -1493,13 +1594,14 @@
           "page": 1,
           "startoffset": 0.789474,
           "endoffset": 0.842105,
-          "duration": 190,
-          "startMs": 3280,
+          "duration": 280,
+          "startMs": 3340,
           "location": 32,
           "length": 2,
           "ch": "ه",
           "wordIndex": 3,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 16,
@@ -1507,13 +1609,14 @@
           "page": 1,
           "startoffset": 0.736842,
           "endoffset": 0.789474,
-          "duration": 200,
-          "startMs": 3470,
+          "duration": 70,
+          "startMs": 3620,
           "location": 34,
           "length": 2,
           "ch": "م",
           "wordIndex": 3,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "sukun"
         },
         {
           "no": 17,
@@ -1521,13 +1624,14 @@
           "page": 1,
           "startoffset": 0.684211,
           "endoffset": 0.736842,
-          "duration": 170,
-          "startMs": 3670,
+          "duration": 230,
+          "startMs": 3690,
           "location": 36,
           "length": 2,
           "ch": "غ",
           "wordIndex": 4,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 18,
@@ -1535,13 +1639,14 @@
           "page": 1,
           "startoffset": 0.631579,
           "endoffset": 0.684211,
-          "duration": 210,
-          "startMs": 3840,
+          "duration": 120,
+          "startMs": 3920,
           "location": 38,
           "length": 2,
           "ch": "ي",
           "wordIndex": 4,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 19,
@@ -1549,13 +1654,14 @@
           "page": 1,
           "startoffset": 0.578947,
           "endoffset": 0.631579,
-          "duration": 160,
-          "startMs": 4050,
+          "duration": 230,
+          "startMs": 4040,
           "location": 40,
           "length": 2,
           "ch": "ر",
           "wordIndex": 4,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 20,
@@ -1563,13 +1669,14 @@
           "page": 1,
           "startoffset": 0.526316,
           "endoffset": 0.578947,
-          "duration": 170,
-          "startMs": 4210,
+          "duration": 80,
+          "startMs": 4270,
           "location": 43,
           "length": 2,
           "ch": "ل",
           "wordIndex": 5,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "sukun"
         },
         {
           "no": 21,
@@ -1577,13 +1684,14 @@
           "page": 1,
           "startoffset": 0.473684,
           "endoffset": 0.526316,
-          "duration": 160,
-          "startMs": 4380,
+          "duration": 150,
+          "startMs": 4350,
           "location": 45,
           "length": 2,
           "ch": "م",
           "wordIndex": 5,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "plain"
         },
         {
           "no": 22,
@@ -1591,13 +1699,14 @@
           "page": 1,
           "startoffset": 0.421053,
           "endoffset": 0.473684,
-          "duration": 90,
-          "startMs": 4540,
+          "duration": 70,
+          "startMs": 4500,
           "location": 47,
           "length": 2,
           "ch": "غ",
           "wordIndex": 5,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "sukun"
         },
         {
           "no": 23,
@@ -1606,12 +1715,13 @@
           "startoffset": 0.368421,
           "endoffset": 0.421053,
           "duration": 170,
-          "startMs": 4630,
+          "startMs": 4570,
           "location": 49,
           "length": 2,
           "ch": "ض",
           "wordIndex": 5,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "plain"
         },
         {
           "no": 24,
@@ -1619,13 +1729,14 @@
           "page": 1,
           "startoffset": 0.315789,
           "endoffset": 0.368421,
-          "duration": 430,
-          "startMs": 4800,
+          "duration": 510,
+          "startMs": 4740,
           "location": 51,
           "length": 1,
           "ch": "و",
           "wordIndex": 5,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "madd"
         },
         {
           "no": 25,
@@ -1633,13 +1744,14 @@
           "page": 1,
           "startoffset": 0.263158,
           "endoffset": 0.315789,
-          "duration": 190,
-          "startMs": 5230,
+          "duration": 200,
+          "startMs": 5250,
           "location": 52,
           "length": 2,
           "ch": "ب",
           "wordIndex": 5,
-          "letterIndex": 6
+          "letterIndex": 6,
+          "kind": "plain"
         },
         {
           "no": 26,
@@ -1647,13 +1759,14 @@
           "page": 1,
           "startoffset": 0.210526,
           "endoffset": 0.263158,
-          "duration": 170,
-          "startMs": 5420,
+          "duration": 220,
+          "startMs": 5450,
           "location": 54,
           "length": 2,
           "ch": "ع",
           "wordIndex": 6,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 27,
@@ -1661,13 +1774,14 @@
           "page": 1,
           "startoffset": 0.157895,
           "endoffset": 0.210526,
-          "duration": 260,
-          "startMs": 5590,
+          "duration": 220,
+          "startMs": 5670,
           "location": 56,
           "length": 2,
           "ch": "ل",
           "wordIndex": 6,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 28,
@@ -1675,13 +1789,14 @@
           "page": 1,
           "startoffset": 0.105263,
           "endoffset": 0.157895,
-          "duration": 150,
-          "startMs": 5850,
+          "duration": 110,
+          "startMs": 5890,
           "location": 58,
           "length": 2,
           "ch": "ي",
           "wordIndex": 6,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "sukun"
         },
         {
           "no": 29,
@@ -1689,13 +1804,14 @@
           "page": 1,
           "startoffset": 0.052632,
           "endoffset": 0.105263,
-          "duration": 160,
+          "duration": 260,
           "startMs": 6000,
           "location": 60,
           "length": 2,
           "ch": "ه",
           "wordIndex": 6,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "plain"
         },
         {
           "no": 30,
@@ -1703,13 +1819,14 @@
           "page": 1,
           "startoffset": 0,
           "endoffset": 0.052632,
-          "duration": 200,
-          "startMs": 6160,
+          "duration": 150,
+          "startMs": 6260,
           "location": 62,
           "length": 2,
           "ch": "م",
           "wordIndex": 6,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "sukun"
         },
         {
           "no": 31,
@@ -1717,13 +1834,14 @@
           "page": 1,
           "startoffset": 0.888889,
           "endoffset": 1,
-          "duration": 90,
-          "startMs": 6360,
+          "duration": 78,
+          "startMs": 6410,
           "location": 64,
           "length": 2,
           "ch": "و",
           "wordIndex": 7,
-          "letterIndex": 0
+          "letterIndex": 0,
+          "kind": "plain"
         },
         {
           "no": 32,
@@ -1731,13 +1849,14 @@
           "page": 1,
           "startoffset": 0.777778,
           "endoffset": 0.888889,
-          "duration": 40,
-          "startMs": 6450,
+          "duration": 72,
+          "startMs": 6488,
           "location": 66,
           "length": 2,
           "ch": "ل",
           "wordIndex": 7,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 33,
@@ -1745,13 +1864,14 @@
           "page": 1,
           "startoffset": 0.666667,
           "endoffset": 0.777778,
-          "duration": 240,
-          "startMs": 6490,
+          "duration": 70,
+          "startMs": 6560,
           "location": 68,
           "length": 1,
           "ch": "ا",
           "wordIndex": 7,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "madd"
         },
         {
           "no": 34,
@@ -1759,13 +1879,14 @@
           "page": 1,
           "startoffset": 0.555556,
           "endoffset": 0.666667,
-          "duration": 510,
-          "startMs": 6730,
+          "duration": 480,
+          "startMs": 6630,
           "location": 70,
           "length": 1,
           "ch": "ل",
           "wordIndex": 8,
-          "letterIndex": 1
+          "letterIndex": 1,
+          "kind": "plain"
         },
         {
           "no": 35,
@@ -1773,13 +1894,14 @@
           "page": 1,
           "startoffset": 0.444444,
           "endoffset": 0.555556,
-          "duration": 870,
-          "startMs": 7240,
+          "duration": 690,
+          "startMs": 7110,
           "location": 71,
           "length": 3,
           "ch": "ض",
           "wordIndex": 8,
-          "letterIndex": 2
+          "letterIndex": 2,
+          "kind": "shadda"
         },
         {
           "no": 36,
@@ -1787,13 +1909,14 @@
           "page": 1,
           "startoffset": 0.333333,
           "endoffset": 0.444444,
-          "duration": 2360,
-          "startMs": 8110,
+          "duration": 2800,
+          "startMs": 7800,
           "location": 74,
           "length": 2,
           "ch": "ا",
           "wordIndex": 8,
-          "letterIndex": 3
+          "letterIndex": 3,
+          "kind": "madd"
         },
         {
           "no": 37,
@@ -1801,13 +1924,14 @@
           "page": 1,
           "startoffset": 0.222222,
           "endoffset": 0.333333,
-          "duration": 960,
-          "startMs": 10470,
+          "duration": 710,
+          "startMs": 10600,
           "location": 76,
           "length": 3,
           "ch": "ل",
           "wordIndex": 8,
-          "letterIndex": 4
+          "letterIndex": 4,
+          "kind": "shadda"
         },
         {
           "no": 38,
@@ -1815,13 +1939,14 @@
           "page": 1,
           "startoffset": 0.111111,
           "endoffset": 0.222222,
-          "duration": 1280,
-          "startMs": 11430,
+          "duration": 1470,
+          "startMs": 11310,
           "location": 79,
           "length": 1,
           "ch": "ي",
           "wordIndex": 8,
-          "letterIndex": 5
+          "letterIndex": 5,
+          "kind": "madd"
         },
         {
           "no": 39,
@@ -1829,13 +1954,14 @@
           "page": 1,
           "startoffset": 0,
           "endoffset": 0.111111,
-          "duration": 464.082,
-          "startMs": 12710,
+          "duration": 404.082,
+          "startMs": 12780,
           "location": 80,
           "length": 2,
           "ch": "ن",
           "wordIndex": 8,
-          "letterIndex": 6
+          "letterIndex": 6,
+          "kind": "plain"
         }
       ]
     }

@@ -18,6 +18,7 @@
     {
       id: "hafizyol",
       label: "Hafızyol hizalama · harf (varsayılan)",
+      short: "Hafızyol",
       file: "/assets/timing/positions-hafizyol-fatiha.json",
       level: "letter",
       demoOnly: false,
@@ -25,6 +26,7 @@
     {
       id: "qurancom",
       label: "quran.com / QUL · kelime→harf · kıyas",
+      short: "QUL harf",
       file: "/assets/timing/positions-qurancom-fatiha.json",
       level: "word",
       demoOnly: true,
@@ -32,6 +34,7 @@
     {
       id: "qurancom-word",
       label: "quran.com / QUL · kelime · kıyas",
+      short: "QUL kelime",
       file: "/assets/timing/positions-qurancom-fatiha.json",
       level: "word-only",
       demoOnly: true,
@@ -57,6 +60,9 @@
   var ALEF_MAQSURA = "\u0649";
   var NOON = "\u0646";
   var MEEM = "\u0645";
+  var QALQALA = /[\u0642\u0637\u0628\u062C\u062F]/;
+  var ARROW_LEAD_MS = 100;
+  var ARROW_MIN_VIS_MS = 70;
 
   function isBase(ch) {
     return BASE.test(ch);
@@ -89,17 +95,39 @@
         skip = true;
       }
       var weight = 1;
-      if (marks.indexOf(SHADDA) >= 0) weight += 0.85;
-      if (marks.indexOf(MADDAH) >= 0 || marks.indexOf(SUPER_ALEF) >= 0) weight += 2.2;
+      var kind = "plain";
+      if (marks.indexOf(SHADDA) >= 0) {
+        weight += 0.55;
+        kind = "shadda";
+      }
+      if (marks.indexOf(MADDAH) >= 0 || marks.indexOf(SUPER_ALEF) >= 0) {
+        weight += 3.0;
+        if (kind === "plain") kind = "madd";
+      }
       if (marks.indexOf(FATHATAN) >= 0 || marks.indexOf(DAMMATAN) >= 0 || marks.indexOf(KASRATAN) >= 0) {
         weight += 0.55;
       }
-      if ((ch === NOON || ch === MEEM) && marks.indexOf(SHADDA) >= 0) weight += 1.15;
+      if ((ch === NOON || ch === MEEM) && marks.indexOf(SHADDA) >= 0) {
+        weight += 1.8;
+        kind = "ghunnah";
+      }
       var prevMarks = out.length ? out[out.length - 1].marks : "";
-      if (ch === ALEF && prevMarks.indexOf(FATHA) >= 0) weight += 1.6;
-      if (ch === WAW && prevMarks.indexOf(DAMMA) >= 0) weight += 1.6;
-      if ((ch === YEH || ch === ALEF_MAQSURA) && prevMarks.indexOf(KASRA) >= 0) weight += 1.6;
-      if (marks.indexOf(SUKUN) >= 0 && !skip) weight = Math.max(0.75, weight * 0.85);
+      if (ch === ALEF && prevMarks.indexOf(FATHA) >= 0) {
+        weight += 2.2;
+        if (kind === "plain") kind = "madd";
+      }
+      if (ch === WAW && prevMarks.indexOf(DAMMA) >= 0) {
+        weight += 2.2;
+        if (kind === "plain") kind = "madd";
+      }
+      if ((ch === YEH || ch === ALEF_MAQSURA) && prevMarks.indexOf(KASRA) >= 0) {
+        weight += 2.2;
+        if (kind === "plain") kind = "madd";
+      }
+      if (marks.indexOf(SUKUN) >= 0 && !skip) {
+        weight = QALQALA.test(ch) ? 0.7 : 0.48;
+        kind = "sukun";
+      }
       out.push({
         i: gi,
         ch: ch + marks,
@@ -107,6 +135,7 @@
         marks: marks,
         weight: skip ? 0 : weight,
         skip: skip,
+        kind: skip ? "skip" : kind,
       });
       gi += 1;
       i = j;
@@ -148,10 +177,7 @@
     } catch (e) {}
     try {
       var s = global.localStorage && localStorage.getItem("hyTimingSource");
-      if (isKnownSource(s) && !sourceMeta(s).demoOnly) return s;
-      if (isKnownSource(s) && sourceMeta(s).demoOnly) {
-        localStorage.removeItem("hyTimingSource");
-      }
+      if (isKnownSource(s)) return s;
     } catch (e2) {}
     return "hafizyol";
   }
@@ -210,6 +236,32 @@
     return !!(meta && meta.wordTiming);
   }
 
+  function readLeadMs() {
+    try {
+      var n = Number(global.localStorage && localStorage.getItem("hyArrowLeadMs"));
+      if (n >= 40 && n <= 200) return n;
+    } catch (e) {}
+    return ARROW_LEAD_MS;
+  }
+
+  function audioLagMs() {
+    if (typeof navigator === "undefined") return 20;
+    var ua = navigator.userAgent || "";
+    if (/iPhone|iPad|iPod/.test(ua)) return 40;
+    if (/Macintosh/.test(ua) && typeof document !== "undefined" && "ontouchend" in document) return 40;
+    return 20;
+  }
+
+  function lookAheadMs() {
+    return readLeadMs() + audioLagMs();
+  }
+
+  function isShortSeg(seg) {
+    if (!seg) return false;
+    if (seg.kind === "sukun" || seg.kind === "shadda") return true;
+    return seg.duration > 0 && seg.duration < 140;
+  }
+
   function atTime(reciterId, surah, ayah, timeSec, spans) {
     var pin = { ayahIndex: spans && spans[0] ? spans[0].ayahIndex : 0, wordIndex: 0, letterIndex: 0, pinned: true };
     if (!hasWordTiming(reciterId)) return pin;
@@ -218,10 +270,21 @@
     var table = positionAyah(surah, ayah);
     if (table && table.segments && table.segments.length) {
       var segs = table.segments;
+      var lead = lookAheadMs();
       var hit = segs[0];
       for (var i = 0; i < segs.length; i++) {
-        var start = segs[i].startMs;
-        var end = start + segs[i].duration;
+        var start = segs[i].startMs - lead;
+        var dur = Math.max(1, segs[i].duration);
+        var hold = isShortSeg(segs[i]) ? Math.max(ARROW_MIN_VIS_MS, Math.min(dur, 110)) : dur;
+        var end = start + hold;
+        if (i + 1 < segs.length) {
+          var nextStart = segs[i + 1].startMs - lead;
+          if (isShortSeg(segs[i])) {
+            end = Math.max(start + ARROW_MIN_VIS_MS, Math.min(end, nextStart));
+          } else if (nextStart > start) {
+            end = Math.min(end, nextStart);
+          }
+        }
         if (tMs >= start && tMs < end) {
           hit = segs[i];
           break;
@@ -241,6 +304,8 @@
         endoffset: hit.endoffset,
         startMs: hit.startMs,
         duration: hit.duration,
+        kind: hit.kind || "",
+        leadMs: lead,
         sourceId: sourceId,
       };
     }
@@ -263,26 +328,70 @@
   }
 
   function ensureArrow() {
-    if (arrowEl && arrowEl.parentNode) return arrowEl;
+    var overlay = document.getElementById("hy-qcf-overlay");
+    var host = overlay || document.body;
+    if (arrowEl && arrowEl.parentNode === host) return arrowEl;
     arrowEl = document.getElementById("hy-track-arrow");
-    if (arrowEl) return arrowEl;
-    arrowEl = document.createElement("div");
-    arrowEl.id = "hy-track-arrow";
-    arrowEl.setAttribute("aria-hidden", "true");
-    arrowEl.innerHTML = '<span style="display:block;font-size:34px;line-height:28px;color:#97FF0A;text-shadow:0 0 8px #14532d,0 2px 0 #052e16">\u25B2</span>';
-    arrowEl.style.cssText =
-      "position:fixed;z-index:99999;pointer-events:none;transform:translate(-50%,0);display:none;";
-    document.body.appendChild(arrowEl);
+    if (!arrowEl) {
+      arrowEl = document.createElement("div");
+      arrowEl.id = "hy-track-arrow";
+      arrowEl.setAttribute("aria-hidden", "true");
+      arrowEl.innerHTML =
+        '<span class="hy-arrow-mark" style="display:block;font-size:15px;line-height:14px;color:#8a6a1c;text-shadow:0 0 1px #fff8e7,0 1px 0 rgba(42,34,24,0.35)">\u25B2</span>';
+    }
+    if (overlay) {
+      arrowEl.style.cssText = "position:absolute;z-index:2;pointer-events:none;transform:translate(-50%,0);display:none;";
+      overlay.appendChild(arrowEl);
+    } else {
+      arrowEl.style.cssText =
+        "position:fixed;z-index:99999;pointer-events:none;transform:translate(-50%,0);display:none;";
+      if (!arrowEl.parentNode) document.body.appendChild(arrowEl);
+    }
     return arrowEl;
   }
 
+  function ensureHighlight() {
+    var overlay = document.getElementById("hy-qcf-overlay");
+    if (!overlay) return null;
+    var hl = document.getElementById("hy-qcf-hl");
+    if (!hl) {
+      hl = document.createElement("div");
+      hl.id = "hy-qcf-hl";
+      overlay.appendChild(hl);
+    } else if (hl.parentNode !== overlay) {
+      overlay.appendChild(hl);
+    }
+    return hl;
+  }
+
+  function ensureLineHl() {
+    var el = document.getElementById("hy-qcf-linehl");
+    if (el) return el;
+    var stage = document.getElementById("hy-qcf-stage");
+    var glyphs = document.getElementById("hy-qcf-glyphs");
+    if (!stage) return null;
+    el = document.createElement("div");
+    el.id = "hy-qcf-linehl";
+    if (glyphs && glyphs.parentNode === stage) stage.insertBefore(el, glyphs);
+    else stage.appendChild(el);
+    return el;
+  }
+
   function findByNativeId(id) {
+    var qcf = document.querySelector('[data-hy-qcf="' + id.replace(/^hy-l-/, "") + '"]');
+    if (qcf) return qcf;
+    if (id.indexOf("hy-row-") === 0) {
+      var n = id.slice(7);
+      var qrow = document.getElementById("hy-qcf-row-" + n) || document.querySelector('[data-hy-qcf-row="' + n + '"]');
+      if (qrow) return qrow;
+    }
     return (
       document.getElementById(id) ||
       document.querySelector('[id="' + id + '"]') ||
       document.querySelector('[nativeID="' + id + '"]') ||
       document.querySelector('[nativeid="' + id + '"]') ||
-      document.querySelector('[data-nativeid="' + id + '"]')
+      document.querySelector('[data-nativeid="' + id + '"]') ||
+      document.querySelector('[data-hy-qcf="' + id.replace(/^hy-l-/, "") + '"]')
     );
   }
 
@@ -317,39 +426,83 @@
     return { left: minL, width: maxR - minL, bottom: bottom, top: top, height: bottom - top };
   }
 
+  function findLetterHit(ayahIndex, wordIndex, letterIndex) {
+    var li = letterIndex || 0;
+    var i;
+    for (i = 0; i < 8; i++) {
+      var hit = document.querySelector('[data-hy-qcf="' + ayahIndex + "-" + wordIndex + "-" + (li + i) + '"]');
+      if (hit) return hit;
+    }
+    for (i = li; i >= 0; i--) {
+      hit = document.querySelector('[data-hy-qcf="' + ayahIndex + "-" + wordIndex + "-" + i + '"]');
+      if (hit) return hit;
+    }
+    return (
+      document.querySelector('[data-hy-qcf^="' + ayahIndex + "-" + wordIndex + '-"]') ||
+      document.querySelector('[data-hy-qcf-word][data-hy-local="' + ayahIndex + "-" + wordIndex + '"]')
+    );
+  }
+
   function placeArrow() {
     if (typeof document === "undefined") return;
     var el = ensureArrow();
-    var r = null;
-    var li = active.letterIndex || 0;
-    for (var k = 0; k < 6 && !r; k++) {
-      r = usableRect(findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + (li + k)));
-    }
-    if (!r && typeof active.startoffset === "number" && active.row != null) {
-      var box = textBoxForRow(active.row);
-      if (box) {
-        var mid = (active.startoffset + (typeof active.endoffset === "number" ? active.endoffset : active.startoffset)) / 2;
-        r = { left: box.left + mid * box.width, width: 0, bottom: box.bottom, top: box.top, height: box.height };
-      }
-    }
+    var node = findLetterHit(active.ayahIndex, active.wordIndex, active.letterIndex);
+    var r = usableRect(node);
     if (!r) {
       el.style.display = "none";
+      var hl0 = document.getElementById("hy-qcf-hl");
+      if (hl0) hl0.style.display = "none";
+      var lh0 = document.getElementById("hy-qcf-linehl");
+      if (lh0) {
+        lh0.style.display = "none";
+        lh0.classList.remove("hy-on");
+      }
       return;
     }
-    var rowNode = active.row != null ? findByNativeId("hy-row-" + active.row) : null;
-    if (!rowNode) {
-      var letterNode = findByNativeId("hy-l-" + active.ayahIndex + "-" + active.wordIndex + "-" + li);
-      rowNode = letterNode && letterNode.closest && letterNode.closest('[id^="hy-row-"]');
-    }
+    var overlay = document.getElementById("hy-qcf-overlay");
     el.style.display = "block";
-    el.style.left = r.left + r.width / 2 + "px";
-    // Glyph boxes overflow the 15-line band; pin the tip inside the row, not onto the next ayah.
-    var tip = r.bottom - 8;
-    if (rowNode) {
-      var band = rowNode.getBoundingClientRect();
-      if (band.height) tip = band.top + band.height * 0.62;
+    var left = parseFloat(node.style.left);
+    var top = parseFloat(node.style.top);
+    var width = parseFloat(node.style.width);
+    var height = parseFloat(node.style.height);
+    var d = null;
+    if (overlay && node.parentNode === overlay && !isNaN(left) && !isNaN(top)) {
+      d = { left: left, top: top, width: width || r.width, height: height || r.height };
+    } else if (overlay && el.parentNode === overlay && global.hyQcfMushaf && global.hyQcfMushaf.toDesignRect) {
+      d = global.hyQcfMushaf.toDesignRect(r);
     }
-    el.style.top = tip + "px";
+    if (d) {
+      el.style.left = d.left + d.width / 2 + "px";
+      el.style.top = d.top + d.height * 0.82 + "px";
+      var hl = ensureHighlight();
+      if (hl) {
+        hl.style.display = "block";
+        hl.style.left = d.left + "px";
+        hl.style.top = d.top + "px";
+        hl.style.width = Math.max(8, d.width) + "px";
+        hl.style.height = Math.max(20, d.height) + "px";
+      }
+      var linehl = ensureLineHl();
+      var row = node.getAttribute && node.getAttribute("data-hy-row");
+      var box = row ? document.getElementById("hy-qcf-row-" + row) : null;
+      if (linehl && box && global.hyQcfMushaf && global.hyQcfMushaf.toDesignRect) {
+        var ld = global.hyQcfMushaf.toDesignRect(box.getBoundingClientRect());
+        if (ld) {
+          linehl.classList.add("hy-on");
+          linehl.style.display = "block";
+          linehl.style.left = ld.left + "px";
+          linehl.style.top = ld.top + "px";
+          linehl.style.width = ld.width + "px";
+          linehl.style.height = ld.height + "px";
+        }
+      }
+      if (global.hyQcfMushaf && global.hyQcfMushaf.scrollActive) {
+        global.hyQcfMushaf.scrollActive(d.top, d.height);
+      }
+    } else {
+      el.style.left = r.left + r.width / 2 + "px";
+      el.style.top = r.top + r.height * 0.82 + "px";
+    }
   }
 
   function setActive(hit) {
@@ -365,6 +518,13 @@
 
   function hideArrow() {
     if (arrowEl) arrowEl.style.display = "none";
+    var hl = document.getElementById("hy-qcf-hl");
+    if (hl) hl.style.display = "none";
+    var linehl = document.getElementById("hy-qcf-linehl");
+    if (linehl) {
+      linehl.style.display = "none";
+      linehl.classList.remove("hy-on");
+    }
   }
 
   function onKuran() {
@@ -374,52 +534,74 @@
     return /kuran/i.test(location.pathname + location.hash + location.search);
   }
 
+  var pickerOpen = false;
+
+  function pickerHost() {
+    return document.getElementById("hy-src-slot") || document.getElementById("hy-player-dock") || document.body;
+  }
+
   function paintPicker() {
     if (!pickerEl) return;
-    var html = '<div class="hy-src-title">Fatiha demo · takip kaynağı</div>';
-    SOURCES.forEach(function (s) {
-      var on = s.id === sourceId;
-      html +=
-        '<button type="button" data-hy-src="' +
-        s.id +
-        '" class="hy-src-btn' +
-        (on ? " on" : "") +
-        '">' +
-        s.label +
-        (on ? " ✓" : "") +
-        "</button>";
-    });
+    var html =
+      '<button type="button" class="hy-src-toggle" data-hy-src-toggle="1" aria-expanded="' +
+      (pickerOpen ? "true" : "false") +
+      '" aria-label="Takip kaynağı">' +
+      (sourceMeta(sourceId).short || "Kaynak") +
+      (pickerOpen ? " ▴" : " ▾") +
+      "</button>";
+    if (pickerOpen) {
+      html += '<div class="hy-src-menu" role="menu">';
+      html += '<div class="hy-src-title">Fatiha demo · takip kaynağı</div>';
+      SOURCES.forEach(function (s) {
+        var on = s.id === sourceId;
+        html +=
+          '<button type="button" data-hy-src="' +
+          s.id +
+          '" class="hy-src-btn' +
+          (on ? " on" : "") +
+          '" role="menuitem">' +
+          '<span class="hy-src-full">' +
+          s.label +
+          (on ? " ✓" : "") +
+          "</span></button>";
+      });
+      html += "</div>";
+    }
     pickerEl.innerHTML = html;
+    pickerEl.className = pickerOpen ? "hy-src-open" : "hy-src-collapsed";
     pickerEl.style.display = onKuran() ? "flex" : "none";
+  }
+
+  function bindPicker() {
+    if (!pickerEl || pickerEl.getAttribute("data-hy-bound")) return;
+    pickerEl.setAttribute("data-hy-bound", "1");
+    pickerEl.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var t = e.target;
+      if (t && t.closest && t.closest("[data-hy-src-toggle]")) {
+        pickerOpen = !pickerOpen;
+        paintPicker();
+        return;
+      }
+      var btn = t && t.closest && t.closest("[data-hy-src]");
+      var id = btn && btn.getAttribute("data-hy-src");
+      if (id) {
+        pickerOpen = false;
+        setSource(id);
+      }
+    });
   }
 
   function ensurePicker() {
     if (typeof document === "undefined") return;
-    if (pickerEl && pickerEl.parentNode) {
-      paintPicker();
-      return pickerEl;
-    }
-    if (!document.getElementById("hy-src-style")) {
-      var st = document.createElement("style");
-      st.id = "hy-src-style";
-      st.textContent =
-        "#hy-timing-source{position:fixed;left:8px;right:8px;bottom:56px;z-index:99998;display:none;flex-wrap:wrap;gap:4px;align-items:center;background:#0f2418f2;color:#e8f5e9;border:1px solid #2e7d32;border-radius:10px;padding:6px 8px;font:11px/1.3 system-ui,sans-serif;box-shadow:0 4px 16px #0006;max-height:28vh;overflow:auto}" +
-        "#hy-timing-source .hy-src-title{width:100%;font-weight:700;color:#97FF0A;font-size:11px}" +
-        "#hy-timing-source .hy-src-btn{background:#1b4332;color:#fff;border:1px solid #2d6a4f;border-radius:8px;padding:4px 7px;cursor:pointer;font-size:11px}" +
-        "#hy-timing-source .hy-src-btn.on{background:#2d6a4f;border-color:#97FF0A;color:#97FF0A;font-weight:700}";
-      document.head.appendChild(st);
-    }
+    var host = pickerHost();
     pickerEl = document.getElementById("hy-timing-source");
     if (!pickerEl) {
       pickerEl = document.createElement("div");
       pickerEl.id = "hy-timing-source";
-      document.body.appendChild(pickerEl);
-      pickerEl.addEventListener("click", function (e) {
-        var t = e.target;
-        var id = t && t.getAttribute && t.getAttribute("data-hy-src");
-        if (id) setSource(id);
-      });
     }
+    if (pickerEl.parentNode !== host) host.appendChild(pickerEl);
+    bindPicker();
     paintPicker();
     return pickerEl;
   }
@@ -440,9 +622,18 @@
     window.addEventListener("popstate", paintPicker);
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
     else boot();
+    document.addEventListener("click", function (e) {
+      if (!pickerOpen || !pickerEl) return;
+      if (e.target && pickerEl.contains(e.target)) return;
+      pickerOpen = false;
+      paintPicker();
+    });
     setInterval(function () {
-      if (pickerEl && onKuran() && pickerEl.style.display === "none") paintPicker();
-      if (pickerEl && !onKuran() && pickerEl.style.display !== "none") pickerEl.style.display = "none";
+      if (!onKuran()) {
+        if (pickerEl && pickerEl.style.display !== "none") pickerEl.style.display = "none";
+        return;
+      }
+      ensurePicker();
     }, 800);
   }
 
@@ -459,6 +650,8 @@
     },
     atTime: atTime,
     letterInWord: letterInWord,
+    ARROW_LEAD_MS: ARROW_LEAD_MS,
+    lookAheadMs: lookAheadMs,
     setActive: setActive,
     placeArrow: placeArrow,
     hideArrow: hideArrow,
