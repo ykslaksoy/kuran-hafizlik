@@ -16,7 +16,7 @@ Kelime zamanı: `GET https://api.quran.com/api/v4/chapter_recitations/{quranId}/
 | Abdülbasit (Murattal) | `abdulbasit-murattal` | everyayah `Abdul_Basit_Murattal_192kbps/001001.mp3` **200** | **Var** — quran.com **id=2**, Fatiha 29 / Bakara 6381 segment | Var | |
 | Husary | `husary` | everyayah `Husary_128kbps/001001.mp3` **200** | **Var** — quran.com **id=6**, Fatiha 29 / Bakara 6303 segment | Var | quran.com ayet URL: `//mirrors.quranicaudio.com/everyayah/Husary_64kbps/001001.mp3` |
 | Sudais | `sudais` | everyayah `Abdurrahmaan_As-Sudais_192kbps/001001.mp3` **200** (75786 B). Eski klasör `Sudais_128kbps` **404** — düzeltildi. | **Var** — quran.com **id=3**, Fatiha 29 / Bakara 6341 segment | Var | quran.com ayet URL: `Sudais/mp3/001001.mp3` |
-| Hoca (TTS) | `hoca-tts` | **Yok** (`folder: null`) | **Yok** | **Yok** | Listede «kelime timing yok · ok: ayet başı» |
+| ~~Hoca (TTS)~~ | `hoca-tts` | **Kaldırıldı** (2026-10-21) | — | — | Seçilebilir listeden çıkarıldı; tarayıcı TTS kalitesi düşük, kelime timing yok. Talim için **Abdülbasit Murattal** kullan. |
 
 ## 2. Eklenebilecek popüler kâriler (uygulamada yok)
 
@@ -24,7 +24,8 @@ Yalnızca bu oturumda doğrulanan çağrılar:
 
 | Kâri | Ses (açık kaynak) | quran.com / QUL kelime segmenti | Ayet zamanı | Sonuç |
 |---|---|---|---|---|
-| **Davut Kaya** | everyayah `Davut_Kaya_128kbps`, `DavutKaya_128kbps`, `Turkish_DavutKaya_128kbps` → **404**. quran.com `chapter_recitations` 1–199 taramasında `kaya`/`davut` **yok**. | Doğrulanamadı | Doğrulanamadı | Açık kaynak timing **yok**. Ezan Vakti `positions19` telifli; kopyalanmaz. |
+| **Davut Kaya** | everyayah `Davut_Kaya_128kbps`, `DavutKaya_128kbps`, `Turkish_DavutKaya_128kbps` → **404**. quran.com `chapter_recitations` 1–199 taramasında `kaya`/`davut` **yok**. | Doğrulanamadı | Doğrulanamadı | **Telifli sayılır** (hayır/blog ≠ uygulama lisansı). Açık timing yok. Ezan Vakti `positions19` kopyalanmaz. |
+| **Fatih Çollak** | everyayah klasör yok (**404**). Kur’an Işığı / Salkım Ar-Ge. | — | — | **Telifli** — yazılı izinsiz kopya/çoğaltma yasak; ücretli app. Entegre etme. |
 | **Mahir el-Muaykılı** | everyayah `MaherAlMuaiqly128kbps/001001.mp3` **200**. quran.com ses: id **52**, **65**, **159** (`maher_almu3aiqly` / `maher_256`). | id 52/65/159 Fatiha **wordsegs=0** | id **159**: 7 ayet `timestamp_*` var; 52/65 ayet zamanı yok | Ses var; **kelime timing yok**. Ayet zamanı yalnızca id 159. |
 | Abdurrahman Südeys | Zaten uygulamada (`sudais`) | id=3 kelime segmentleri var | Var | — |
 | Husari / Husary | Zaten uygulamada (`husary`) | id=6 var | Var | — |
