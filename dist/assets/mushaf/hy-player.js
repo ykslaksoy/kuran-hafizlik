@@ -52,16 +52,18 @@
       document.body.appendChild(dock);
     }
     dock.innerHTML =
-      '<div class="hy-player-row">' +
+      '<div class="hy-player-row hy-transport">' +
       '<button type="button" data-act="prev-page" title="Önceki sayfa" aria-label="Önceki sayfa">⟨⟨</button>' +
       '<button type="button" data-act="prev-ayah" title="Önceki ayet" aria-label="Önceki ayet">⟨</button>' +
       '<button type="button" data-act="play" class="hy-play" title="Oynat / duraklat" aria-label="Oynat veya duraklat">▶</button>' +
       '<button type="button" data-act="next-ayah" title="Sonraki ayet" aria-label="Sonraki ayet">⟩</button>' +
       '<button type="button" data-act="next-page" title="Sonraki sayfa" aria-label="Sonraki sayfa">⟩⟩</button>' +
+      '<span class="hy-player-label" id="hy-player-now">Fatiha</span>' +
+      "</div>" +
+      '<div class="hy-player-row hy-options">' +
       '<button type="button" data-act="reciter" title="Kâri" aria-label="Kâri seç">Mişari</button>' +
       '<button type="button" data-act="loop" title="Tekrar" aria-label="Tekrar">↺</button>' +
       '<button type="button" data-act="speed" title="Hız" aria-label="Hız">1.0x</button>' +
-      '<span class="hy-player-label" id="hy-player-now">Fatiha</span>' +
       '<button type="button" data-act="style" id="hy-style-btn" title="Sayfa stili" aria-label="Sayfa stili">Sade</button>' +
       '<button type="button" data-act="allah" id="hy-allah-btn" title="Allah lafzı rengi" aria-label="Allah lafzı rengi" aria-pressed="true">الله</button>' +
       '<span class="hy-src-slot" id="hy-src-slot"></span>' +

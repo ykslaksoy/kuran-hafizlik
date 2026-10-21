@@ -17,12 +17,13 @@
 
 :root {
   --hy-safe-bottom: env(safe-area-inset-bottom, 0px);
-  --hy-player-h: 56px;
-  --hy-player-stack: calc(var(--hy-player-h) + 16px + var(--hy-safe-bottom));
-  --hy-chrome-h: 28px;
-  --hy-ink: #141414;
-  --hy-sade-paper: #fbf8f1;
-  --hy-sade-line: #c9bba0;
+  --hy-player-h: 88px;
+  --hy-player-stack: calc(var(--hy-player-h) + 10px + var(--hy-safe-bottom));
+  --hy-chrome-h: 36px;
+  --hy-ink: #1a1610;
+  --hy-ink-soft: #3d3428;
+  --hy-sade-paper: #f7f1e4;
+  --hy-sade-line: #c4b090;
   --hy-sade-muted: #6b6356;
   --hy-gold-hi: #F6D77A;
   --hy-gold-mid: #D4A017;
@@ -35,8 +36,18 @@
   --hy-gold-deep: #b88912;
   --hy-navy: #0b1d4a;
   --hy-navy-mid: #15305c;
+  --hy-dock: #2a2218;
+  --hy-dock-edge: #5a4a32;
+  --hy-dock-btn: #3a3024;
+  --hy-dock-on: #c9a24a;
+  --hy-track: #8a6a1c;
+  --hy-track-soft: rgba(201, 162, 74, 0.22);
   --hy-design-w: 1000px;
   --hy-design-h: 1610px;
+  --hy-paper-wash:
+    radial-gradient(ellipse at 50% 12%, rgba(255, 252, 245, 0.7), transparent 55%),
+    radial-gradient(ellipse at 12% 88%, rgba(196, 176, 140, 0.12), transparent 48%),
+    linear-gradient(180deg, #faf6ec 0%, #f7f1e4 48%, #f2ead8 100%);
   --hy-ahar:
     radial-gradient(ellipse at 50% 18%, rgba(255, 248, 230, 0.55), transparent 52%),
     radial-gradient(ellipse at 18% 82%, rgba(184, 137, 18, 0.07), transparent 46%),
@@ -52,7 +63,7 @@ html, body {
 
 body.hy-kuran {
   background-color: var(--hy-sade-paper) !important;
-  background-image: none !important;
+  background-image: var(--hy-paper-wash) !important;
   overflow: hidden;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -110,7 +121,7 @@ body:not(.hy-kuran) #hy-qcf-host {
   padding-right: env(safe-area-inset-right, 0px);
   padding-top: env(safe-area-inset-top, 0px);
   background-color: var(--hy-sade-paper);
-  background-image: none;
+  background-image: var(--hy-paper-wash);
 }
 
 body.hy-style-tezhip #hy-qcf-host {
@@ -122,17 +133,33 @@ body.hy-style-tezhip #hy-qcf-host {
   flex: 0 0 var(--hy-chrome-h);
   height: var(--hy-chrome-h);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font: 12px/1.2 system-ui, -apple-system, sans-serif;
-  color: var(--hy-sade-muted);
-  letter-spacing: 0.01em;
+  gap: 1px;
+  font-family: "Literata", "Georgia", "Times New Roman", serif;
+  color: var(--hy-ink-soft);
+  letter-spacing: 0.02em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 10px;
+  padding: 0 12px;
   pointer-events: none;
   z-index: 6;
+  border-bottom: 1px solid rgba(154, 130, 84, 0.28);
+  background: linear-gradient(180deg, rgba(255, 252, 245, 0.92), rgba(247, 241, 228, 0.55));
+}
+
+#hy-qcf-chrome .hy-chrome-title {
+  font: 600 13px/1.15 "Literata", "Georgia", serif;
+  color: var(--hy-ink);
+}
+
+#hy-qcf-chrome .hy-chrome-meta {
+  font: 400 10px/1.1 "Literata", "Georgia", serif;
+  color: var(--hy-sade-muted);
+  letter-spacing: 0.04em;
+  text-transform: none;
 }
 
 #hy-qcf-scroll {
@@ -159,11 +186,15 @@ body.hy-style-tezhip #hy-qcf-host {
   position: relative;
   transform-origin: top left;
   background-color: var(--hy-sade-paper);
+  background-image: var(--hy-paper-wash);
   color: var(--hy-ink);
   contain: strict;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   font-synthesis: none;
+  box-shadow:
+    0 1px 0 rgba(74, 54, 12, 0.06),
+    0 12px 28px rgba(42, 34, 24, 0.08);
 }
 
 body.hy-style-tezhip #hy-qcf-stage {
@@ -183,7 +214,7 @@ body.hy-style-tezhip #hy-qcf-stage {
   justify-content: center;
   background: var(--hy-paper);
   color: #6b5438;
-  font: 16px/1.3 system-ui, sans-serif;
+  font: 16px/1.3 "Literata", Georgia, serif;
   z-index: 3;
 }
 
@@ -201,14 +232,14 @@ body.hy-style-tezhip #hy-qcf-stage {
 #hy-qcf-ornament::before {
   content: "";
   position: absolute;
-  inset: 8px;
-  border: 2px solid var(--hy-gold);
+  inset: 10px;
+  border: 1.5px solid var(--hy-gold);
   box-shadow:
-    0 0 0 3px var(--hy-navy),
-    0 0 0 5px var(--hy-gold-deep),
-    inset 0 0 0 2px var(--hy-gold-pale),
-    inset 0 0 0 22px var(--hy-navy),
-    inset 0 0 0 24px var(--hy-gold);
+    0 0 0 2px var(--hy-navy),
+    0 0 0 4px var(--hy-gold-deep),
+    inset 0 0 0 1.5px var(--hy-gold-pale),
+    inset 0 0 0 16px var(--hy-navy),
+    inset 0 0 0 17.5px var(--hy-gold);
   pointer-events: none;
 }
 
@@ -237,9 +268,15 @@ body.hy-style-tezhip #hy-qcf-stage {
 }
 
 body.hy-style-sade #hy-qcf-ornament {
-  inset: 16px;
-  border: 1px solid var(--hy-sade-line);
-  box-shadow: none;
+  inset: 14px;
+  border: none;
+  background:
+    linear-gradient(var(--hy-sade-line), var(--hy-sade-line)) padding-box,
+    linear-gradient(165deg, #e8d9b8, #c4b090 55%, #a8946e) border-box;
+  border: 1px solid transparent;
+  box-shadow:
+    inset 0 0 0 5px var(--hy-sade-paper),
+    inset 0 0 0 6px rgba(154, 130, 84, 0.45);
 }
 
 body.hy-style-sade #hy-qcf-ornament::before,
@@ -253,10 +290,10 @@ body.hy-style-sade #hy-qcf-pagenum {
 body.hy-style-sade .hy-qcf-end {
   color: transparent !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/ayah-rose-sade.svg?v=qcf13") !important;
+  background-image: url("/assets/mushaf/ayah-rose-sade.svg?v=qcf14") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  background-size: 1.42em 1.42em !important;
+  background-size: 1.12em 1.12em !important;
 }
 
 body.hy-style-sade .hy-qcf-header {
@@ -268,7 +305,7 @@ body.hy-style-sade .hy-qcf-header {
   gap: 6px;
   color: #2c2418 !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/sade-header.svg?v=qcf13") !important;
+  background-image: url("/assets/mushaf/sade-header.svg?v=qcf14") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -294,7 +331,7 @@ body.hy-style-altin .hy-qcf-ayah-n {
   align-items: center;
   justify-content: center;
   color: #fff;
-  font: 800 0.78em/1 "Noto Naskh Arabic", "Scheherazade New", system-ui, serif;
+  font: 800 0.72em/1 "Noto Naskh Arabic", "Scheherazade New", system-ui, serif;
   text-shadow: 0 0 1px #2a1a08, 0 1px 0 #2a1a08;
 }
 
@@ -309,18 +346,19 @@ body.hy-style-altin #hy-qcf-ornament {
   inset: 10px;
   border: none;
   background: linear-gradient(165deg, var(--hy-gold-hi) 0%, #E2B31A 34%, var(--hy-gold-mid) 62%, var(--hy-gold-lo) 100%);
-  box-shadow: 0 0 0 2px var(--hy-gold-ink);
+  box-shadow: 0 0 0 1.5px var(--hy-gold-ink);
 }
 
 body.hy-style-altin #hy-qcf-ornament::before {
   display: block !important;
-  inset: 11px;
-  border: 2px solid var(--hy-gold-ink);
+  inset: 9px;
+  border: 1.5px solid var(--hy-gold-ink);
   box-shadow:
-    0 0 0 2.6px var(--hy-gold-hi),
-    inset 0 0 0 3.2px var(--hy-gold-mid),
-    inset 0 0 0 5.2px var(--hy-gold-ink);
+    0 0 0 2px var(--hy-gold-hi),
+    inset 0 0 0 2.5px var(--hy-gold-mid),
+    inset 0 0 0 4px var(--hy-gold-ink);
   background: var(--hy-sade-paper);
+  background-image: var(--hy-paper-wash);
 }
 
 body.hy-style-altin #hy-qcf-ornament svg,
@@ -334,10 +372,10 @@ body.hy-style-altin #hy-qcf-finial {
 body.hy-style-altin .hy-qcf-end {
   color: transparent !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/ayah-rose-altin.svg?v=qcf13") !important;
+  background-image: url("/assets/mushaf/ayah-rose-altin.svg?v=qcf14") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
-  background-size: 1.42em 1.42em !important;
+  background-size: 1.12em 1.12em !important;
 }
 
 body.hy-style-altin .hy-qcf-header {
@@ -349,7 +387,7 @@ body.hy-style-altin .hy-qcf-header {
   gap: 6px;
   color: #2c2418 !important;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/sade-header-altin.svg?v=qcf13") !important;
+  background-image: url("/assets/mushaf/sade-header-altin.svg?v=qcf14") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;
@@ -458,7 +496,7 @@ body.hy-kuran.hy-allah-on #hy-qcf-glyphs .hy-qcf-word.hy-qcf-allah {
 .hy-qcf-end,
 .hy-qcf-header,
 .hy-qcf-bismillah {
-  color: #141414 !important;
+  color: #1a1610 !important;
   white-space: nowrap;
   font-style: normal;
   font-weight: 400;
@@ -488,10 +526,10 @@ body.hy-kuran.hy-allah-on #hy-qcf-glyphs .hy-qcf-word.hy-qcf-allah {
 .hy-qcf-end {
   position: relative;
   background-color: transparent !important;
-  background-image: url("/assets/mushaf/ayah-rose.svg?v=qcf7") !important;
+  background-image: url("/assets/mushaf/ayah-rose.svg?v=qcf14") !important;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 1.18em 1.18em;
+  background-size: 1.05em 1.05em;
 }
 
 .hy-qcf-ayah-n {
@@ -604,8 +642,9 @@ body.hy-style-altin .hy-qcf-ayah-n-3 {
   display: none;
   pointer-events: none;
   z-index: 1;
-  background: rgba(196, 232, 204, 0.62);
-  border-radius: 3px;
+  background: var(--hy-track-soft);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(154, 130, 84, 0.18);
 }
 
 body.hy-style-sade #hy-qcf-linehl.hy-on,
@@ -621,6 +660,7 @@ body.hy-style-altin #hy-qcf-linehl.hy-on {
   pointer-events: none;
   text-align: center;
   z-index: 1;
+  opacity: 0.92;
 }
 
 body.hy-style-sade #hy-qcf-finial.hy-on {
@@ -628,7 +668,7 @@ body.hy-style-sade #hy-qcf-finial.hy-on {
 }
 
 #hy-qcf-finial img {
-  width: 168px;
+  width: 108px;
   height: auto;
   display: inline-block;
 }
@@ -644,9 +684,9 @@ body.hy-style-sade #hy-qcf-finial.hy-on {
 #hy-qcf-hl,
 #hy-qcf-overlay #hy-qcf-hl {
   position: absolute;
-  background: rgba(151, 255, 10, 0.22);
-  box-shadow: inset 0 0 0 1px rgba(151, 255, 10, 0.45);
-  border-radius: 6px;
+  background: rgba(201, 162, 74, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(138, 106, 28, 0.28);
+  border-radius: 4px;
   display: none;
   pointer-events: none;
   z-index: 1;
@@ -659,6 +699,16 @@ body.hy-style-sade #hy-qcf-finial.hy-on {
   transform: translate(-50%, 0);
   display: none;
   line-height: 0;
+}
+
+#hy-track-arrow .hy-arrow-mark {
+  display: block;
+  font-size: 15px;
+  line-height: 14px;
+  color: var(--hy-track);
+  text-shadow:
+    0 0 1px #fff8e7,
+    0 1px 0 rgba(42, 34, 24, 0.35);
 }
 
 /* Native React bar is kept for click-through only; dock is the visible player */
@@ -684,55 +734,79 @@ body.hy-kuran #hy-player-bar {
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start;
-  background: #0f2418 !important;
-  color: #e8f5e9 !important;
-  border-top: 1px solid #2d6a4f !important;
+  gap: 6px;
+  background:
+    linear-gradient(180deg, rgba(74, 54, 12, 0.12), transparent 40%),
+    linear-gradient(180deg, #342a20 0%, #2a2218 100%) !important;
+  color: #f4ead4 !important;
+  border-top: 1px solid var(--hy-dock-edge) !important;
   min-height: var(--hy-player-stack);
-  padding: 8px 8px calc(8px + var(--hy-safe-bottom)) !important;
+  padding: 8px 10px calc(8px + var(--hy-safe-bottom)) !important;
   box-sizing: border-box;
+  box-shadow: 0 -8px 24px rgba(42, 34, 24, 0.18);
 }
 
 #hy-player-dock .hy-player-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 4px;
-  min-height: var(--hy-player-h);
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+}
+
+#hy-player-dock .hy-player-row.hy-transport {
+  gap: 8px;
+}
+
+#hy-player-dock .hy-player-row.hy-options {
+  gap: 5px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  justify-content: flex-start;
+  scrollbar-width: none;
+}
+
+#hy-player-dock .hy-player-row.hy-options::-webkit-scrollbar {
+  display: none;
 }
 
 #hy-player-dock button {
-  background: #1b4332;
-  color: #f1fff4;
-  border: 1px solid #2d6a4f;
-  border-radius: 8px;
+  background: var(--hy-dock-btn);
+  color: #f7efdc;
+  border: 1px solid #6a5638;
+  border-radius: 9px;
   min-width: 36px;
   height: 36px;
-  padding: 0 7px;
-  font: 600 12px/1 system-ui, sans-serif;
+  padding: 0 9px;
+  font: 600 12px/1 "Literata", Georgia, system-ui, sans-serif;
   cursor: pointer;
   position: relative;
   z-index: 2;
+  flex: 0 0 auto;
 }
 
 #hy-player-dock button.on,
 #hy-player-dock button.hy-play {
-  background: #2d6a4f;
-  border-color: #97ff0a;
-  color: #97ff0a;
+  background: #4a3a24;
+  border-color: var(--hy-dock-on);
+  color: var(--hy-gold-hi);
 }
 
 #hy-player-dock button.hy-play {
-  min-width: 44px;
-  height: 44px;
-  border-radius: 22px;
+  min-width: 46px;
+  height: 46px;
+  border-radius: 23px;
   font-size: 16px;
+  box-shadow: 0 0 0 1px rgba(246, 215, 122, 0.25);
 }
 
 #hy-player-dock .hy-player-label {
-  font: 11px/1.2 system-ui, sans-serif;
-  color: #95d5b2;
+  font: 11px/1.2 "Literata", Georgia, serif;
+  color: #d4c4a0;
   min-width: 52px;
   text-align: center;
+  flex: 0 0 auto;
 }
 
 #hy-player-dock,
@@ -741,13 +815,17 @@ body.hy-kuran #hy-player-bar {
   overflow: visible !important;
 }
 
+#hy-player-dock .hy-player-row.hy-options {
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
+
 #hy-player-dock .hy-src-slot {
   position: relative;
   flex: 0 0 auto;
   z-index: 3;
 }
 
-/* Source chip stays in the dock row; menu opens upward from the slot */
 #hy-timing-source {
   position: static !important;
   right: auto !important;
@@ -764,14 +842,14 @@ body.hy-kuran #hy-player-bar {
 }
 
 #hy-timing-source .hy-src-toggle {
-  background: #1b4332;
-  color: #97ff0a;
-  border: 1px solid #2d6a4f;
-  border-radius: 8px;
+  background: var(--hy-dock-btn);
+  color: var(--hy-gold-hi);
+  border: 1px solid #6a5638;
+  border-radius: 9px;
   padding: 0 8px;
   height: 36px;
   max-width: 118px;
-  font: 600 11px/1 system-ui, sans-serif;
+  font: 600 11px/1 "Literata", Georgia, system-ui, sans-serif;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -788,9 +866,9 @@ body.hy-kuran #hy-player-bar {
   gap: 6px;
   width: min(320px, calc(100vw - 16px));
   max-height: none;
-  background: #0f2418f2;
-  border: 1px solid #2d6a4f;
-  border-radius: 8px;
+  background: #2a2218f2;
+  border: 1px solid var(--hy-dock-edge);
+  border-radius: 10px;
   padding: 8px;
   box-sizing: border-box;
   z-index: 100060;
@@ -799,14 +877,14 @@ body.hy-kuran #hy-player-bar {
 
 #hy-timing-source .hy-src-title {
   width: 100%;
-  font: 700 11px/1.3 system-ui, sans-serif;
-  color: #97ff0a;
+  font: 700 11px/1.3 "Literata", Georgia, serif;
+  color: var(--hy-gold-hi);
 }
 
 #hy-timing-source .hy-src-btn {
-  background: #1b4332;
+  background: var(--hy-dock-btn);
   color: #fff;
-  border: 1px solid #2d6a4f;
+  border: 1px solid #6a5638;
   border-radius: 8px;
   padding: 8px 10px;
   cursor: pointer;
@@ -826,9 +904,9 @@ body.hy-kuran #hy-player-bar {
 }
 
 #hy-timing-source .hy-src-btn.on {
-  background: #2d6a4f;
-  border-color: #97ff0a;
-  color: #97ff0a;
+  background: #4a3a24;
+  border-color: var(--hy-dock-on);
+  color: var(--hy-gold-hi);
   font-weight: 700;
 }
 
@@ -844,20 +922,42 @@ body.hy-kuran #hy-player-bar {
 }
 
 @media (max-width: 700px) {
-  :root { --hy-player-h: 52px; }
-  #hy-player-dock button { min-width: 30px; height: 34px; font-size: 11px; }
+  :root { --hy-player-h: 84px; }
+  #hy-player-dock button { min-width: 32px; height: 34px; font-size: 11px; }
   #hy-player-dock button.hy-play { min-width: 42px; height: 42px; }
   #hy-player-dock .hy-player-label { display: none; }
+  #hy-qcf-chrome .hy-chrome-title { font-size: 12px; }
 }
 
 @media (orientation: landscape) and (max-height: 520px) {
   :root {
-    --hy-player-h: 40px;
-    --hy-chrome-h: 22px;
+    --hy-player-h: 44px;
+    --hy-chrome-h: 26px;
   }
-  #hy-qcf-chrome { font-size: 11px; }
-  #hy-player-dock button { min-width: 28px; height: 30px; font-size: 10px; padding: 0 5px; }
-  #hy-player-dock button.hy-play { min-width: 36px; height: 36px; }
+  #hy-qcf-chrome { gap: 0; padding: 0 10px; }
+  #hy-qcf-chrome .hy-chrome-title { font-size: 12px; }
+  #hy-qcf-chrome .hy-chrome-meta { font-size: 9px; }
+  #hy-player-dock {
+    gap: 0;
+    padding: 4px 8px calc(4px + var(--hy-safe-bottom)) !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #hy-player-dock .hy-player-row {
+    min-height: 34px;
+    flex: 1 1 auto;
+  }
+  #hy-player-dock .hy-player-row.hy-transport {
+    justify-content: flex-start;
+    flex: 0 0 auto;
+  }
+  #hy-player-dock .hy-player-row.hy-options {
+    justify-content: flex-end;
+    overflow-x: auto !important;
+  }
+  #hy-player-dock button { min-width: 28px; height: 30px; font-size: 10px; padding: 0 6px; }
+  #hy-player-dock button.hy-play { min-width: 34px; height: 34px; }
   #hy-player-dock .hy-player-label { display: none; }
   #hy-timing-source .hy-src-toggle { max-width: 88px; height: 30px; }
 }

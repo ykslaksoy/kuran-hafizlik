@@ -337,7 +337,7 @@
       arrowEl.id = "hy-track-arrow";
       arrowEl.setAttribute("aria-hidden", "true");
       arrowEl.innerHTML =
-        '<span style="display:block;font-size:18px;line-height:16px;color:#97FF0A;text-shadow:0 0 6px #14532d,0 1px 0 #052e16">\u25B2</span>';
+        '<span class="hy-arrow-mark" style="display:block;font-size:15px;line-height:14px;color:#8a6a1c;text-shadow:0 0 1px #fff8e7,0 1px 0 rgba(42,34,24,0.35)">\u25B2</span>';
     }
     if (overlay) {
       arrowEl.style.cssText = "position:absolute;z-index:2;pointer-events:none;transform:translate(-50%,0);display:none;";

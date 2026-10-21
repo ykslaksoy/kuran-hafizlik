@@ -650,7 +650,15 @@
     var sub = "Sayfa " + data.page + " Cüz " + (data.juz || 1);
     var bar = document.getElementById("hy-qcf-chrome");
     if (bar) {
-      bar.textContent = "Cüz " + (data.juz || 1) + "  Sayfa " + data.page + "  " + title;
+      bar.innerHTML =
+        '<span class="hy-chrome-title">' +
+        esc(title) +
+        "</span>" +
+        '<span class="hy-chrome-meta">Cüz ' +
+        (data.juz || 1) +
+        " · Sayfa " +
+        data.page +
+        "</span>";
     }
     var nodes = document.querySelectorAll("div,span");
     for (var i = 0; i < nodes.length; i++) {
@@ -723,7 +731,7 @@
     var orn = document.getElementById("hy-qcf-ornament");
     if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
     orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf13")
+    fetch("/assets/mushaf/tezhip.svg?v=qcf14")
       .then(function (r) {
         return r.ok ? r.text() : "";
       })
@@ -827,7 +835,7 @@
     fin.setAttribute("aria-hidden", "true");
     var top = lastTop + LINE_H + Math.max(8, Math.min(36, (room - 220) / 2));
     fin.style.top = top + "px";
-    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=qcf13" alt="" width="168" height="214" />';
+    fin.innerHTML = '<img src="/assets/mushaf/sade-gonca.svg?v=qcf14" alt="" width="108" height="138" />';
     glyphs.appendChild(fin);
   }
 
@@ -844,10 +852,12 @@
     var y = Number(designTop) * scale;
     var h = Math.max(20, Number(designH) * scale);
     var view = sc.clientHeight;
-    var pad = Math.max(20, Math.min(80, view * 0.2));
+    var pad = Math.max(16, Math.min(48, view * 0.14));
     var cur = sc.scrollTop;
+    /* Keep early lines (page top) pinned unless they leave the viewport. */
+    if (y < view * 0.55 && cur < 8 && y + h < view - 8) return;
     if (y < cur + pad) sc.scrollTop = Math.max(0, y - pad);
-    else if (y + h > cur + view - pad) sc.scrollTop = y + h - view + pad;
+    else if (y + h > cur + view - pad) sc.scrollTop = Math.min(sc.scrollHeight - view, y + h - view + pad);
   }
 
   function fitStage() {
@@ -1143,7 +1153,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf13";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=qcf14";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
