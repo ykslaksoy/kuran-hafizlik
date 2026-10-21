@@ -1,7 +1,7 @@
 (function () {
   var q = new URLSearchParams(location.search);
-  var alt = (q.get("alt") || "A").toUpperCase();
-  if (alt !== "A" && alt !== "B" && alt !== "C" && alt !== "D") alt = "A";
+  var alt = (q.get("alt") || "E").toUpperCase();
+  if (alt !== "E" && alt !== "F") alt = "E";
   var page = q.get("page") || "1";
 
   document.body.classList.add("hy-frame-preview", "hy-frame-alt-" + alt.toLowerCase());
@@ -17,13 +17,9 @@
   }
 
   function waitReady() {
-    if (window.hyFrameDeco && window.hyFrameDeco.inject(alt)) {
-      document.body.setAttribute("data-hy-preview-ready", "1");
-      return;
-    }
     var stage = document.getElementById("hy-qcf-stage");
-    if (stage && !stage.classList.contains("hy-waiting") && window.hyFrameDeco) {
-      window.hyFrameDeco.inject(alt);
+    if (!stage || stage.classList.contains("hy-waiting") || !window.hyFrameDeco) return;
+    if (window.hyFrameDeco.inject(alt)) {
       document.body.setAttribute("data-hy-preview-ready", "1");
     }
   }

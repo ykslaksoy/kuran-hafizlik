@@ -1,0 +1,42 @@
+[
+  {
+    "id": "walters-w6722",
+    "label": "Walters W6722B — Şeyh Hamdullah sayfası",
+    "usable": true,
+    "artifact": "ms-original-walters-w6722.jpg",
+    "commons": "https://commons.wikimedia.org/wiki/File:Seyh_Hamdullah_-_Page_of_Ottoman_Calligraphy_-_Walters_W6722B_-_Full_Page.jpg",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Seyh_Hamdullah_-_Page_of_Ottoman_Calligraphy_-_Walters_W6722B_-_Full_Page.jpg",
+    "paper": "#f3ead6",
+    "bgPosition": "50% 42%"
+  },
+  {
+    "id": "walters-w6724",
+    "label": "Walters W6724B — Şeyh Hamdullah sayfası",
+    "usable": true,
+    "artifact": "ms-original-walters-w6724.jpg",
+    "commons": "https://commons.wikimedia.org/wiki/File:Seyh_Hamdullah_-_Page_of_Ottoman_Calligraphyi_-_Walters_W6724B_-_Full_Page.jpg",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Seyh_Hamdullah_-_Page_of_Ottoman_Calligraphyi_-_Walters_W6724B_-_Full_Page.jpg",
+    "paper": "#f2e6ce",
+    "bgPosition": "48% 40%"
+  },
+  {
+    "id": "kadiasker-izzet-gart",
+    "label": "Kadıasker Mustafa İzzet — mushaf sayfası (Google Art/Commons)",
+    "usable": true,
+    "artifact": "ms-original-kadiasker-izzet.jpg",
+    "commons": "https://commons.wikimedia.org/wiki/File:Copied_by_Kad%C4%B1asker_Mustafa_%C4%B0zzet_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/8/89/Copied_by_Kad%C4%B1asker_Mustafa_%C4%B0zzet_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+    "paper": "#f4ecd8",
+    "bgPosition": "50% 38%"
+  },
+  {
+    "id": "mehmed-sevki-gart",
+    "label": "Mehmed Şevki Efendi — mushaf sayfası (Google Art/Commons)",
+    "usable": true,
+    "artifact": "ms-original-mehmed-sevki.jpg",
+    "commons": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/5/59/Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+    "paper": "#f5efe0",
+    "bgPosition": "50% 36%"
+  }
+]

@@ -1,0 +1,132 @@
+/**
+ * E — Klasik Osmanlı el yazması (Hafız Osman düzeni esinli)
+ * F — Sade el yazması (altın cetvel + sade ayet gülü)
+ * Metin kutusu (#hy-qcf-glyphs) konumu değişmez.
+ */
+
+body.hy-frame-preview.hy-frame-alt-e,
+body.hy-frame-preview.hy-frame-alt-f {
+  background: #050a12 !important;
+}
+
+body.hy-frame-preview.hy-frame-alt-e.hy-kuran,
+body.hy-frame-preview.hy-frame-alt-f.hy-kuran {
+  background: #050a12 !important;
+}
+
+body.hy-frame-preview.hy-frame-alt-e #hy-qcf-host {
+  background: radial-gradient(ellipse 100% 80% at 50% 15%, #1a2f52 0%, #050a12 55%, #020408 100%);
+}
+
+body.hy-frame-preview.hy-frame-alt-f #hy-qcf-host {
+  background: linear-gradient(165deg, #d8d4cc 0%, #a8a49c 100%);
+}
+
+body.hy-frame-alt-e {
+  --hy-paper: #f2e8d4;
+  --hy-ink: #12100c;
+}
+
+body.hy-frame-alt-f {
+  --hy-paper: #faf6ee;
+  --hy-ink: #141210;
+}
+
+body.hy-frame-alt-e #hy-qcf-stage,
+body.hy-frame-alt-f #hy-qcf-stage {
+  background: transparent;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.06) inset,
+    0 18px 48px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+body.hy-frame-alt-e #hy-qcf-ornament,
+body.hy-frame-alt-f #hy-qcf-ornament {
+  inset: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+body.hy-frame-alt-e #hy-qcf-ornament::before,
+body.hy-frame-alt-f #hy-qcf-ornament::before {
+  content: none;
+}
+
+body.hy-frame-alt-e #hy-qcf-meta,
+body.hy-frame-alt-e #hy-qcf-pagenum {
+  color: #5c4a32;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+body.hy-frame-alt-f #hy-qcf-meta,
+body.hy-frame-alt-f #hy-qcf-pagenum {
+  color: #6a655c;
+}
+
+/* ——— E: serlevha paneli ——— */
+body.hy-frame-alt-e .hy-qcf-header {
+  background: linear-gradient(180deg, #1e3a62 0%, #0f1f3d 48%, #0a1628 100%) !important;
+  color: #faf3dc !important;
+  border: 2px solid transparent !important;
+  border-image: linear-gradient(135deg, #f5e6a8, #c9a227, #8b6914, #e8d090) 1 !important;
+  box-shadow:
+    0 0 0 1px #0a0a0a,
+    0 2px 8px rgba(10, 20, 40, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  padding: 10px 32px !important;
+  font-size: 34px !important;
+  letter-spacing: 0.04em;
+}
+
+body.hy-frame-alt-e #hy-qcf-stage.hy-special .hy-qcf-header {
+  font-size: 38px !important;
+}
+
+body.hy-frame-alt-e .hy-qcf-bismillah {
+  font-size: 28px;
+  color: #2a2418;
+}
+
+body.hy-frame-alt-e #hy-qcf-special-frame {
+  display: none !important;
+}
+
+body.hy-frame-alt-e .hy-serlevha-ribbon {
+  position: absolute;
+  top: 118px;
+  left: 50%;
+  width: 320px;
+  height: 8px;
+  margin-left: -160px;
+  background: linear-gradient(90deg, transparent, #c9a227, #f5e6a8, #c9a227, transparent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ——— F: minimal serlevha ——— */
+body.hy-frame-alt-f .hy-qcf-header {
+  background: transparent !important;
+  color: #1e1c18 !important;
+  border: none !important;
+  border-bottom: 1px solid #c9a227 !important;
+  box-shadow: none !important;
+  font-size: 30px !important;
+  font-weight: 600 !important;
+  padding: 6px 16px 10px !important;
+}
+
+body.hy-frame-alt-f .hy-qcf-bismillah {
+  font-size: 26px;
+  color: #2c2a26;
+}
+
+body.hy-frame-alt-f #hy-qcf-special-frame {
+  display: none !important;
+}
+
+body.hy-frame-alt-f .hy-qcf-margin {
+  color: #9a7b1a;
+  opacity: 0.7;
+}

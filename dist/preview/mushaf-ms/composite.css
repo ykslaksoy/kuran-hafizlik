@@ -1,0 +1,95 @@
+@import url("/preview/mushaf-frames/frame-themes.css");
+@import url("/preview/mushaf-frames/frame-themes-ef.css");
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #050a12;
+}
+
+body.hy-ms-preview #hy-qcf-ornament,
+body.hy-ms-preview #hy-qcf-special-frame {
+  display: none !important;
+}
+
+body.hy-ms-preview #hy-qcf-stage {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.hy-ms-preview #hy-qcf-host {
+  background: transparent !important;
+}
+
+#hy-ms-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hy-qcf-frame-mount {
+  position: absolute;
+  inset: 0;
+}
+
+.hy-qcf-frame-mount > div {
+  position: absolute;
+  inset: 0;
+}
+
+body.hy-ms-preview .hy-book-frame,
+body.hy-ms-preview #hy-qcf-host,
+body.hy-ms-preview #hy-qcf-fit {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+}
+
+#hy-ms-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#hy-ms-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: contrast(1.02) saturate(1.04);
+}
+
+#hy-ms-clear {
+  position: absolute;
+  left: 56px;
+  top: 72px;
+  width: 888px;
+  height: 1470px;
+  z-index: 2;
+  box-shadow: inset 0 0 40px rgba(80, 60, 30, 0.06);
+}
+
+#hy-ms-clear::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.04) 100%);
+  pointer-events: none;
+}
+
+#hy-qcf-glyphs {
+  position: relative;
+  z-index: 4;
+}
+
+#hy-qcf-meta,
+#hy-qcf-pagenum {
+  z-index: 3;
+}
+
+#hy-qcf-overlay {
+  z-index: 6 !important;
+}
