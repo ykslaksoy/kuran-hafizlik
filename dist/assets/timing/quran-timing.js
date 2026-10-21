@@ -18,6 +18,7 @@
     {
       id: "hafizyol",
       label: "Hafızyol hizalama · harf (varsayılan)",
+      short: "Hafızyol",
       file: "/assets/timing/positions-hafizyol-fatiha.json",
       level: "letter",
       demoOnly: false,
@@ -25,6 +26,7 @@
     {
       id: "qurancom",
       label: "quran.com / QUL · kelime→harf · kıyas",
+      short: "QUL harf",
       file: "/assets/timing/positions-qurancom-fatiha.json",
       level: "word",
       demoOnly: true,
@@ -32,6 +34,7 @@
     {
       id: "qurancom-word",
       label: "quran.com / QUL · kelime · kıyas",
+      short: "QUL kelime",
       file: "/assets/timing/positions-qurancom-fatiha.json",
       level: "word-only",
       demoOnly: true,
@@ -57,6 +60,9 @@
   var ALEF_MAQSURA = "\u0649";
   var NOON = "\u0646";
   var MEEM = "\u0645";
+  var QALQALA = /[\u0642\u0637\u0628\u062C\u062F]/;
+  var ARROW_LEAD_MS = 100;
+  var ARROW_MIN_VIS_MS = 70;
 
   function isBase(ch) {
     return BASE.test(ch);
@@ -89,17 +95,39 @@
         skip = true;
       }
       var weight = 1;
-      if (marks.indexOf(SHADDA) >= 0) weight += 0.85;
-      if (marks.indexOf(MADDAH) >= 0 || marks.indexOf(SUPER_ALEF) >= 0) weight += 2.2;
+      var kind = "plain";
+      if (marks.indexOf(SHADDA) >= 0) {
+        weight += 0.55;
+        kind = "shadda";
+      }
+      if (marks.indexOf(MADDAH) >= 0 || marks.indexOf(SUPER_ALEF) >= 0) {
+        weight += 3.0;
+        if (kind === "plain") kind = "madd";
+      }
       if (marks.indexOf(FATHATAN) >= 0 || marks.indexOf(DAMMATAN) >= 0 || marks.indexOf(KASRATAN) >= 0) {
         weight += 0.55;
       }
-      if ((ch === NOON || ch === MEEM) && marks.indexOf(SHADDA) >= 0) weight += 1.15;
+      if ((ch === NOON || ch === MEEM) && marks.indexOf(SHADDA) >= 0) {
+        weight += 1.8;
+        kind = "ghunnah";
+      }
       var prevMarks = out.length ? out[out.length - 1].marks : "";
-      if (ch === ALEF && prevMarks.indexOf(FATHA) >= 0) weight += 1.6;
-      if (ch === WAW && prevMarks.indexOf(DAMMA) >= 0) weight += 1.6;
-      if ((ch === YEH || ch === ALEF_MAQSURA) && prevMarks.indexOf(KASRA) >= 0) weight += 1.6;
-      if (marks.indexOf(SUKUN) >= 0 && !skip) weight = Math.max(0.75, weight * 0.85);
+      if (ch === ALEF && prevMarks.indexOf(FATHA) >= 0) {
+        weight += 2.2;
+        if (kind === "plain") kind = "madd";
+      }
+      if (ch === WAW && prevMarks.indexOf(DAMMA) >= 0) {
+        weight += 2.2;
+        if (kind === "plain") kind = "madd";
+      }
+      if ((ch === YEH || ch === ALEF_MAQSURA) && prevMarks.indexOf(KASRA) >= 0) {
+        weight += 2.2;
+        if (kind === "plain") kind = "madd";
+      }
+      if (marks.indexOf(SUKUN) >= 0 && !skip) {
+        weight = QALQALA.test(ch) ? 0.7 : 0.48;
+        kind = "sukun";
+      }
       out.push({
         i: gi,
         ch: ch + marks,
@@ -107,6 +135,7 @@
         marks: marks,
         weight: skip ? 0 : weight,
         skip: skip,
+        kind: skip ? "skip" : kind,
       });
       gi += 1;
       i = j;
@@ -148,10 +177,7 @@
     } catch (e) {}
     try {
       var s = global.localStorage && localStorage.getItem("hyTimingSource");
-      if (isKnownSource(s) && !sourceMeta(s).demoOnly) return s;
-      if (isKnownSource(s) && sourceMeta(s).demoOnly) {
-        localStorage.removeItem("hyTimingSource");
-      }
+      if (isKnownSource(s)) return s;
     } catch (e2) {}
     return "hafizyol";
   }
@@ -210,6 +236,32 @@
     return !!(meta && meta.wordTiming);
   }
 
+  function readLeadMs() {
+    try {
+      var n = Number(global.localStorage && localStorage.getItem("hyArrowLeadMs"));
+      if (n >= 40 && n <= 200) return n;
+    } catch (e) {}
+    return ARROW_LEAD_MS;
+  }
+
+  function audioLagMs() {
+    if (typeof navigator === "undefined") return 20;
+    var ua = navigator.userAgent || "";
+    if (/iPhone|iPad|iPod/.test(ua)) return 40;
+    if (/Macintosh/.test(ua) && typeof document !== "undefined" && "ontouchend" in document) return 40;
+    return 20;
+  }
+
+  function lookAheadMs() {
+    return readLeadMs() + audioLagMs();
+  }
+
+  function isShortSeg(seg) {
+    if (!seg) return false;
+    if (seg.kind === "sukun" || seg.kind === "shadda") return true;
+    return seg.duration > 0 && seg.duration < 140;
+  }
+
   function atTime(reciterId, surah, ayah, timeSec, spans) {
     var pin = { ayahIndex: spans && spans[0] ? spans[0].ayahIndex : 0, wordIndex: 0, letterIndex: 0, pinned: true };
     if (!hasWordTiming(reciterId)) return pin;
@@ -218,10 +270,21 @@
     var table = positionAyah(surah, ayah);
     if (table && table.segments && table.segments.length) {
       var segs = table.segments;
+      var lead = lookAheadMs();
       var hit = segs[0];
       for (var i = 0; i < segs.length; i++) {
-        var start = segs[i].startMs;
-        var end = start + segs[i].duration;
+        var start = segs[i].startMs - lead;
+        var dur = Math.max(1, segs[i].duration);
+        var hold = isShortSeg(segs[i]) ? Math.max(ARROW_MIN_VIS_MS, Math.min(dur, 110)) : dur;
+        var end = start + hold;
+        if (i + 1 < segs.length) {
+          var nextStart = segs[i + 1].startMs - lead;
+          if (isShortSeg(segs[i])) {
+            end = Math.max(start + ARROW_MIN_VIS_MS, Math.min(end, nextStart));
+          } else if (nextStart > start) {
+            end = Math.min(end, nextStart);
+          }
+        }
         if (tMs >= start && tMs < end) {
           hit = segs[i];
           break;
@@ -241,6 +304,8 @@
         endoffset: hit.endoffset,
         startMs: hit.startMs,
         duration: hit.duration,
+        kind: hit.kind || "",
+        leadMs: lead,
         sourceId: sourceId,
       };
     }
@@ -434,7 +499,8 @@
       '<button type="button" class="hy-src-toggle" data-hy-src-toggle="1" aria-expanded="' +
       (pickerOpen ? "true" : "false") +
       '" aria-label="Takip kaynağı">' +
-      (pickerOpen ? "Kaynak ▴" : "Kaynak ▾") +
+      (sourceMeta(sourceId).short || "Kaynak") +
+      (pickerOpen ? " ▴" : " ▾") +
       "</button>";
     if (pickerOpen) {
       html += '<div class="hy-src-menu" role="menu">';
@@ -447,9 +513,10 @@
           '" class="hy-src-btn' +
           (on ? " on" : "") +
           '" role="menuitem">' +
+          '<span class="hy-src-full">' +
           s.label +
           (on ? " ✓" : "") +
-          "</button>";
+          "</span></button>";
       });
       html += "</div>";
     }
@@ -536,6 +603,8 @@
     },
     atTime: atTime,
     letterInWord: letterInWord,
+    ARROW_LEAD_MS: ARROW_LEAD_MS,
+    lookAheadMs: lookAheadMs,
     setActive: setActive,
     placeArrow: placeArrow,
     hideArrow: hideArrow,

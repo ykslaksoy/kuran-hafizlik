@@ -1,97 +1,34 @@
 {
-  "generatedAt": "2026-10-19T23:11:54.290Z",
+  "generatedAt": "2026-10-21T00:16:52.339Z",
   "reciter": "alafasy",
-  "ayahs": [
-    {
-      "ayah": 1,
-      "words": 4,
-      "letters": 16,
-      "audioMs": 6087,
-      "qulDur": 6090,
-      "audioVsQul": -3.5,
-      "speech": "35–6017",
-      "meanWordSnapMs": 14.6,
-      "endGapMs": 0,
-      "firstLetter": "ب@35",
-      "lastLetter": "م@5550+467"
-    },
-    {
-      "ayah": 2,
-      "words": 4,
-      "letters": 15,
-      "audioMs": 5590,
-      "qulDur": 5590,
-      "audioVsQul": 0.2,
-      "speech": "75–5520",
-      "meanWordSnapMs": 24,
-      "endGapMs": 0,
-      "firstLetter": "ل@75",
-      "lastLetter": "ن@5140+380"
-    },
-    {
-      "ayah": 3,
-      "words": 2,
-      "letters": 10,
-      "audioMs": 4624,
-      "qulDur": 4620,
-      "audioVsQul": 3.7,
-      "speech": "55–4554",
-      "meanWordSnapMs": 40.2,
-      "endGapMs": 0,
-      "firstLetter": "ل@55",
-      "lastLetter": "م@4150+404"
-    },
-    {
-      "ayah": 4,
-      "words": 3,
-      "letters": 10,
-      "audioMs": 4650,
-      "qulDur": 4650,
-      "audioVsQul": -0.2,
-      "speech": "25–4580",
-      "meanWordSnapMs": 55.6,
-      "endGapMs": 0,
-      "firstLetter": "م@25",
-      "lastLetter": "ن@4130+450"
-    },
-    {
-      "ayah": 5,
-      "words": 4,
-      "letters": 19,
-      "audioMs": 6713,
-      "qulDur": 6710,
-      "audioVsQul": 3.5,
-      "speech": "55–6643",
-      "meanWordSnapMs": 23.6,
-      "endGapMs": 0,
-      "firstLetter": "إ@55",
-      "lastLetter": "ن@6110+533"
-    },
-    {
-      "ayah": 6,
-      "words": 3,
-      "letters": 15,
-      "audioMs": 5590,
-      "qulDur": 5590,
-      "audioVsQul": 0.2,
-      "speech": "35–5520",
-      "meanWordSnapMs": 41.9,
-      "endGapMs": 0,
-      "firstLetter": "ه@35",
-      "lastLetter": "م@5070+450"
-    },
-    {
-      "ayah": 7,
-      "words": 9,
-      "letters": 40,
-      "audioMs": 13244,
-      "qulDur": 13240,
-      "audioVsQul": 4.1,
-      "speech": "25–13174",
-      "meanWordSnapMs": 53.6,
-      "endGapMs": 0,
-      "firstLetter": "ص@25",
-      "lastLetter": "ن@12710+464"
-    }
+  "metric": "mean |wordStart − QUL-mapped wordStart| ms",
+  "arrowLeadMs": 100,
+  "iosBufferMs": 40,
+  "minVisibleMs": 70,
+  "beforeMean": 42.8,
+  "afterMean": 20.0,
+  "before": [
+    { "ayah": 1, "meanMs": 18.7, "words": [3, 33.1, 3.7, 35.1] },
+    { "ayah": 2, "meanMs": 61.6, "words": [3, 64.8, 93.5, 85.2] },
+    { "ayah": 3, "meanMs": 15.6, "words": [3, 28.1] },
+    { "ayah": 4, "meanMs": 58.7, "words": [3, 133.9, 39.2] },
+    { "ayah": 5, "meanMs": 53.4, "words": [3, 42.1, 127.5, 40.8] },
+    { "ayah": 6, "meanMs": 55.0, "words": [3, 23.6, 138.3] },
+    { "ayah": 7, "meanMs": 36.6, "words": [3, 146.9, 14.4, 15.9, 27.2, 22, 19.7, 38.8, 41.6] }
+  ],
+  "after": [
+    { "ayah": 1, "meanMs": 22.1, "words": [0, 26.9, 6.3, 55.1] },
+    { "ayah": 2, "meanMs": 24.1, "words": [0, 44.8, 16.5, 35.2] },
+    { "ayah": 3, "meanMs": 5.9, "words": [0, 11.9] },
+    { "ayah": 4, "meanMs": 31.8, "words": [0, 36.1, 59.2] },
+    { "ayah": 5, "meanMs": 14.9, "words": [0, 47.9, 2.5, 9.2] },
+    { "ayah": 6, "meanMs": 5.1, "words": [0, 3.6, 11.7] },
+    { "ayah": 7, "meanMs": 36.4, "words": [0, 53.1, 25.6, 44.1, 47.2, 38, 49.7, 11.2, 58.4] }
+  ],
+  "shaddaSukun": [
+    { "name": "Allah lâm şedde", "ayah": 1, "startMs": 880, "durMs": 335, "arrowAtMinus80": "on", "arrowAtStart": "on" },
+    { "name": "Rahmân râ şedde", "ayah": 1, "startMs": 1680, "durMs": 340, "arrowAtMinus80": "on", "arrowAtStart": "on" },
+    { "name": "Rahmân hâ cezim", "ayah": 1, "startMs": 2020, "durMs": 90, "arrowAtMinus80": "on", "arrowAtStart": "next (ahead)" },
+    { "name": "iyyâke yâ şedde", "ayah": 5, "startMs": 150, "durMs": 380, "arrowAtMinus80": "on", "arrowAtStart": "on" }
   ]
 }
