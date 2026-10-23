@@ -74,6 +74,10 @@ body.hy-kuran.hy-style-tezhip {
   background-image: var(--hy-ahar) !important;
 }
 
+body.hy-style-tezhip #hy-qcf-ornament svg {
+  filter: saturate(1.08) contrast(1.02);
+}
+
 body.hy-kuran #root {
   padding-bottom: var(--hy-player-stack);
   box-sizing: border-box;
