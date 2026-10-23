@@ -759,7 +759,7 @@
     var orn = document.getElementById("hy-qcf-ornament");
     if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
     orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf15")
+    fetch("/assets/mushaf/tezhip.svg?v=qcf16-tezhip")
       .then(function (r) {
         return r.ok ? r.text() : "";
       })
