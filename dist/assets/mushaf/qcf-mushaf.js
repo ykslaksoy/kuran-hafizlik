@@ -661,10 +661,16 @@
   function syncSourceRibbon() {
     var el = document.getElementById("hy-qcf-source");
     if (!el || !activeEdition) return;
-    el.textContent = activeEdition.shortLabelTr || activeEdition.nameTr || "";
+    var main = activeEdition.shortLabelTr || activeEdition.nameTr || "";
+    el.innerHTML =
+      '<span class="hy-qcf-source-main">' +
+      esc(main) +
+      '</span><span class="hy-qcf-source-sub">' +
+      esc(DECOR_SUB_TR) +
+      "</span>";
     el.title =
       (activeEdition.nameTr || "") +
-      " — QCF sayfa fontu, basılı Medine mushaf düzeni (15 satır). Türkiye hafız boy için Diyanet izni ayrı.";
+      " — QCF sayfa fontu, basılı Medine mushaf düzeni (15 satır). Kenar süsleri uygulama dekorasyonu; gerçek mushaf tezhibi veya Diyanet sayfa görüntüsü değil. Türkiye hafız boy için Diyanet izni ayrı.";
   }
 
   function syncChrome(data, verse) {
@@ -748,50 +754,36 @@
         '<div id="hy-qcf-wait">Sayfa hattı yükleniyor</div>' +
         "</div></div></div>";
       document.body.appendChild(host);
-      injectTezhip();
     } else if (host.parentElement !== document.body) {
       document.body.appendChild(host);
     }
     return host;
   }
 
-  function injectTezhip() {
-    var orn = document.getElementById("hy-qcf-ornament");
-    if (!orn || orn.getAttribute("data-hy-tezhip") === "1") return;
-    orn.setAttribute("data-hy-tezhip", "1");
-    fetch("/assets/mushaf/tezhip.svg?v=qcf16-tezhip")
-      .then(function (r) {
-        return r.ok ? r.text() : "";
-      })
-      .then(function (svg) {
-        if (!svg || !orn) return;
-        orn.innerHTML = svg;
-        orn.classList.add("hy-tezhip-on");
-      })
-      .catch(function () {});
-  }
+  var DECOR_SUB_TR = "Sayfa fontu KFGQPC QCF · çerçeve ve gül özgün dekoratif (basılı tezhip değil)";
 
   function normalizeStyle(style) {
-    if (style === "tezhip" || style === "altin") return style;
+    if (style === "altin") return "altin";
     return "sade";
   }
 
   function styleLabel(style) {
-    if (style === "tezhip") return "Tezhip";
     if (style === "altin") return "Altın";
     return "Sade";
   }
 
   function nextStyle(style) {
-    if (style === "sade") return "altin";
-    if (style === "altin") return "tezhip";
-    return "sade";
+    return style === "sade" ? "altin" : "sade";
   }
 
   function readStyle() {
     try {
       var s = global.localStorage && localStorage.getItem("hyPageStyle");
-      if (s === "tezhip" || s === "sade" || s === "altin") return s;
+      if (s === "tezhip") {
+        localStorage.setItem("hyPageStyle", "sade");
+        return "sade";
+      }
+      if (s === "sade" || s === "altin") return s;
     } catch (e) {}
     return "sade";
   }
@@ -824,9 +816,18 @@
     pageStyle = normalizeStyle(style);
     document.body.classList.toggle("hy-style-sade", pageStyle === "sade");
     document.body.classList.toggle("hy-style-altin", pageStyle === "altin");
-    document.body.classList.toggle("hy-style-tezhip", pageStyle === "tezhip");
+    document.body.classList.remove("hy-style-tezhip");
+    var orn = document.getElementById("hy-qcf-ornament");
+    if (orn) {
+      orn.classList.remove("hy-tezhip-on");
+      if (orn.querySelector("svg")) orn.innerHTML = "";
+    }
     var btn = document.getElementById("hy-style-btn");
-    if (btn) btn.textContent = styleLabel(pageStyle);
+    if (btn) {
+      btn.textContent = styleLabel(pageStyle);
+      btn.title = "Sayfa süsü (dekoratif): Sade veya Sade Altın";
+      btn.setAttribute("aria-label", btn.title);
+    }
     applyAllah(readAllah());
     if (paintedData) applySpecialTops(paintedData);
   }
@@ -1154,7 +1155,7 @@
   }
 
   function loadEditionCatalog() {
-    return fetch("/assets/mushaf/mushaf-editions.json?v=gercek1")
+    return fetch("/assets/mushaf/mushaf-editions.json?v=dekor1")
       .then(function (r) {
         return r.ok ? r.json() : null;
       })
@@ -1203,7 +1204,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=gercek1";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=dekor1";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();

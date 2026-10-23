@@ -9,7 +9,8 @@
     "start": "node scripts/serve.js",
     "web": "node scripts/serve.js",
     "serve": "node scripts/serve.js",
-    "patch:gercek-mushaf": "node scripts/patch-gercek-mushaf.js"
+    "patch:gercek-mushaf": "node scripts/patch-gercek-mushaf.js",
+    "patch:honest-decor": "node scripts/patch-honest-decor.js"
   },
   "engines": {
     "node": ">=18"

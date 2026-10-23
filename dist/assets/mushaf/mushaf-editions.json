@@ -17,8 +17,8 @@
         "layoutApi": "quran.com QDC / QUL",
         "index": "/assets/mushaf/qcf-index.json"
       },
-      "licenseTr": "QCF sayfa fontları KFGQPC; satır–kelime düzeni Quran Foundation / quran.com. Hafızyol Ezan Vakti PNG veya sayfa görüntüsü kullanmaz.",
-      "notesTr": "Türkiye’deki Diyanet hafız boy ile sayfa kırılımı farklı olabilir; basılı Medine mushaf ile uyumlu."
+      "licenseTr": "QCF sayfa fontları KFGQPC; satır–kelime düzeni Quran Foundation / quran.com. Hafızyol Ezan Vakti PNG veya sayfa görüntüsü kullanmaz. Çerçeve, sure başlığı ve ayet gülü özgün dekoratif SVG — basılı mushaf tezhibi veya taranmış sayfa kenarı değil.",
+      "notesTr": "Türkiye’deki Diyanet hafız boy ile sayfa kırılımı farklı olabilir; basılı Medine mushaf ile uyumlu. «Tezhip» stili kaldırıldı (2026-10-24): çizilmiş süs gerçek mushaf sanatı gibi sunulmuyor."
     },
     {
       "id": "diyanet-hafizboy-604",
