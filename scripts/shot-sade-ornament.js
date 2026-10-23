@@ -24,7 +24,7 @@ async function ready(page, style) {
         document.body.classList.contains(cls) &&
         header &&
         meta &&
-        /آيات|آية/.test(meta.textContent || "")
+        /آيات|آية|ayet/.test(meta.textContent || "")
       );
     },
     { timeout: 45000 },

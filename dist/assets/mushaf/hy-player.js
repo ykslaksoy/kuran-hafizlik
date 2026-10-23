@@ -64,7 +64,7 @@
       '<button type="button" data-act="reciter" title="Kâri" aria-label="Kâri seç">Mişari</button>' +
       '<button type="button" data-act="loop" title="Tekrar" aria-label="Tekrar">↺</button>' +
       '<button type="button" data-act="speed" title="Hız" aria-label="Hız">1.0x</button>' +
-      '<button type="button" data-act="style" id="hy-style-btn" title="Sayfa stili" aria-label="Sayfa stili">Sade</button>' +
+      '<button type="button" data-act="style" id="hy-style-btn" title="Sayfa süsü (dekoratif): Sade veya Sade Altın" aria-label="Sayfa süsü (dekoratif): Sade veya Sade Altın">Sade</button>' +
       '<button type="button" data-act="allah" id="hy-allah-btn" title="Allah lafzı rengi" aria-label="Allah lafzı rengi" aria-pressed="true">الله</button>' +
       '<span class="hy-src-slot" id="hy-src-slot"></span>' +
       "</div>";
@@ -148,16 +148,14 @@
       if (global.hyContinuous) global.hyContinuous.setReciter(RECITERS[i].id);
     } else if (act === "style") {
       var cur = (global.hyQcfMushaf && global.hyQcfMushaf.getStyle && global.hyQcfMushaf.getStyle()) || "sade";
-      var next = global.hyQcfMushaf && global.hyQcfMushaf.nextStyle ? global.hyQcfMushaf.nextStyle(cur) : cur === "sade" ? "altin" : cur === "altin" ? "tezhip" : "sade";
+      var next = global.hyQcfMushaf && global.hyQcfMushaf.nextStyle ? global.hyQcfMushaf.nextStyle(cur) : cur === "sade" ? "altin" : "sade";
       if (global.hyQcfMushaf && global.hyQcfMushaf.setStyle) global.hyQcfMushaf.setStyle(next);
       btn.textContent =
         global.hyQcfMushaf && global.hyQcfMushaf.styleLabel
           ? global.hyQcfMushaf.styleLabel(next)
-          : next === "tezhip"
-            ? "Tezhip"
-            : next === "altin"
-              ? "Altın"
-              : "Sade";
+          : next === "altin"
+            ? "Altın"
+            : "Sade";
     } else if (act === "allah") {
       var onAllah = true;
       if (global.hyQcfMushaf && global.hyQcfMushaf.getAllah) onAllah = !global.hyQcfMushaf.getAllah();
@@ -261,7 +259,7 @@
     var sb = document.getElementById("hy-style-btn");
     if (sb && global.hyQcfMushaf && global.hyQcfMushaf.getStyle) {
       var st = global.hyQcfMushaf.getStyle();
-      sb.textContent = global.hyQcfMushaf.styleLabel ? global.hyQcfMushaf.styleLabel(st) : st === "tezhip" ? "Tezhip" : st === "altin" ? "Altın" : "Sade";
+      sb.textContent = global.hyQcfMushaf.styleLabel ? global.hyQcfMushaf.styleLabel(st) : st === "altin" ? "Altın" : "Sade";
     }
     var ab = document.getElementById("hy-allah-btn");
     if (ab) {

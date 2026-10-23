@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /**
+ * DEPRECATED (2026-10-24): Tezhip UI mode removed — user feedback «bunlar gerçek değil».
+ * File kept for history; qcf-mushaf no longer loads tezhip.svg.
  * Original Ottoman/Turkish tezhip for Hafızyol.
  * Refined classical frame: bright gold cetvel, thin lacquer, corner emphasis — not a busy pattern fill.
  */

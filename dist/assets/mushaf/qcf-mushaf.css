@@ -172,8 +172,8 @@ body.hy-style-tezhip #hy-qcf-host {
 
 #hy-qcf-source.hy-qcf-source {
   flex: 0 0 auto;
-  padding: 2px 12px 4px;
-  font: 500 10px/1.2 "Literata", "Georgia", serif;
+  padding: 3px 10px 5px;
+  font: 500 10px/1.25 "Literata", "Georgia", serif;
   letter-spacing: 0.04em;
   text-align: center;
   color: #3d5c45;
@@ -181,6 +181,22 @@ body.hy-style-tezhip #hy-qcf-host {
   border-bottom: 1px solid rgba(45, 106, 79, 0.18);
   pointer-events: none;
   z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#hy-qcf-source .hy-qcf-source-main {
+  font-weight: 600;
+  color: #2d4a35;
+}
+
+#hy-qcf-source .hy-qcf-source-sub {
+  font: 400 8.5px/1.2 "Literata", "Georgia", serif;
+  letter-spacing: 0.02em;
+  color: #5a6b5e;
+  max-width: 22rem;
+  margin: 0 auto;
 }
 
 #hy-qcf-scroll {
