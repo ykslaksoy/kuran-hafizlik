@@ -1,7 +1,7 @@
 {
   "schema": 4,
   "verifiedOn": "2026-10-26",
-  "cacheKey": "pdhist4",
+  "cacheKey": "pdhist5",
   "design": {
     "stageW": 1000,
     "stageH": 1610,
@@ -40,16 +40,16 @@
         },
         "serlevha": {
           "p1": {
-            "top": 0.372,
-            "left": 0.248,
-            "width": 0.504,
-            "height": 0.298
+            "top": 0.28,
+            "left": 0.1,
+            "width": 0.34,
+            "height": 0.32
           },
           "p2": {
-            "top": 0.358,
-            "left": 0.228,
-            "width": 0.532,
-            "height": 0.312
+            "top": 0.27,
+            "left": 0.55,
+            "width": 0.34,
+            "height": 0.33
           }
         }
       },

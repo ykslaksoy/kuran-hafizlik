@@ -68,6 +68,7 @@ async function main() {
     defaultViewport: { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true },
   });
   const page = await browser.newPage();
+  await page.setCacheEnabled(false);
   await prep(page);
   const saved = [];
 

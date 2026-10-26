@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Restore hyPageStyle=tezhip as PD historical frame mode + original-hat toggle.
- * Bumps asset cache bust (currently pdhist4).
+ * Bumps asset cache bust (currently pdhist5).
  */
 const fs = require("fs");
 const path = require("path");
@@ -14,7 +14,7 @@ const INDEX = path.join(ROOT, "dist/index.html");
 const EDITIONS = path.join(ROOT, "dist/assets/mushaf/mushaf-editions.json");
 
 const FROM = "dekor1";
-const TO = "pdhist4";
+const TO = "pdhist5";
 
 function read(p) {
   return fs.readFileSync(p, "utf8");

@@ -120,7 +120,7 @@ def inpaint_writing_box(folio: Image.Image, box: dict) -> Image.Image:
     mask = ink_mask_in_box(region)
     if mask.max() == 0:
         return folio
-    fixed = cv2.inpaint(region, mask, 5, cv2.INPAINT_TELEA)
+    fixed = cv2.inpaint(region, mask, 3, cv2.INPAINT_NS)
     out = folio.copy()
     out.paste(Image.fromarray(fixed), (x0, y0))
     return out
@@ -228,7 +228,7 @@ def main() -> int:
     manifest = {
         "schema": 4,
         "verifiedOn": cfg["verifiedOn"],
-        "cacheKey": "pdhist4",
+        "cacheKey": "pdhist5",
         "design": cfg.get("design"),
         "writingBoxMargin": margin_box,
         "editions": [],

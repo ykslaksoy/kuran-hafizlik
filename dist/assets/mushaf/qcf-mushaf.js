@@ -817,7 +817,7 @@
 
   function loadPdManifest() {
     if (pdManifest) return Promise.resolve(pdManifest);
-    return fetch("/assets/mushaf/pd/manifest.json?v=pdhist4")
+    return fetch("/assets/mushaf/pd/manifest.json?v=pdhist5")
       .then(function (r) {
         return r.ok ? r.json() : null;
       })
@@ -1015,7 +1015,7 @@
     if (!folioSrc) return;
     orn.classList.add("hy-tezhip-on", "hy-pd-frame-on");
     orn.setAttribute("data-hy-pd", pdFrameId);
-    var bust = "?v=pdhist4";
+    var bust = "?v=pdhist5";
     var img = orn.querySelector(".hy-pd-frame-img");
     if (!img) {
       img = document.createElement("img");
@@ -1056,7 +1056,7 @@
       return;
     }
     scan.classList.add("hy-on");
-    scan.style.backgroundImage = "url(" + scanUrl + "?v=pdhist4)";
+    scan.style.backgroundImage = "url(" + scanUrl + "?v=pdhist5)";
   }
 
   function setOriginalHat(on) {
@@ -1522,7 +1522,7 @@
   }
 
   function loadEditionCatalog() {
-    return fetch("/assets/mushaf/mushaf-editions.json?v=pdhist4")
+    return fetch("/assets/mushaf/mushaf-editions.json?v=pdhist5")
       .then(function (r) {
         return r.ok ? r.json() : null;
       })
@@ -1574,7 +1574,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=pdhist4";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=pdhist5";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
