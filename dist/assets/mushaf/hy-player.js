@@ -64,7 +64,9 @@
       '<button type="button" data-act="reciter" title="Kâri" aria-label="Kâri seç">Mişari</button>' +
       '<button type="button" data-act="loop" title="Tekrar" aria-label="Tekrar">↺</button>' +
       '<button type="button" data-act="speed" title="Hız" aria-label="Hız">1.0x</button>' +
-      '<button type="button" data-act="style" id="hy-style-btn" title="Sayfa süsü (dekoratif): Sade veya Sade Altın" aria-label="Sayfa süsü (dekoratif): Sade veya Sade Altın">Sade</button>' +
+      '<button type="button" data-act="style" id="hy-style-btn" title="Sayfa süsü" aria-label="Sayfa süsü">Sade</button>' +
+      '<button type="button" data-act="pd" id="hy-pd-btn" title="PD tezhip kaynağı" aria-label="PD tezhip kaynağı">W.569</button>' +
+      '<button type="button" data-act="hat" id="hy-hat-btn" title="Orijinal hat / el yazması (sayfa 1)" aria-label="Orijinal hat">Hat</button>' +
       '<button type="button" data-act="allah" id="hy-allah-btn" title="Allah lafzı rengi" aria-label="Allah lafzı rengi" aria-pressed="true">الله</button>' +
       '<span class="hy-src-slot" id="hy-src-slot"></span>' +
       "</div>";
@@ -146,6 +148,12 @@
       var i = (currentReciterIndex() + 1) % RECITERS.length;
       setReciter(i);
       if (global.hyContinuous) global.hyContinuous.setReciter(RECITERS[i].id);
+    } else if (act === "pd") {
+      if (global.hyQcfMushaf && global.hyQcfMushaf.cyclePdFrame) global.hyQcfMushaf.cyclePdFrame();
+    } else if (act === "hat") {
+      var hatOn = global.hyQcfMushaf && global.hyQcfMushaf.getOriginalHat ? global.hyQcfMushaf.getOriginalHat() : false;
+      if (global.hyQcfMushaf && global.hyQcfMushaf.setOriginalHat) global.hyQcfMushaf.setOriginalHat(!hatOn);
+      btn.classList.toggle("on", !hatOn);
     } else if (act === "style") {
       var cur = (global.hyQcfMushaf && global.hyQcfMushaf.getStyle && global.hyQcfMushaf.getStyle()) || "sade";
       var next = global.hyQcfMushaf && global.hyQcfMushaf.nextStyle ? global.hyQcfMushaf.nextStyle(cur) : cur === "sade" ? "altin" : "sade";

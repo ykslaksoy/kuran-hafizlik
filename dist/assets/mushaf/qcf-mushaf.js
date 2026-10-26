@@ -37,6 +37,9 @@
   var lastFitKey = "";
   var pageStyle = "sade";
   var editionCatalog = null;
+  var pdManifest = null;
+  var pdFrameId = "pd-walters-w569";
+  var originalHat = false;
   var activeEdition = {
     id: "medine604-qcf",
     shortLabelTr: "Basılı mushaf · KFGQPC Medine 604",
@@ -662,15 +665,22 @@
     var el = document.getElementById("hy-qcf-source");
     if (!el || !activeEdition) return;
     var main = activeEdition.shortLabelTr || activeEdition.nameTr || "";
+    var sub = pageStyle === "tezhip" ? DECOR_SUB_PD : DECOR_SUB_SADE;
+    if (pageStyle === "tezhip") {
+      var pa = pdAttribLine();
+      if (pa) sub = pa;
+    }
     el.innerHTML =
       '<span class="hy-qcf-source-main">' +
       esc(main) +
       '</span><span class="hy-qcf-source-sub">' +
-      esc(DECOR_SUB_TR) +
+      esc(sub) +
       "</span>";
     el.title =
-      (activeEdition.nameTr || "") +
-      " — QCF sayfa fontu, basılı Medine mushaf düzeni (15 satır). Kenar süsleri uygulama dekorasyonu; gerçek mushaf tezhibi veya Diyanet sayfa görüntüsü değil. Türkiye hafız boy için Diyanet izni ayrı.";
+      pageStyle === "tezhip"
+        ? (activeEdition.nameTr || "") + " — " + (pdAttribLine() || DECOR_SUB_PD)
+        : (activeEdition.nameTr || "") +
+          " — QCF sayfa fontu, basılı Medine mushaf düzeni (15 satır). Sade/Altın kenar özgün dekoratif.";
   }
 
   function syncChrome(data, verse) {
@@ -745,11 +755,14 @@
         '<div id="hy-qcf-source" class="hy-qcf-source" aria-label="Mushaf kaynağı"></div>' +
         '<div id="hy-qcf-scroll"><div id="hy-qcf-fit"><div id="hy-qcf-stage" class="hy-waiting">' +
         '<div id="hy-qcf-ornament" aria-hidden="true"></div>' +
+        '<div id="hy-qcf-scan" aria-hidden="true"></div>' +
         '<div id="hy-qcf-special-frame" aria-hidden="true"></div>' +
         '<div id="hy-qcf-meta"></div>' +
         '<div id="hy-qcf-linehl"></div>' +
+        '<div id="hy-qcf-writing-port">' +
         '<div id="hy-qcf-glyphs"></div>' +
         '<div id="hy-qcf-overlay"><div id="hy-qcf-hl"></div></div>' +
+        "</div>" +
         '<div id="hy-qcf-pagenum"></div>' +
         '<div id="hy-qcf-wait">Sayfa hattı yükleniyor</div>' +
         "</div></div></div>";
@@ -757,33 +770,360 @@
     } else if (host.parentElement !== document.body) {
       document.body.appendChild(host);
     }
+    migrateWritingPort();
     return host;
   }
 
-  var DECOR_SUB_TR = "Sayfa fontu KFGQPC QCF · çerçeve ve gül özgün dekoratif (basılı tezhip değil)";
+  function migrateWritingPort() {
+    var stage = document.getElementById("hy-qcf-stage");
+    if (!stage || document.getElementById("hy-qcf-writing-port")) return;
+    var glyphs = document.getElementById("hy-qcf-glyphs");
+    var overlay = document.getElementById("hy-qcf-overlay");
+    if (!glyphs || !overlay) return;
+    var port = document.createElement("div");
+    port.id = "hy-qcf-writing-port";
+    stage.insertBefore(port, glyphs);
+    port.appendChild(glyphs);
+    port.appendChild(overlay);
+    var paper = document.getElementById("hy-qcf-paper-infill");
+    if (paper && paper.parentNode) paper.parentNode.removeChild(paper);
+  }
+
+  var DECOR_SUB_SADE = "Sayfa fontu KFGQPC QCF · Sade/Altın çerçeve özgün dekoratif";
+  var DECOR_SUB_PD = "İç metin: KFGQPC QCF + ok takibi · kenar/kağıt: kamu malı (PD) tarihî tarama";
+
+  function pdEditionMeta(id) {
+    if (!pdManifest || !pdManifest.editions) return null;
+    for (var i = 0; i < pdManifest.editions.length; i++) {
+      if (pdManifest.editions[i].id === id) return pdManifest.editions[i];
+    }
+    return null;
+  }
+
+  function readPdFrameId() {
+    try {
+      var id = localStorage.getItem("hyPdFrameId");
+      if (id) return id;
+    } catch (e0) {}
+    return "pd-walters-w569";
+  }
+
+  function readOriginalHat() {
+    try {
+      return localStorage.getItem("hyOriginalHat") === "1";
+    } catch (e1) {}
+    return false;
+  }
+
+  function loadPdManifest() {
+    if (pdManifest) return Promise.resolve(pdManifest);
+    return fetch("/assets/mushaf/pd/manifest.json?v=pdhist5")
+      .then(function (r) {
+        return r.ok ? r.json() : null;
+      })
+      .then(function (j) {
+        pdManifest = j;
+        pdFrameId = readPdFrameId();
+        return j;
+      })
+      .catch(function () {
+        return null;
+      });
+  }
+
+  function pdLayoutForPage(page) {
+    return page <= 2 ? "serlevha" : "margin";
+  }
+
+  function writingBoxForPage(meta, page) {
+    if (!meta || !meta.writingBox) return null;
+    if (page >= 3) return meta.writingBox.margin;
+    var s = meta.writingBox.serlevha || {};
+    return page === 1 ? s.p1 : s.p2;
+  }
+
+  function folioAssetForPage(meta, page) {
+    if (!meta || !meta.assets) return "";
+    var f = meta.assets.folio;
+    if (!f) return meta.assets.frame || "";
+    if (page === 1) return f.p1;
+    if (page === 2) return f.p2;
+    return f.margin;
+  }
+
+  function scanAssetForPage(meta, page) {
+    if (!meta || !meta.assets || !meta.assets.scan) return "";
+    return page === 1 ? meta.assets.scan.p1 : meta.assets.scan.p2;
+  }
+
+  function pdMarginMaskUrl(box) {
+    var w = DESIGN_W;
+    var h = DESIGN_H;
+    if (!box) return "";
+    var x1 = box.left * w;
+    var y1 = box.top * h;
+    var x2 = (box.left + box.width) * w;
+    var y2 = (box.top + box.height) * h;
+    var svg =
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " +
+      w +
+      " " +
+      h +
+      "'><path fill='#fff' fill-rule='evenodd' d='M0,0H" +
+      w +
+      "V" +
+      h +
+      "H0z M" +
+      x1 +
+      "," +
+      y1 +
+      "H" +
+      x2 +
+      "V" +
+      y2 +
+      "H" +
+      x1 +
+      "z'/></svg>";
+    return "url(\"data:image/svg+xml," + encodeURIComponent(svg) + "\")";
+  }
+
+  function applyPdPageLayout(data) {
+    var stage = document.getElementById("hy-qcf-stage");
+    if (!stage) return;
+    if (!data || pageStyle !== "tezhip") {
+      stage.removeAttribute("data-hy-pd-layout");
+      return;
+    }
+    stage.setAttribute("data-hy-pd-layout", pdLayoutForPage(data.page));
+  }
+
+  function applyPdFrameMask(data) {
+    var img = document.querySelector("#hy-qcf-ornament .hy-pd-frame-img");
+    if (!img) return;
+    if (!data || pageStyle !== "tezhip") {
+      img.style.maskImage = "";
+      img.style.webkitMaskImage = "";
+      return;
+    }
+    if (pdLayoutForPage(data.page) === "margin") {
+      var meta = pdEditionMeta(pdFrameId);
+      var box = meta ? writingBoxForPage(meta, data.page) : null;
+      var m = pdMarginMaskUrl(box);
+      img.style.maskImage = m;
+      img.style.webkitMaskImage = m;
+      img.style.maskSize = "100% 100%";
+      img.style.webkitMaskSize = "100% 100%";
+      img.style.maskRepeat = "no-repeat";
+      img.style.webkitMaskRepeat = "no-repeat";
+    } else {
+      img.style.maskImage = "";
+      img.style.webkitMaskImage = "";
+    }
+  }
+
+  function resetWritingPort() {
+    var port = document.getElementById("hy-qcf-writing-port");
+    var glyphs = document.getElementById("hy-qcf-glyphs");
+    var overlay = document.getElementById("hy-qcf-overlay");
+    if (port) {
+      port.style.left = "56px";
+      port.style.top = "72px";
+      port.style.width = "888px";
+      port.style.height = "1470px";
+    }
+    if (glyphs) {
+      glyphs.style.transform = "";
+      glyphs.style.width = "888px";
+      glyphs.style.height = "1470px";
+      glyphs.style.left = "0";
+      glyphs.style.top = "0";
+    }
+    if (overlay) {
+      overlay.style.transform = "";
+      overlay.style.width = "";
+      overlay.style.height = "";
+    }
+    document.body.classList.remove("hy-pd-serlevha");
+  }
+
+  function applyWritingPortBox(data) {
+    if (!data || pageStyle !== "tezhip") {
+      resetWritingPort();
+      return;
+    }
+    var meta = pdEditionMeta(pdFrameId);
+    var box = meta ? writingBoxForPage(meta, data.page) : null;
+    var port = document.getElementById("hy-qcf-writing-port");
+    var glyphs = document.getElementById("hy-qcf-glyphs");
+    var overlay = document.getElementById("hy-qcf-overlay");
+    if (!box || !port || !glyphs) return;
+    var left = box.left * DESIGN_W;
+    var top = box.top * DESIGN_H;
+    var w = box.width * DESIGN_W;
+    var h = box.height * DESIGN_H;
+    port.style.left = left + "px";
+    port.style.top = top + "px";
+    port.style.width = w + "px";
+    port.style.height = h + "px";
+    var sx = w / 888;
+    var sy = h / 1470;
+    glyphs.style.left = "0";
+    glyphs.style.top = "0";
+    glyphs.style.width = "888px";
+    glyphs.style.height = "1470px";
+    glyphs.style.transform = "scale(" + sx + "," + sy + ")";
+    glyphs.style.transformOrigin = "top left";
+    if (overlay) {
+      overlay.style.left = "0";
+      overlay.style.top = "0";
+      overlay.style.width = "888px";
+      overlay.style.height = "1470px";
+      overlay.style.transform = "scale(" + sx + "," + sy + ")";
+      overlay.style.transformOrigin = "top left";
+    }
+    document.body.classList.toggle("hy-pd-serlevha", data.page <= 2);
+  }
+
+  function clearPdLayers() {
+    var orn = document.getElementById("hy-qcf-ornament");
+    if (orn) {
+      orn.classList.remove("hy-tezhip-on", "hy-pd-frame-on");
+      orn.removeAttribute("data-hy-pd");
+      var img = orn.querySelector(".hy-pd-frame-img");
+      if (img) img.parentNode.removeChild(img);
+    }
+    var stage = document.getElementById("hy-qcf-stage");
+    if (stage) stage.removeAttribute("data-hy-pd-layout");
+    var scan = document.getElementById("hy-qcf-scan");
+    if (scan) {
+      scan.style.backgroundImage = "";
+      scan.classList.remove("hy-on");
+    }
+    resetWritingPort();
+  }
+
+  function applyPdDecor() {
+    var meta = pdEditionMeta(pdFrameId);
+    if (!meta || pageStyle !== "tezhip") {
+      clearPdLayers();
+      return;
+    }
+    var orn = document.getElementById("hy-qcf-ornament");
+    if (!orn) return;
+    var page = paintedData && paintedData.page ? paintedData.page : 3;
+    var folioSrc = folioAssetForPage(meta, page);
+    if (!folioSrc) return;
+    orn.classList.add("hy-tezhip-on", "hy-pd-frame-on");
+    orn.setAttribute("data-hy-pd", pdFrameId);
+    var bust = "?v=pdhist5";
+    var img = orn.querySelector(".hy-pd-frame-img");
+    if (!img) {
+      img = document.createElement("img");
+      img.className = "hy-pd-frame-img";
+      img.alt = "";
+      img.setAttribute("aria-hidden", "true");
+      orn.appendChild(img);
+    }
+    img.src = folioSrc + bust;
+    applyPdPageLayout(paintedData);
+    applyPdFrameMask(paintedData);
+    applyWritingPortBox(paintedData);
+    applyOriginalHatLayer();
+  }
+
+  function applyOriginalHatLayer() {
+    var on = originalHat && pageStyle === "tezhip";
+    document.body.classList.toggle("hy-original-hat", !!on);
+    var scan = document.getElementById("hy-qcf-scan");
+    if (!scan) return;
+    if (!on) {
+      scan.classList.remove("hy-on");
+      scan.style.backgroundImage = "";
+      return;
+    }
+    var meta = pdEditionMeta(pdFrameId);
+    if (!meta || !paintedData || paintedData.page > 2) {
+      scan.classList.remove("hy-on");
+      scan.style.backgroundImage = "";
+      document.body.classList.remove("hy-original-hat");
+      return;
+    }
+    var scanUrl = scanAssetForPage(meta, paintedData.page);
+    if (!scanUrl) {
+      scan.classList.remove("hy-on");
+      scan.style.backgroundImage = "";
+      document.body.classList.remove("hy-original-hat");
+      return;
+    }
+    scan.classList.add("hy-on");
+    scan.style.backgroundImage = "url(" + scanUrl + "?v=pdhist5)";
+  }
+
+  function setOriginalHat(on) {
+    originalHat = !!on;
+    try {
+      localStorage.setItem("hyOriginalHat", on ? "1" : "0");
+    } catch (e2) {}
+    applyOriginalHatLayer();
+    var btn = document.getElementById("hy-hat-btn");
+    if (btn) {
+      btn.classList.toggle("on", !!on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    }
+  }
+
+  function cyclePdFrame() {
+    loadPdManifest().then(function () {
+      if (!pdManifest || !pdManifest.editions || !pdManifest.editions.length) return;
+      var ids = pdManifest.editions.map(function (e) {
+        return e.id;
+      });
+      var idx = ids.indexOf(pdFrameId);
+      pdFrameId = ids[(idx + 1) % ids.length];
+      try {
+        localStorage.setItem("hyPdFrameId", pdFrameId);
+      } catch (e3) {}
+      applyPdDecor();
+      syncSourceRibbon();
+      var btn = document.getElementById("hy-pd-btn");
+      if (btn && pdEditionMeta(pdFrameId)) {
+        var p = pdEditionMeta(pdFrameId).provenance;
+        btn.textContent = p.shelfmark || "PD";
+        btn.title = p.nameTr + " · " + p.licenseTr;
+      }
+    });
+  }
+
+  function pdAttribLine() {
+    var p = pdEditionMeta(pdFrameId);
+    if (!p || !p.provenance) return "";
+    var pr = p.provenance;
+    return pr.institutionTr + " · " + pr.shelfmark + " · " + pr.licenseTr;
+  }
+
+  var DECOR_SUB_TR = DECOR_SUB_SADE;
 
   function normalizeStyle(style) {
-    if (style === "altin") return "altin";
+    if (style === "tezhip" || style === "altin") return style;
     return "sade";
   }
 
   function styleLabel(style) {
+    if (style === "tezhip") return "Tezhip";
     if (style === "altin") return "Altın";
     return "Sade";
   }
 
   function nextStyle(style) {
-    return style === "sade" ? "altin" : "sade";
+    if (style === "sade") return "altin";
+    if (style === "altin") return "tezhip";
+    return "sade";
   }
 
   function readStyle() {
     try {
       var s = global.localStorage && localStorage.getItem("hyPageStyle");
-      if (s === "tezhip") {
-        localStorage.setItem("hyPageStyle", "sade");
-        return "sade";
-      }
-      if (s === "sade" || s === "altin") return s;
+      if (s === "tezhip" || s === "sade" || s === "altin") return s;
     } catch (e) {}
     return "sade";
   }
@@ -816,20 +1156,38 @@
     pageStyle = normalizeStyle(style);
     document.body.classList.toggle("hy-style-sade", pageStyle === "sade");
     document.body.classList.toggle("hy-style-altin", pageStyle === "altin");
-    document.body.classList.remove("hy-style-tezhip");
+    document.body.classList.toggle("hy-style-tezhip", pageStyle === "tezhip");
     var orn = document.getElementById("hy-qcf-ornament");
-    if (orn) {
-      orn.classList.remove("hy-tezhip-on");
-      if (orn.querySelector("svg")) orn.innerHTML = "";
+    if (pageStyle !== "tezhip") {
+      clearPdLayers();
+      document.body.classList.remove("hy-original-hat", "hy-pd-serlevha");
+      if (orn && orn.querySelector("svg")) orn.innerHTML = "";
+    } else {
+      if (orn && orn.querySelector("svg")) orn.innerHTML = "";
+      applyPdDecor();
     }
     var btn = document.getElementById("hy-style-btn");
     if (btn) {
       btn.textContent = styleLabel(pageStyle);
-      btn.title = "Sayfa süsü (dekoratif): Sade veya Sade Altın";
+      btn.title =
+        pageStyle === "tezhip"
+          ? "Tarihî tezhip (PD tarama çerçevesi) + QCF metin"
+          : "Sayfa süsü: Sade veya Sade Altın";
       btn.setAttribute("aria-label", btn.title);
     }
+    var pdBtn = document.getElementById("hy-pd-btn");
+    if (pdBtn) pdBtn.style.display = pageStyle === "tezhip" ? "" : "none";
+    var hatBtn = document.getElementById("hy-hat-btn");
+    if (hatBtn) hatBtn.style.display = pageStyle === "tezhip" ? "" : "none";
     applyAllah(readAllah());
-    if (paintedData) applySpecialTops(paintedData);
+    if (paintedData) {
+      applySpecialTops(paintedData);
+      applyPdPageLayout(paintedData);
+      applyPdFrameMask(paintedData);
+      applyWritingPortBox(paintedData);
+      applyOriginalHatLayer();
+    }
+    syncSourceRibbon();
   }
 
   function setStyle(style) {
@@ -901,7 +1259,7 @@
     var availH = Math.max(120, box.height);
     var landscape = window.innerWidth > window.innerHeight;
     var s =
-      pageStyle === "sade" || pageStyle === "altin" || landscape
+      pageStyle === "sade" || pageStyle === "altin" || pageStyle === "tezhip" || landscape
         ? availW / DESIGN_W
         : Math.min(availW / DESIGN_W, availH / DESIGN_H);
     var key = pageStyle + ":" + s.toFixed(4) + ":" + Math.round(availW) + "x" + Math.round(availH);
@@ -1015,6 +1373,14 @@
     paintedPage = data.page;
     paintedFont = name;
     document.body.classList.add("hy-kuran", "hy-qcf-on");
+    applyPdPageLayout(data);
+    if (pageStyle === "tezhip") {
+      applyPdFrameMask(data);
+      applyWritingPortBox(data);
+      applyPdDecor();
+    } else {
+      resetWritingPort();
+    }
     placeFinial(data);
     scheduleFit();
     Promise.all([loadFont(data.page, data.fontRemote || data.font, pageSample(data)), loadBsml()])
@@ -1027,6 +1393,7 @@
         stage.classList.remove("hy-waiting");
         scheduleFit();
         placeHits(data);
+        applyOriginalHatLayer();
         syncChrome(data, chromeVerse);
         if (data.page === 1) alignReactTo(1);
         prefetchNear(data.page);
@@ -1155,7 +1522,7 @@
   }
 
   function loadEditionCatalog() {
-    return fetch("/assets/mushaf/mushaf-editions.json?v=dekor1")
+    return fetch("/assets/mushaf/mushaf-editions.json?v=pdhist5")
       .then(function (r) {
         return r.ok ? r.json() : null;
       })
@@ -1199,17 +1566,30 @@
   }
 
   function boot() {
+    pdFrameId = readPdFrameId();
+    originalHat = readOriginalHat();
+    loadPdManifest();
     loadEditionCatalog();
     if (!document.getElementById("hy-qcf-style-link")) {
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=dekor1";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=pdhist5";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
     applyStyle(pageStyle);
     applyAllah(readAllah());
+    loadPdManifest().then(function () {
+      var pbtn = document.getElementById("hy-pd-btn");
+      var meta = pdEditionMeta(pdFrameId);
+      if (pbtn && meta && meta.provenance) {
+        pbtn.textContent = meta.provenance.shelfmark || "PD";
+        pbtn.title = meta.provenance.nameTr + " · " + meta.provenance.licenseTr;
+      }
+      var hbtn = document.getElementById("hy-hat-btn");
+      if (hbtn) hbtn.classList.toggle("on", originalHat);
+    });
     paint();
     window.addEventListener("resize", scheduleFit);
     window.addEventListener("orientationchange", function () {
@@ -1280,6 +1660,14 @@
     },
     styleLabel: styleLabel,
     nextStyle: nextStyle,
+    cyclePdFrame: cyclePdFrame,
+    setOriginalHat: setOriginalHat,
+    getOriginalHat: function () {
+      return originalHat;
+    },
+    getPdFrameId: function () {
+      return pdFrameId;
+    },
     setAllah: setAllah,
     getAllah: readAllah,
     scrollActive: scrollActive,

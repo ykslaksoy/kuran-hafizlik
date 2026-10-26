@@ -1,0 +1,302 @@
+{
+  "schema": 4,
+  "verifiedOn": "2026-10-26",
+  "cacheKey": "pdhist5",
+  "design": {
+    "stageW": 1000,
+    "stageH": 1610,
+    "glyphW": 888,
+    "glyphH": 1470
+  },
+  "writingBoxMargin": {
+    "top": 0.04472049689440994,
+    "left": 0.056,
+    "width": 0.888,
+    "height": 0.9130434782608695,
+    "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+  },
+  "editions": [
+    {
+      "id": "pd-mehmed-sevki-ssm",
+      "folioMapTr": "p1 Fâtiha: sağ yaprak · p2 Bakara açılış: sol yaprak",
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/pd/pd-mehmed-sevki-ssm/folio-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-mehmed-sevki-ssm/folio-p2.webp",
+          "margin": "/assets/mushaf/pd/pd-mehmed-sevki-ssm/folio-margin.webp"
+        },
+        "scan": {
+          "p1": "/assets/mushaf/pd/pd-mehmed-sevki-ssm/scan-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-mehmed-sevki-ssm/scan-p2.webp"
+        }
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.28,
+            "left": 0.1,
+            "width": 0.34,
+            "height": 0.32
+          },
+          "p2": {
+            "top": 0.27,
+            "left": 0.55,
+            "width": 0.34,
+            "height": 0.33
+          }
+        }
+      },
+      "restored": null,
+      "provenance": {
+        "nameTr": "Mehmed Şevki Efendi",
+        "institutionTr": "Sakıp Sabancı Müzesi",
+        "shelfmark": "SSM GAP",
+        "licenseTr": "Kamu malı (Public Domain)",
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-ruzbihan-cbl-1558",
+      "folioMapTr": "p1 sağ yaprak · p2 sol yaprak (çift serlevha bölündü)",
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/pd/pd-ruzbihan-cbl-1558/folio-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-ruzbihan-cbl-1558/folio-p2.webp",
+          "margin": "/assets/mushaf/pd/pd-ruzbihan-cbl-1558/folio-margin.webp"
+        },
+        "scan": {
+          "p1": "/assets/mushaf/pd/pd-ruzbihan-cbl-1558/scan-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-ruzbihan-cbl-1558/scan-p2.webp"
+        }
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.398,
+            "left": 0.198,
+            "width": 0.604,
+            "height": 0.276
+          },
+          "p2": {
+            "top": 0.382,
+            "left": 0.178,
+            "width": 0.628,
+            "height": 0.292
+          }
+        }
+      },
+      "restored": null,
+      "provenance": {
+        "nameTr": "Ruzbihan CBL Is 1558",
+        "institutionTr": "Columbia Burke",
+        "shelfmark": "CBL Is 1558",
+        "licenseTr": "Kamu malı (Public Domain)",
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Double_frontispiece_of_the_Ruzbihan_Qur%27an_(CBL_Is_1558).jpg",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-walters-w569",
+      "folioMapTr": "Tek yaprak: W5693B (p1), sure 18 açılış (p2), W5694A metin (p3+)",
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/pd/pd-walters-w569/folio-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-walters-w569/folio-p2.webp",
+          "margin": "/assets/mushaf/pd/pd-walters-w569/folio-margin.webp"
+        },
+        "scan": {
+          "p1": "/assets/mushaf/pd/pd-walters-w569/scan-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-walters-w569/scan-p2.webp"
+        }
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.448,
+            "left": 0.152,
+            "width": 0.696,
+            "height": 0.288
+          },
+          "p2": {
+            "top": 0.428,
+            "left": 0.138,
+            "width": 0.712,
+            "height": 0.302
+          }
+        }
+      },
+      "restored": null,
+      "provenance": {
+        "nameTr": "Walters W.569",
+        "institutionTr": "Walters Art Museum",
+        "shelfmark": "W.569",
+        "licenseTr": "Kamu malı (Public Domain)",
+        "licenseUrl": "",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-walters-w557",
+      "folioMapTr": "",
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/pd/pd-walters-w557/folio-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-walters-w557/folio-p2.webp",
+          "margin": "/assets/mushaf/pd/pd-walters-w557/folio-margin.webp"
+        },
+        "scan": {
+          "p1": "/assets/mushaf/pd/pd-walters-w557/scan-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-walters-w557/scan-p2.webp"
+        }
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.438,
+            "left": 0.162,
+            "width": 0.676,
+            "height": 0.296
+          },
+          "p2": {
+            "top": 0.412,
+            "left": 0.148,
+            "width": 0.692,
+            "height": 0.318
+          }
+        }
+      },
+      "restored": null,
+      "provenance": {
+        "nameTr": "Walters W.557",
+        "institutionTr": "Walters Art Museum",
+        "shelfmark": "W.557",
+        "licenseTr": "Kamu malı (Public Domain)",
+        "licenseUrl": "",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-loc-or-15227",
+      "folioMapTr": "",
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/pd/pd-loc-or-15227/folio-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-loc-or-15227/folio-p2.webp",
+          "margin": "/assets/mushaf/pd/pd-loc-or-15227/folio-margin.webp"
+        },
+        "scan": {
+          "p1": "/assets/mushaf/pd/pd-loc-or-15227/scan-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-loc-or-15227/scan-p2.webp"
+        }
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.118,
+            "left": 0.112,
+            "width": 0.776,
+            "height": 0.768
+          },
+          "p2": {
+            "top": 0.112,
+            "left": 0.108,
+            "width": 0.784,
+            "height": 0.776
+          }
+        }
+      },
+      "restored": null,
+      "provenance": {
+        "nameTr": "LOC Or. 15227",
+        "institutionTr": "Library of Congress WDL",
+        "shelfmark": "Or. 15227",
+        "licenseTr": "Kamu malı (LOC)",
+        "licenseUrl": "",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-loc-plmp-m131",
+      "folioMapTr": "",
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/pd/pd-loc-plmp-m131/folio-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-loc-plmp-m131/folio-p2.webp",
+          "margin": "/assets/mushaf/pd/pd-loc-plmp-m131/folio-margin.webp"
+        },
+        "scan": {
+          "p1": "/assets/mushaf/pd/pd-loc-plmp-m131/scan-p1.webp",
+          "p2": "/assets/mushaf/pd/pd-loc-plmp-m131/scan-p2.webp"
+        }
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.108,
+            "left": 0.118,
+            "width": 0.764,
+            "height": 0.782
+          },
+          "p2": {
+            "top": 0.104,
+            "left": 0.114,
+            "width": 0.772,
+            "height": 0.788
+          }
+        }
+      },
+      "restored": null,
+      "provenance": {
+        "nameTr": "LOC plmp.m131",
+        "institutionTr": "Library of Congress",
+        "shelfmark": "plmp.m131",
+        "licenseTr": "Kamu malı (LOC)",
+        "licenseUrl": "",
+        "verifiedOn": "2026-10-26"
+      }
+    }
+  ]
+}
