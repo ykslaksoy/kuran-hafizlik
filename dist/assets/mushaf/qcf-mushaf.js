@@ -801,7 +801,7 @@
 
   function loadPdManifest() {
     if (pdManifest) return Promise.resolve(pdManifest);
-    return fetch("/assets/mushaf/pd/manifest.json?v=pdhist1")
+    return fetch("/assets/mushaf/pd/manifest.json?v=pdhist2")
       .then(function (r) {
         return r.ok ? r.json() : null;
       })
@@ -815,6 +815,75 @@
       });
   }
 
+  var PD_INSET = { top: 72, left: 56, right: 56, bottom: 68 };
+
+  function pdLayoutForPage(page) {
+    return page <= 2 ? "serlevha" : "margin";
+  }
+
+  function pdMarginMaskUrl(inset) {
+    var w = DESIGN_W;
+    var h = DESIGN_H;
+    var ins = inset || PD_INSET;
+    var x1 = ins.left;
+    var y1 = ins.top;
+    var x2 = w - ins.right;
+    var y2 = h - ins.bottom;
+    var svg =
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " +
+      w +
+      " " +
+      h +
+      "'><path fill='#fff' fill-rule='evenodd' d='M0,0H" +
+      w +
+      "V" +
+      h +
+      "H0z M" +
+      x1 +
+      "," +
+      y1 +
+      "H" +
+      x2 +
+      "V" +
+      y2 +
+      "H" +
+      x1 +
+      "z'/></svg>";
+    return "url(\"data:image/svg+xml," + encodeURIComponent(svg) + "\")";
+  }
+
+  function applyPdPageLayout(data) {
+    var stage = document.getElementById("hy-qcf-stage");
+    if (!stage) return;
+    if (!data || pageStyle !== "tezhip") {
+      stage.removeAttribute("data-hy-pd-layout");
+      return;
+    }
+    stage.setAttribute("data-hy-pd-layout", pdLayoutForPage(data.page));
+  }
+
+  function applyPdFrameMask(data) {
+    var img = document.querySelector("#hy-qcf-ornament .hy-pd-frame-img");
+    if (!img) return;
+    if (!data || pageStyle !== "tezhip") {
+      img.style.maskImage = "";
+      img.style.webkitMaskImage = "";
+      return;
+    }
+    if (pdLayoutForPage(data.page) === "margin") {
+      var m = pdMarginMaskUrl(PD_INSET);
+      img.style.maskImage = m;
+      img.style.webkitMaskImage = m;
+      img.style.maskSize = "100% 100%";
+      img.style.webkitMaskSize = "100% 100%";
+      img.style.maskRepeat = "no-repeat";
+      img.style.webkitMaskRepeat = "no-repeat";
+    } else {
+      img.style.maskImage = "";
+      img.style.webkitMaskImage = "";
+    }
+  }
+
   function clearPdLayers() {
     var orn = document.getElementById("hy-qcf-ornament");
     if (orn) {
@@ -823,6 +892,8 @@
       var img = orn.querySelector(".hy-pd-frame-img");
       if (img) img.parentNode.removeChild(img);
     }
+    var stage = document.getElementById("hy-qcf-stage");
+    if (stage) stage.removeAttribute("data-hy-pd-layout");
     var scan = document.getElementById("hy-qcf-scan");
     if (scan) {
       scan.style.backgroundImage = "";
@@ -850,16 +921,21 @@
       im.className = "hy-pd-frame-img";
       im.alt = "";
       im.setAttribute("aria-hidden", "true");
-      im.src = meta.assets.frame + "?v=pdhist1";
+      im.src = meta.assets.frame + "?v=pdhist2";
       orn.appendChild(im);
     } else {
-      orn.querySelector(".hy-pd-frame-img").src = meta.assets.frame + "?v=pdhist1";
+      orn.querySelector(".hy-pd-frame-img").src = meta.assets.frame + "?v=pdhist2";
     }
     var paper = document.getElementById("hy-qcf-paper-infill");
     if (paper) {
       paper.classList.add("hy-on");
-      paper.style.backgroundImage = "url(" + meta.assets.paper + "?v=pdhist1)";
+      paper.style.backgroundImage =
+        "linear-gradient(180deg,#faf4e6 0%,#f3e6c8 48%,#efe0b6 100%),url(" +
+        meta.assets.paper +
+        "?v=pdhist2)";
     }
+    applyPdPageLayout(paintedData);
+    applyPdFrameMask(paintedData);
     applyOriginalHatLayer();
   }
 
@@ -881,7 +957,7 @@
       return;
     }
     scan.classList.add("hy-on");
-    scan.style.backgroundImage = "url(" + meta.assets.scan + "?v=pdhist1)";
+    scan.style.backgroundImage = "url(" + meta.assets.scan + "?v=pdhist2)";
   }
 
   function setOriginalHat(on) {
@@ -1007,6 +1083,8 @@
     applyAllah(readAllah());
     if (paintedData) {
       applySpecialTops(paintedData);
+      applyPdPageLayout(paintedData);
+      applyPdFrameMask(paintedData);
       applyOriginalHatLayer();
     }
     syncSourceRibbon();
@@ -1195,6 +1273,11 @@
     paintedPage = data.page;
     paintedFont = name;
     document.body.classList.add("hy-kuran", "hy-qcf-on");
+    applyPdPageLayout(data);
+    if (pageStyle === "tezhip") {
+      applyPdFrameMask(data);
+      applyPdDecor();
+    }
     placeFinial(data);
     scheduleFit();
     Promise.all([loadFont(data.page, data.fontRemote || data.font, pageSample(data)), loadBsml()])
@@ -1336,7 +1419,7 @@
   }
 
   function loadEditionCatalog() {
-    return fetch("/assets/mushaf/mushaf-editions.json?v=pdhist1")
+    return fetch("/assets/mushaf/mushaf-editions.json?v=pdhist2")
       .then(function (r) {
         return r.ok ? r.json() : null;
       })
@@ -1388,7 +1471,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=pdhist1";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=pdhist2";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();
