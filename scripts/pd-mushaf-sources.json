@@ -1,80 +1,122 @@
 {
-  "schema": 1,
+  "schema": 3,
   "verifiedOn": "2026-10-26",
-  "note": "Only Public Domain (or equivalent) assets. CC BY-SA excluded.",
+  "design": { "stageW": 1000, "stageH": 1610, "glyphW": 888, "glyphH": 1470 },
+  "writingBoxMargin": {
+    "top": 0.04472049689440994,
+    "left": 0.056,
+    "width": 0.888,
+    "height": 0.9130434782608695,
+    "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+  },
   "editions": [
     {
       "id": "pd-mehmed-sevki-ssm",
-      "nameTr": "Mehmed Şevki Efendi (tarihî hat)",
-      "shortLabelTr": "PD · Mehmed Şevki Efendi",
+      "nameTr": "Mehmed Şevki Efendi",
       "institutionTr": "Sakıp Sabancı Müzesi",
-      "shelfmark": "SSM (Google Art Project taraması)",
+      "shelfmark": "SSM GAP",
       "licenseTr": "Kamu malı (Public Domain)",
       "licenseUrl": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
-      "commonsTitle": "File:Copied by Mehmed Şevki Efendi - Qur’an - Google Art Project.jpg",
-      "scanPage": 1,
-      "scanNoteTr": "Sayfa 1 önizleme: müze taramasındaki Fâtiha açılışı (Medine 604 sayfa numarasıyla örtüşmez)."
+      "spread": {
+        "title": "File:Copied by Mehmed Şevki Efendi - Qur’an - Google Art Project.jpg",
+        "p1Half": "right",
+        "p2Half": "left",
+        "folioMapTr": "p1 Fâtiha: sağ yaprak · p2 Bakara açılış: sol yaprak"
+      },
+      "writingBoxSerlevha": {
+        "p1": { "top": 0.372, "left": 0.248, "width": 0.504, "height": 0.298 },
+        "p2": { "top": 0.358, "left": 0.228, "width": 0.532, "height": 0.312 }
+      }
     },
     {
       "id": "pd-ruzbihan-cbl-1558",
-      "nameTr": "Ruzbihan (CBL Is 1558)",
-      "shortLabelTr": "PD · Ruzbihan CBL Is 1558",
-      "institutionTr": "Columbia University · Burke Library",
+      "nameTr": "Ruzbihan CBL Is 1558",
+      "institutionTr": "Columbia Burke",
       "shelfmark": "CBL Is 1558",
       "licenseTr": "Kamu malı (Public Domain)",
       "licenseUrl": "https://commons.wikimedia.org/wiki/File:Double_frontispiece_of_the_Ruzbihan_Qur%27an_(CBL_Is_1558).jpg",
-      "commonsTitle": "File:Double frontispiece of the Ruzbihan Qur'an (CBL Is 1558).jpg",
-      "scanCommonsTitle": "File:The Ruzbihan Qur'an. Illuminated frontispiece, containing Chapter 1, al-Fatiha (CBL Is 1558, f.2b).jpg",
-      "scanPage": 1
+      "spread": {
+        "title": "File:Double frontispiece of the Ruzbihan Qur'an (CBL Is 1558).jpg",
+        "p1Half": "right",
+        "p2Half": "left",
+        "folioMapTr": "p1 sağ yaprak · p2 sol yaprak (çift serlevha bölündü)"
+      },
+      "marginFolio": "File:Illuminated folio. The Ruzbihan Qur'an (CBL Is 1558, f. 209a).jpg",
+      "scan": {
+        "p1": "File:The Ruzbihan Qur'an. Illuminated frontispiece, containing Chapter 1, al-Fatiha (CBL Is 1558, f.2b).jpg",
+        "p2": "File:Second part of illuminated double-page, Heading for Chapter 2, al-Baqara. The Ruzbihan Qur'an (CBL Is 1558, f.4a).jpg"
+      },
+      "writingBoxSerlevha": {
+        "p1": { "top": 0.398, "left": 0.198, "width": 0.604, "height": 0.276 },
+        "p2": { "top": 0.382, "left": 0.178, "width": 0.628, "height": 0.292 }
+      }
     },
     {
       "id": "pd-walters-w569",
-      "nameTr": "Walters W.569 (İran, 11. yy.)",
-      "shortLabelTr": "PD · Walters W.569",
+      "nameTr": "Walters W.569",
       "institutionTr": "Walters Art Museum",
       "shelfmark": "W.569",
       "licenseTr": "Kamu malı (Public Domain)",
-      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Illuminated_Incipit_Page_with_Headpiece_-_Walters_W5693B_-_Full_Page.jpg",
-      "commonsTitle": "File:Iranian - Illuminated Incipit Page with Headpiece - Walters W5693B - Full Page.jpg",
-      "frameCommonsTitle": "File:Iranian - Illuminated Incipit Page with Headpiece - Walters W5693B - Full Page.jpg",
-      "scanCommonsTitle": "File:Iranian - Left Side of a Double-page Opening Inscribed with Verses of Chapter 1 - Walters W5693A - Full Page.jpg",
-      "scanPage": 1
+      "folio": {
+        "p1": "File:Iranian - Illuminated Incipit Page with Headpiece - Walters W5693B - Full Page.jpg",
+        "p2": "File:Iranian - Decorated Incipit Page with Headpiece Introducing Chapter 18 - Walters W569153B - Full Page.jpg",
+        "margin": "File:Iranian - Leaf from Qur'an - Walters W5694A - Full Page.jpg",
+        "scanP1": "File:Iranian - Left Side of a Double-page Opening Inscribed with Verses of Chapter 1 - Walters W5693A - Full Page.jpg"
+      },
+      "folioMapTr": "Tek yaprak: W5693B (p1), sure 18 açılış (p2), W5694A metin (p3+)",
+      "writingBoxSerlevha": {
+        "p1": { "top": 0.448, "left": 0.152, "width": 0.696, "height": 0.288 },
+        "p2": { "top": 0.428, "left": 0.138, "width": 0.712, "height": 0.302 }
+      }
     },
     {
       "id": "pd-walters-w557",
       "nameTr": "Walters W.557",
-      "shortLabelTr": "PD · Walters W.557",
       "institutionTr": "Walters Art Museum",
       "shelfmark": "W.557",
       "licenseTr": "Kamu malı (Public Domain)",
-      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Left_Side_of_an_Illuminated_Double-page_Incipit_-_Walters_W5573A_-_Full_Page.jpg",
-      "commonsTitle": "File:Iranian - Left Side of an Illuminated Double-page Incipit - Walters W5573A - Full Page.jpg",
-      "scanCommonsTitle": "File:Iranian - Leaf from Qur'an - Walters W557104B - Full Page.jpg",
-      "scanPage": 1
+      "folio": {
+        "p1": "File:Iranian - Left Side of an Illuminated Double-page Incipit - Walters W5573A - Full Page.jpg",
+        "p2": "File:Iranian - Illuminated Text Page with Verses from Chapter 2 - Walters W5577B - Full Page.jpg",
+        "margin": "File:Iranian - Leaf from Qur'an - Walters W557104B - Full Page.jpg",
+        "scanP1": "File:Iranian - Leaf from Qur'an - Walters W557104B - Full Page.jpg"
+      },
+      "writingBoxSerlevha": {
+        "p1": { "top": 0.438, "left": 0.162, "width": 0.676, "height": 0.296 },
+        "p2": { "top": 0.412, "left": 0.148, "width": 0.692, "height": 0.318 }
+      }
     },
     {
       "id": "pd-loc-or-15227",
-      "nameTr": "LOC Or. 15227 (WDL)",
-      "shortLabelTr": "PD · LOC Or. 15227",
-      "institutionTr": "Library of Congress · World Digital Library",
+      "nameTr": "LOC Or. 15227",
+      "institutionTr": "Library of Congress WDL",
       "shelfmark": "Or. 15227",
-      "licenseTr": "Kamu malı — LOC/WDL (bilinen kısıt yok)",
-      "licenseUrl": "https://www.loc.gov/item/2021667630/",
-      "directUrl": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:50/0/default.jpg",
-      "scanDirectUrl": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:50/0/default.jpg",
-      "scanPage": 1
+      "licenseTr": "Kamu malı (LOC)",
+      "direct": {
+        "p1": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:50/0/default.jpg",
+        "p2": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f004r/full/pct:50/0/default.jpg",
+        "margin": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f010r/full/pct:50/0/default.jpg"
+      },
+      "writingBoxSerlevha": {
+        "p1": { "top": 0.118, "left": 0.112, "width": 0.776, "height": 0.768 },
+        "p2": { "top": 0.112, "left": 0.108, "width": 0.784, "height": 0.776 }
+      }
     },
     {
       "id": "pd-loc-plmp-m131",
       "nameTr": "LOC plmp.m131",
-      "shortLabelTr": "PD · LOC plmp.m131",
       "institutionTr": "Library of Congress",
       "shelfmark": "plmp.m131",
-      "licenseTr": "Kamu malı — Library of Congress",
-      "licenseUrl": "https://www.loc.gov/item/2021668722/",
-      "directUrl": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:50.0/0/default.jpg",
-      "scanDirectUrl": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:50.0/0/default.jpg",
-      "scanPage": 1
+      "licenseTr": "Kamu malı (LOC)",
+      "direct": {
+        "p1": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:50.0/0/default.jpg",
+        "p2": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0010/full/pct:50.0/0/default.jpg",
+        "margin": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0015/full/pct:50.0/0/default.jpg"
+      },
+      "writingBoxSerlevha": {
+        "p1": { "top": 0.108, "left": 0.118, "width": 0.764, "height": 0.782 },
+        "p2": { "top": 0.104, "left": 0.114, "width": 0.772, "height": 0.788 }
+      }
     }
   ]
 }

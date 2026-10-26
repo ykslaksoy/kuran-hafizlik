@@ -488,6 +488,23 @@ body.hy-kuran.hy-allah-on #hy-qcf-glyphs .hy-qcf-word.hy-qcf-allah {
   z-index: 3;
 }
 
+#hy-qcf-writing-port {
+  position: absolute;
+  top: 72px;
+  left: 56px;
+  width: 888px;
+  height: 1470px;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#hy-qcf-writing-port #hy-qcf-glyphs,
+#hy-qcf-writing-port #hy-qcf-overlay {
+  top: 0;
+  left: 0;
+}
+
 /* Fixed 15 line boxes — never wrap, never grow, never reflow */
 #hy-qcf-glyphs {
   position: absolute;
@@ -1088,8 +1105,12 @@ body.hy-style-tezhip #hy-qcf-stage[data-hy-pd-layout="serlevha"] .hy-pd-frame-im
   filter: saturate(1.06) contrast(1.04);
 }
 
-body.hy-style-tezhip #hy-qcf-stage[data-hy-pd-layout="margin"] #hy-qcf-glyphs {
+body.hy-style-tezhip #hy-qcf-stage[data-hy-pd-layout="margin"] #hy-qcf-writing-port {
   z-index: 2;
+}
+
+body.hy-style-tezhip.hy-pd-serlevha #hy-qcf-glyphs .hy-qcf-linebox[data-kind="header"] {
+  display: none !important;
 }
 
 body.hy-original-hat #hy-qcf-glyphs {

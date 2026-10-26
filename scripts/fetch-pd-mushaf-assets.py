@@ -1,20 +1,28 @@
 #!/usr/bin/env python3
-"""Download PD-verified mushaf scans; build frame + paper + scan WebP assets."""
+"""
+PD mushaf folios v4: single-leaf crops, manual writingBox, ink-only inpaint.
+Forbidden: auto 78% bbox, margin tile paste, flat cream fills.
+"""
 from __future__ import annotations
 
 import json
 import os
-import re
-import sys
+import time
 import urllib.parse
 import urllib.request
+from io import BytesIO
 
+import cv2
+import numpy as np
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "scripts", "pd-mushaf-sources.json")
 OUT = os.path.join(ROOT, "dist", "assets", "mushaf", "pd")
+STORE_MEDIA = "/cursor/stores/bc-114252f7-dc62-4152-81a7-76cb5dd7da05/media"
 UA = "HafizyolBot/1.0 (PD asset fetch; ykslaksoy/kuran-hafizlik)"
+DESIGN_W = 1000
+DESIGN_H = 1610
 
 
 def commons_url(title: str) -> str:
@@ -23,106 +31,191 @@ def commons_url(title: str) -> str:
         + urllib.parse.quote(title)
         + "&prop=imageinfo&iiprop=url|extmetadata&format=json"
     )
-    req = urllib.request.Request(api, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=120) as r:
-        data = json.load(r)
-    pages = data.get("query", {}).get("pages", {})
-    for p in pages.values():
-        if p.get("missing"):
-            raise RuntimeError("Commons file missing: " + title)
-        ii = p["imageinfo"][0]
-        lic = ii.get("extmetadata", {}).get("LicenseShortName", {}).get("value", "")
-        if "public domain" not in lic.lower() and "pd" not in lic.lower():
-            raise RuntimeError(f"License not PD for {title}: {lic}")
-        return ii["url"]
-    raise RuntimeError("No imageinfo for " + title)
+    for attempt in range(6):
+        try:
+            req = urllib.request.Request(api, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=120) as r:
+                data = json.load(r)
+            for p in data.get("query", {}).get("pages", {}).values():
+                if p.get("missing"):
+                    raise RuntimeError("Commons file missing: " + title)
+                return p["imageinfo"][0]["url"]
+        except Exception:
+            time.sleep(2 + attempt * 2)
+    raise RuntimeError("Commons failed: " + title)
 
 
-def download(url: str, dest: str) -> None:
-    os.makedirs(os.path.dirname(dest), exist_ok=True)
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=180) as r:
-        raw = r.read()
-    with open(dest, "wb") as f:
-        f.write(raw)
+def download(url: str) -> Image.Image:
+    for attempt in range(6):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=180) as r:
+                return Image.open(BytesIO(r.read())).convert("RGB")
+        except Exception:
+            time.sleep(2 + attempt * 2)
+    raise RuntimeError("download failed: " + url[:80])
 
 
-def fit_width(img: Image.Image, w: int) -> Image.Image:
-    if img.width <= w:
-        return img
-    h = int(img.height * (w / img.width))
-    return img.resize((w, h), Image.Resampling.LANCZOS)
+def split_half(img: Image.Image, side: str) -> Image.Image:
+    w, _h = img.size
+    mid = w // 2
+    return img.crop((0, 0, mid, _h)) if side == "left" else img.crop((mid, 0, w, _h))
 
 
-def center_crop_fraction(img: Image.Image, fx: float, fy: float) -> Image.Image:
-    """Crop central fraction (fx, fy) of image size."""
-    cw = int(img.width * fx)
-    ch = int(img.height * fy)
-    left = (img.width - cw) // 2
-    top = (img.height - ch) // 2
-    return img.crop((left, top, left + cw, top + ch))
+def fit_folio(img: Image.Image) -> Image.Image:
+    target_r = DESIGN_W / DESIGN_H
+    w, h = img.size
+    r = w / h
+    if r > target_r:
+        nw, nh = DESIGN_W, int(DESIGN_W / r)
+    else:
+        nh, nw = DESIGN_H, int(DESIGN_H * r)
+    img = img.resize((nw, nh), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGB", (DESIGN_W, DESIGN_H), (245, 238, 220))
+    canvas.paste(img, ((DESIGN_W - nw) // 2, (DESIGN_H - nh) // 2))
+    return canvas
 
 
-def process_edition(ed: dict) -> dict:
+def box_px(box: dict) -> tuple[int, int, int, int]:
+    x0 = int(box["left"] * DESIGN_W)
+    y0 = int(box["top"] * DESIGN_H)
+    x1 = int((box["left"] + box["width"]) * DESIGN_W)
+    y1 = int((box["top"] + box["height"]) * DESIGN_H)
+    return x0, y0, x1, y1
+
+
+def ink_mask_in_box(rgb: np.ndarray, edge_guard: int = 14) -> np.ndarray:
+    """Mask dark ink/diacritics only — not gold/blue border at box edges."""
+    gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
+    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    # Otsu within box; ink darker than local paper
+    _, mask = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+    h, w = mask.shape
+    mask[:edge_guard, :] = 0
+    mask[-edge_guard:, :] = 0
+    mask[:, :edge_guard] = 0
+    mask[:, -edge_guard:] = 0
+    # drop large decorative blobs (keep stroke-sized ink)
+    n, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
+    clean = np.zeros_like(mask)
+    for i in range(1, n):
+        area = stats[i, cv2.CC_STAT_AREA]
+        if area < 12 or area > int(w * h * 0.08):
+            continue
+        clean[labels == i] = 255
+    if clean.sum() < 50:
+        clean = ((blur < 135) & (blur > 0)).astype(np.uint8) * 255
+        clean[:edge_guard, :] = 0
+        clean[-edge_guard:, :] = 0
+        clean[:, :edge_guard] = 0
+        clean[:, -edge_guard:] = 0
+    return clean
+
+
+def inpaint_writing_box(folio: Image.Image, box: dict) -> Image.Image:
+    x0, y0, x1, y1 = box_px(box)
+    if x1 <= x0 or y1 <= y0:
+        return folio
+    region = np.array(folio.crop((x0, y0, x1, y1)))
+    mask = ink_mask_in_box(region)
+    if mask.max() == 0:
+        return folio
+    fixed = cv2.inpaint(region, mask, 5, cv2.INPAINT_TELEA)
+    out = folio.copy()
+    out.paste(Image.fromarray(fixed), (x0, y0))
+    return out
+
+
+def load_leaf(ed: dict, key: str) -> Image.Image:
+    if ed.get("spread"):
+        sp = ed["spread"]
+        img = download(commons_url(sp["title"]))
+        if key == "p1":
+            return split_half(img, sp.get("p1Half", "right"))
+        if key == "p2":
+            return split_half(img, sp.get("p2Half", "left"))
+        if key == "margin":
+            if ed.get("marginFolio"):
+                return download(commons_url(ed["marginFolio"]))
+            return split_half(img, sp.get("p1Half", "right"))
+    if ed.get("folio"):
+        title = ed["folio"].get(key) or ed["folio"]["margin"]
+        return download(commons_url(title))
+    if ed.get("direct"):
+        url = ed["direct"].get(key) or ed["direct"]["margin"]
+        return download(url)
+    raise RuntimeError(f"no source {ed['id']} {key}")
+
+
+def load_scan(ed: dict, page: int) -> Image.Image:
+    if ed.get("scan"):
+        key = "p1" if page == 1 else "p2"
+        return download(commons_url(ed["scan"][key]))
+    if ed.get("folio") and ed["folio"].get("scanP1") and page == 1:
+        return download(commons_url(ed["folio"]["scanP1"]))
+    return load_leaf(ed, "p1" if page == 1 else "p2")
+
+
+def process_edition(ed: dict, margin_box: dict) -> dict:
     eid = ed["id"]
     edir = os.path.join(OUT, eid)
     os.makedirs(edir, exist_ok=True)
 
-    frame_title = ed.get("frameCommonsTitle") or ed.get("commonsTitle")
-    scan_title = ed.get("scanCommonsTitle") or ed.get("commonsTitle")
+    serlevha = ed.get("writingBoxSerlevha", {})
+    wb_p1 = serlevha.get("p1", margin_box)
+    wb_p2 = serlevha.get("p2", margin_box)
 
-    if ed.get("directUrl") and not ed.get("commonsTitle"):
-        frame_url = ed["directUrl"]
-        scan_url = ed.get("scanDirectUrl") or frame_url
-    elif ed.get("directUrl"):
-        frame_url = ed["directUrl"]
-        scan_url = ed.get("scanDirectUrl") or (commons_url(scan_title) if scan_title else frame_url)
-    else:
-        frame_url = commons_url(frame_title)
-        scan_url = commons_url(scan_title) if scan_title else frame_url
+    raw_p1 = fit_folio(load_leaf(ed, "p1"))
+    raw_p2 = fit_folio(load_leaf(ed, "p2"))
+    raw_margin = fit_folio(load_leaf(ed, "margin"))
 
-    raw_frame = os.path.join(edir, "_frame_src.jpg")
-    raw_scan = os.path.join(edir, "_scan_src.jpg")
-    download(frame_url, raw_frame)
-    if scan_url != frame_url:
-        download(scan_url, raw_scan)
-    else:
-        raw_scan = raw_frame
+    folio_p1 = inpaint_writing_box(raw_p1, wb_p1)
+    folio_p2 = inpaint_writing_box(raw_p2, wb_p2)
+    folio_margin = inpaint_writing_box(raw_margin, margin_box)
 
-    frame_img = Image.open(raw_frame).convert("RGB")
-    scan_img = Image.open(raw_scan).convert("RGB")
+    scan_p1 = fit_folio(load_scan(ed, 1))
+    scan_p2 = fit_folio(load_scan(ed, 2))
 
-    frame_full = fit_width(frame_img, 1000)
-    scan_full = fit_width(scan_img, 1000)
-    paper = center_crop_fraction(frame_img, 0.52, 0.58)
-    paper = fit_width(paper, 888)
+    folio_p1.save(os.path.join(edir, "folio-p1.webp"), "WEBP", quality=86, method=6)
+    folio_p2.save(os.path.join(edir, "folio-p2.webp"), "WEBP", quality=86, method=6)
+    folio_margin.save(os.path.join(edir, "folio-margin.webp"), "WEBP", quality=86, method=6)
+    scan_p1.save(os.path.join(edir, "scan-p1.webp"), "WEBP", quality=86, method=6)
+    scan_p2.save(os.path.join(edir, "scan-p2.webp"), "WEBP", quality=86, method=6)
 
-    frame_full.save(os.path.join(edir, "frame-full.webp"), "WEBP", quality=82, method=6)
-    paper.save(os.path.join(edir, "paper-infill.webp"), "WEBP", quality=80, method=6)
-    scan_full.save(os.path.join(edir, "scan-folio.webp"), "WEBP", quality=82, method=6)
-
-    for p in (raw_frame, raw_scan):
-        if os.path.basename(p).startswith("_") and os.path.exists(p):
-            try:
-                os.remove(p)
-            except OSError:
-                pass
+    if eid == "pd-mehmed-sevki-ssm":
+        os.makedirs(STORE_MEDIA, exist_ok=True)
+        for label, before, after in [
+            ("p1", raw_p1, folio_p1),
+            ("p2", raw_p2, folio_p2),
+            ("p3", raw_margin, folio_margin),
+        ]:
+            before.save(os.path.join(STORE_MEDIA, f"pd-mehmed-sevki-ssm-{label}-compare-before.png"), "PNG")
+            after.save(os.path.join(STORE_MEDIA, f"pd-mehmed-sevki-ssm-{label}-compare-after.png"), "PNG")
 
     return {
         "id": eid,
+        "folioMapTr": ed.get("spread", {}).get("folioMapTr") or ed.get("folioMapTr", ""),
         "assets": {
-            "frame": f"/assets/mushaf/pd/{eid}/frame-full.webp",
-            "paper": f"/assets/mushaf/pd/{eid}/paper-infill.webp",
-            "scan": f"/assets/mushaf/pd/{eid}/scan-folio.webp",
+            "folio": {
+                "p1": f"/assets/mushaf/pd/{eid}/folio-p1.webp",
+                "p2": f"/assets/mushaf/pd/{eid}/folio-p2.webp",
+                "margin": f"/assets/mushaf/pd/{eid}/folio-margin.webp",
+            },
+            "scan": {
+                "p1": f"/assets/mushaf/pd/{eid}/scan-p1.webp",
+                "p2": f"/assets/mushaf/pd/{eid}/scan-p2.webp",
+            },
+        },
+        "writingBox": {
+            "margin": margin_box,
+            "serlevha": serlevha,
         },
         "provenance": {
-            "nameTr": ed["nameTr"],
-            "institutionTr": ed["institutionTr"],
-            "shelfmark": ed["shelfmark"],
-            "licenseTr": ed["licenseTr"],
+            "nameTr": ed.get("nameTr", eid),
+            "institutionTr": ed.get("institutionTr", ""),
+            "shelfmark": ed.get("shelfmark", ""),
+            "licenseTr": ed.get("licenseTr", "Public Domain"),
             "licenseUrl": ed.get("licenseUrl", ""),
-            "frameSource": frame_url,
-            "scanSource": scan_url,
             "verifiedOn": "2026-10-26",
         },
     }
@@ -131,16 +224,25 @@ def process_edition(ed: dict) -> dict:
 def main() -> int:
     with open(SRC, encoding="utf-8") as f:
         cfg = json.load(f)
-    manifest = {"schema": 2, "verifiedOn": cfg["verifiedOn"], "editions": []}
+    margin_box = cfg["writingBoxMargin"]
+    manifest = {
+        "schema": 4,
+        "verifiedOn": cfg["verifiedOn"],
+        "cacheKey": "pdhist4",
+        "design": cfg.get("design"),
+        "writingBoxMargin": margin_box,
+        "editions": [],
+    }
     for ed in cfg["editions"]:
         print("fetch", ed["id"], "...")
-        manifest["editions"].append(process_edition(ed))
-    out_manifest = os.path.join(OUT, "manifest.json")
-    with open(out_manifest, "w", encoding="utf-8") as f:
+        manifest["editions"].append(process_edition(ed, margin_box))
+        time.sleep(3)
+    path = os.path.join(OUT, "manifest.json")
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
-    print("wrote", out_manifest)
+    print("wrote", path)
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())
