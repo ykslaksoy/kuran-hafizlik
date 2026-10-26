@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "verifiedOn": "2026-10-26",
+  "note": "Only Public Domain (or equivalent) assets. CC BY-SA excluded.",
+  "editions": [
+    {
+      "id": "pd-mehmed-sevki-ssm",
+      "nameTr": "Mehmed Şevki Efendi (tarihî hat)",
+      "shortLabelTr": "PD · Mehmed Şevki Efendi",
+      "institutionTr": "Sakıp Sabancı Müzesi",
+      "shelfmark": "SSM (Google Art Project taraması)",
+      "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+      "commonsTitle": "File:Copied by Mehmed Şevki Efendi - Qur’an - Google Art Project.jpg",
+      "scanPage": 1,
+      "scanNoteTr": "Sayfa 1 önizleme: müze taramasındaki Fâtiha açılışı (Medine 604 sayfa numarasıyla örtüşmez)."
+    },
+    {
+      "id": "pd-ruzbihan-cbl-1558",
+      "nameTr": "Ruzbihan (CBL Is 1558)",
+      "shortLabelTr": "PD · Ruzbihan CBL Is 1558",
+      "institutionTr": "Columbia University · Burke Library",
+      "shelfmark": "CBL Is 1558",
+      "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Double_frontispiece_of_the_Ruzbihan_Qur%27an_(CBL_Is_1558).jpg",
+      "commonsTitle": "File:Double frontispiece of the Ruzbihan Qur'an (CBL Is 1558).jpg",
+      "scanCommonsTitle": "File:The Ruzbihan Qur'an. Illuminated frontispiece, containing Chapter 1, al-Fatiha (CBL Is 1558, f.2b).jpg",
+      "scanPage": 1
+    },
+    {
+      "id": "pd-walters-w569",
+      "nameTr": "Walters W.569 (İran, 11. yy.)",
+      "shortLabelTr": "PD · Walters W.569",
+      "institutionTr": "Walters Art Museum",
+      "shelfmark": "W.569",
+      "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Illuminated_Incipit_Page_with_Headpiece_-_Walters_W5693B_-_Full_Page.jpg",
+      "commonsTitle": "File:Iranian - Illuminated Incipit Page with Headpiece - Walters W5693B - Full Page.jpg",
+      "frameCommonsTitle": "File:Iranian - Illuminated Incipit Page with Headpiece - Walters W5693B - Full Page.jpg",
+      "scanCommonsTitle": "File:Iranian - Left Side of a Double-page Opening Inscribed with Verses of Chapter 1 - Walters W5693A - Full Page.jpg",
+      "scanPage": 1
+    },
+    {
+      "id": "pd-walters-w557",
+      "nameTr": "Walters W.557",
+      "shortLabelTr": "PD · Walters W.557",
+      "institutionTr": "Walters Art Museum",
+      "shelfmark": "W.557",
+      "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Left_Side_of_an_Illuminated_Double-page_Incipit_-_Walters_W5573A_-_Full_Page.jpg",
+      "commonsTitle": "File:Iranian - Left Side of an Illuminated Double-page Incipit - Walters W5573A - Full Page.jpg",
+      "scanCommonsTitle": "File:Iranian - Leaf from Qur'an - Walters W557104B - Full Page.jpg",
+      "scanPage": 1
+    },
+    {
+      "id": "pd-loc-or-15227",
+      "nameTr": "LOC Or. 15227 (WDL)",
+      "shortLabelTr": "PD · LOC Or. 15227",
+      "institutionTr": "Library of Congress · World Digital Library",
+      "shelfmark": "Or. 15227",
+      "licenseTr": "Kamu malı — LOC/WDL (bilinen kısıt yok)",
+      "licenseUrl": "https://www.loc.gov/item/2021667630/",
+      "directUrl": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:50/0/default.jpg",
+      "scanDirectUrl": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:50/0/default.jpg",
+      "scanPage": 1
+    },
+    {
+      "id": "pd-loc-plmp-m131",
+      "nameTr": "LOC plmp.m131",
+      "shortLabelTr": "PD · LOC plmp.m131",
+      "institutionTr": "Library of Congress",
+      "shelfmark": "plmp.m131",
+      "licenseTr": "Kamu malı — Library of Congress",
+      "licenseUrl": "https://www.loc.gov/item/2021668722/",
+      "directUrl": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:50.0/0/default.jpg",
+      "scanDirectUrl": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:50.0/0/default.jpg",
+      "scanPage": 1
+    }
+  ]
+}

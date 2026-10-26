@@ -17,8 +17,8 @@
         "layoutApi": "quran.com QDC / QUL",
         "index": "/assets/mushaf/qcf-index.json"
       },
-      "licenseTr": "QCF sayfa fontları KFGQPC; satır–kelime düzeni Quran Foundation / quran.com. Hafızyol Ezan Vakti PNG veya sayfa görüntüsü kullanmaz. Çerçeve, sure başlığı ve ayet gülü özgün dekoratif SVG — basılı mushaf tezhibi veya taranmış sayfa kenarı değil.",
-      "notesTr": "Türkiye’deki Diyanet hafız boy ile sayfa kırılımı farklı olabilir; basılı Medine mushaf ile uyumlu. «Tezhip» stili kaldırıldı (2026-10-24): çizilmiş süs gerçek mushaf sanatı gibi sunulmuyor."
+      "licenseTr": "QCF sayfa fontları KFGQPC; satır–kelime düzeni Quran Foundation / quran.com. Sade/Altın kenar özgün dekoratif SVG. «Tezhip» modu: kamu malı tarihî mushaf taramasından çerçeve/kağıt (manifest: /assets/mushaf/pd/manifest.json); iç metin yine QCF.",
+      "notesTr": "Tezhip = PD tarihî çerçeve + QCF (2026-10-26). «Orijinal hat» sayfa 1’de el yazması taraması; diğer sayfalarda QCF."
     },
     {
       "id": "diyanet-hafizboy-604",
@@ -51,6 +51,67 @@
       },
       "licenseTr": "Yayıncıdan ayrı yazılı lisans gerekir.",
       "notesTr": "SKU’ya göre 604 veya 624 sayfa; Diyanet mektubundan bağımsız başvuru."
+    }
+  ],
+  "pdHistoricalFrames": {
+    "schema": 1,
+    "manifest": "/assets/mushaf/pd/manifest.json",
+    "licensePolicyTr": "Yalnız Public Domain / serbest kullanım; CC BY-SA paketleri kullanılmaz."
+  },
+  "pdFrameEditions": [
+    {
+      "id": "pd-mehmed-sevki-ssm",
+      "nameTr": "Mehmed Şevki Efendi (tarihî hat)",
+      "shortLabelTr": "PD · Mehmed Şevki Efendi",
+      "institutionTr": "Sakıp Sabancı Müzesi",
+      "shelfmark": "SSM (Google Art Project taraması)",
+      "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg"
+    },
+    {
+      "id": "pd-ruzbihan-cbl-1558",
+      "nameTr": "Ruzbihan (CBL Is 1558)",
+      "shortLabelTr": "PD · Ruzbihan CBL Is 1558",
+      "institutionTr": "Columbia University · Burke Library",
+      "shelfmark": "CBL Is 1558",
+      "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Double_frontispiece_of_the_Ruzbihan_Qur%27an_(CBL_Is_1558).jpg"
+    },
+    {
+      "id": "pd-walters-w569",
+      "nameTr": "Walters W.569 (İran, 11. yy.)",
+      "shortLabelTr": "PD · Walters W.569",
+      "institutionTr": "Walters Art Museum",
+      "shelfmark": "W.569",
+      "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Illuminated_Incipit_Page_with_Headpiece_-_Walters_W5693B_-_Full_Page.jpg"
+    },
+    {
+      "id": "pd-walters-w557",
+      "nameTr": "Walters W.557",
+      "shortLabelTr": "PD · Walters W.557",
+      "institutionTr": "Walters Art Museum",
+      "shelfmark": "W.557",
+      "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Left_Side_of_an_Illuminated_Double-page_Incipit_-_Walters_W5573A_-_Full_Page.jpg"
+    },
+    {
+      "id": "pd-loc-or-15227",
+      "nameTr": "LOC Or. 15227 (WDL)",
+      "shortLabelTr": "PD · LOC Or. 15227",
+      "institutionTr": "Library of Congress · World Digital Library",
+      "shelfmark": "Or. 15227",
+      "licenseTr": "Kamu malı — LOC/WDL (bilinen kısıt yok)",
+      "licenseUrl": "https://www.loc.gov/item/2021667630/"
+    },
+    {
+      "id": "pd-loc-plmp-m131",
+      "nameTr": "LOC plmp.m131",
+      "shortLabelTr": "PD · LOC plmp.m131",
+      "institutionTr": "Library of Congress",
+      "shelfmark": "plmp.m131",
+      "licenseTr": "Kamu malı — Library of Congress",
+      "licenseUrl": "https://www.loc.gov/item/2021668722/"
     }
   ]
 }

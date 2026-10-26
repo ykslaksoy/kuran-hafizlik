@@ -1,0 +1,114 @@
+{
+  "schema": 2,
+  "verifiedOn": "2026-10-26",
+  "editions": [
+    {
+      "id": "pd-mehmed-sevki-ssm",
+      "assets": {
+        "frame": "/assets/mushaf/pd/pd-mehmed-sevki-ssm/frame-full.webp",
+        "paper": "/assets/mushaf/pd/pd-mehmed-sevki-ssm/paper-infill.webp",
+        "scan": "/assets/mushaf/pd/pd-mehmed-sevki-ssm/scan-folio.webp"
+      },
+      "provenance": {
+        "nameTr": "Mehmed Şevki Efendi (tarihî hat)",
+        "institutionTr": "Sakıp Sabancı Müzesi",
+        "shelfmark": "SSM (Google Art Project taraması)",
+        "licenseTr": "Kamu malı (Public Domain)",
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+        "frameSource": "https://upload.wikimedia.org/wikipedia/commons/5/59/Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "scanSource": "https://upload.wikimedia.org/wikipedia/commons/5/59/Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-ruzbihan-cbl-1558",
+      "assets": {
+        "frame": "/assets/mushaf/pd/pd-ruzbihan-cbl-1558/frame-full.webp",
+        "paper": "/assets/mushaf/pd/pd-ruzbihan-cbl-1558/paper-infill.webp",
+        "scan": "/assets/mushaf/pd/pd-ruzbihan-cbl-1558/scan-folio.webp"
+      },
+      "provenance": {
+        "nameTr": "Ruzbihan (CBL Is 1558)",
+        "institutionTr": "Columbia University · Burke Library",
+        "shelfmark": "CBL Is 1558",
+        "licenseTr": "Kamu malı (Public Domain)",
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Double_frontispiece_of_the_Ruzbihan_Qur%27an_(CBL_Is_1558).jpg",
+        "frameSource": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Double_frontispiece_of_the_Ruzbihan_Qur%27an_%28CBL_Is_1558%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "scanSource": "https://upload.wikimedia.org/wikipedia/commons/9/9d/The_Ruzbihan_Qur%27an._Illuminated_frontispiece%2C_containing_Chapter_1%2C_al-Fatiha_%28CBL_Is_1558%2C_f.2b%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-walters-w569",
+      "assets": {
+        "frame": "/assets/mushaf/pd/pd-walters-w569/frame-full.webp",
+        "paper": "/assets/mushaf/pd/pd-walters-w569/paper-infill.webp",
+        "scan": "/assets/mushaf/pd/pd-walters-w569/scan-folio.webp"
+      },
+      "provenance": {
+        "nameTr": "Walters W.569 (İran, 11. yy.)",
+        "institutionTr": "Walters Art Museum",
+        "shelfmark": "W.569",
+        "licenseTr": "Kamu malı (Public Domain)",
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Illuminated_Incipit_Page_with_Headpiece_-_Walters_W5693B_-_Full_Page.jpg",
+        "frameSource": "https://upload.wikimedia.org/wikipedia/commons/6/66/Iranian_-_Illuminated_Incipit_Page_with_Headpiece_-_Walters_W5693B_-_Full_Page.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "scanSource": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Iranian_-_Left_Side_of_a_Double-page_Opening_Inscribed_with_Verses_of_Chapter_1_-_Walters_W5693A_-_Full_Page.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-walters-w557",
+      "assets": {
+        "frame": "/assets/mushaf/pd/pd-walters-w557/frame-full.webp",
+        "paper": "/assets/mushaf/pd/pd-walters-w557/paper-infill.webp",
+        "scan": "/assets/mushaf/pd/pd-walters-w557/scan-folio.webp"
+      },
+      "provenance": {
+        "nameTr": "Walters W.557",
+        "institutionTr": "Walters Art Museum",
+        "shelfmark": "W.557",
+        "licenseTr": "Kamu malı (Public Domain)",
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Left_Side_of_an_Illuminated_Double-page_Incipit_-_Walters_W5573A_-_Full_Page.jpg",
+        "frameSource": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Iranian_-_Left_Side_of_an_Illuminated_Double-page_Incipit_-_Walters_W5573A_-_Full_Page.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "scanSource": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Iranian_-_Leaf_from_Qur%27an_-_Walters_W557104B_-_Full_Page.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-loc-or-15227",
+      "assets": {
+        "frame": "/assets/mushaf/pd/pd-loc-or-15227/frame-full.webp",
+        "paper": "/assets/mushaf/pd/pd-loc-or-15227/paper-infill.webp",
+        "scan": "/assets/mushaf/pd/pd-loc-or-15227/scan-folio.webp"
+      },
+      "provenance": {
+        "nameTr": "LOC Or. 15227 (WDL)",
+        "institutionTr": "Library of Congress · World Digital Library",
+        "shelfmark": "Or. 15227",
+        "licenseTr": "Kamu malı — LOC/WDL (bilinen kısıt yok)",
+        "licenseUrl": "https://www.loc.gov/item/2021667630/",
+        "frameSource": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:50/0/default.jpg",
+        "scanSource": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:50/0/default.jpg",
+        "verifiedOn": "2026-10-26"
+      }
+    },
+    {
+      "id": "pd-loc-plmp-m131",
+      "assets": {
+        "frame": "/assets/mushaf/pd/pd-loc-plmp-m131/frame-full.webp",
+        "paper": "/assets/mushaf/pd/pd-loc-plmp-m131/paper-infill.webp",
+        "scan": "/assets/mushaf/pd/pd-loc-plmp-m131/scan-folio.webp"
+      },
+      "provenance": {
+        "nameTr": "LOC plmp.m131",
+        "institutionTr": "Library of Congress",
+        "shelfmark": "plmp.m131",
+        "licenseTr": "Kamu malı — Library of Congress",
+        "licenseUrl": "https://www.loc.gov/item/2021668722/",
+        "frameSource": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:50.0/0/default.jpg",
+        "scanSource": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:50.0/0/default.jpg",
+        "verifiedOn": "2026-10-26"
+      }
+    }
+  ]
+}

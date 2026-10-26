@@ -1027,3 +1027,78 @@ body.hy-style-sade #hy-timing-source .hy-src-toggle {
   #hy-player-dock .hy-player-label { display: none; }
   #hy-timing-source .hy-src-toggle { max-width: 88px; height: 30px; }
 }
+
+#hy-qcf-scan {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+#hy-qcf-scan.hy-on { display: block; }
+
+#hy-qcf-paper-infill {
+  display: none;
+  position: absolute;
+  top: 72px;
+  left: 56px;
+  width: 888px;
+  height: 1470px;
+  z-index: 0;
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  pointer-events: none;
+}
+
+#hy-qcf-paper-infill.hy-on { display: block; }
+
+body.hy-style-tezhip #hy-qcf-ornament.hy-pd-frame-on {
+  inset: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+body.hy-style-tezhip #hy-qcf-ornament.hy-pd-frame-on::before {
+  display: none;
+}
+
+body.hy-style-tezhip #hy-qcf-ornament .hy-pd-frame-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  filter: saturate(1.05) contrast(1.03);
+}
+
+body.hy-original-hat #hy-qcf-glyphs,
+body.hy-original-hat #hy-qcf-paper-infill,
+body.hy-original-hat #hy-qcf-ornament .hy-pd-frame-img {
+  opacity: 0;
+}
+
+body.hy-original-hat #hy-qcf-glyphs {
+  pointer-events: none;
+}
+
+#hy-player-dock #hy-pd-btn,
+#hy-player-dock #hy-hat-btn {
+  display: none;
+  max-width: 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.hy-style-tezhip #hy-player-dock #hy-pd-btn,
+body.hy-style-tezhip #hy-player-dock #hy-hat-btn {
+  display: inline-flex;
+}

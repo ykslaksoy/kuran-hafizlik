@@ -10,7 +10,9 @@
     "web": "node scripts/serve.js",
     "serve": "node scripts/serve.js",
     "patch:gercek-mushaf": "node scripts/patch-gercek-mushaf.js",
-    "patch:honest-decor": "node scripts/patch-honest-decor.js"
+    "patch:honest-decor": "node scripts/patch-honest-decor.js",
+    "fetch:pd-mushaf": "python3 scripts/fetch-pd-mushaf-assets.py",
+    "patch:pd-mushaf": "node scripts/patch-pd-historical-mushaf.js"
   },
   "engines": {
     "node": ">=18"
