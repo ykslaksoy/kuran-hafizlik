@@ -1059,7 +1059,7 @@ body.hy-style-sade #hy-timing-source .hy-src-toggle {
 #hy-qcf-scan.hy-on { display: block; }
 
 #hy-qcf-paper-infill {
-  display: none;
+  display: none !important;
   position: absolute;
   top: 72px;
   left: 56px;

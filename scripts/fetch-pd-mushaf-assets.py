@@ -19,6 +19,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "scripts", "pd-mushaf-sources.json")
 OUT = os.path.join(ROOT, "dist", "assets", "mushaf", "pd")
+RESTORED_DIR = os.path.join(ROOT, "dist", "assets", "mushaf", "restored")
 STORE_MEDIA = "/cursor/stores/bc-114252f7-dc62-4152-81a7-76cb5dd7da05/media"
 UA = "HafizyolBot/1.0 (PD asset fetch; ykslaksoy/kuran-hafizlik)"
 DESIGN_W = 1000
@@ -84,6 +85,16 @@ def box_px(box: dict) -> tuple[int, int, int, int]:
     return x0, y0, x1, y1
 
 
+def try_restored_master(eid: str, slot: str) -> Image.Image | None:
+    """Restorer branch: dist/assets/mushaf/restored/<id>/p1|p2|p3|blank.png (1000×1610)."""
+    names = {"p1": ("p1.png",), "p2": ("p2.png",), "margin": ("p3.png", "margin.png")}
+    for fn in names.get(slot, ()):
+        path = os.path.join(RESTORED_DIR, eid, fn)
+        if os.path.isfile(path):
+            return fit_folio(Image.open(path).convert("RGB"))
+    return None
+
+
 def ink_mask_in_box(rgb: np.ndarray, edge_guard: int = 14) -> np.ndarray:
     """Mask dark ink/diacritics only — not gold/blue border at box edges."""
     gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
@@ -103,8 +114,10 @@ def ink_mask_in_box(rgb: np.ndarray, edge_guard: int = 14) -> np.ndarray:
         if area < 12 or area > int(w * h * 0.08):
             continue
         clean[labels == i] = 255
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+    clean = cv2.morphologyEx(clean, cv2.MORPH_OPEN, kernel, iterations=1)
     if clean.sum() < 50:
-        clean = ((blur < 135) & (blur > 0)).astype(np.uint8) * 255
+        clean = ((blur < 128) & (blur > 72)).astype(np.uint8) * 255
         clean[:edge_guard, :] = 0
         clean[-edge_guard:, :] = 0
         clean[:, :edge_guard] = 0
@@ -169,9 +182,22 @@ def process_edition(ed: dict, margin_box: dict) -> dict:
     raw_p2 = fit_folio(load_leaf(ed, "p2"))
     raw_margin = fit_folio(load_leaf(ed, "margin"))
 
-    folio_p1 = inpaint_writing_box(raw_p1, wb_p1)
-    folio_p2 = inpaint_writing_box(raw_p2, wb_p2)
-    folio_margin = inpaint_writing_box(raw_margin, margin_box)
+    restored_meta: dict[str, str] = {}
+    folio_p1 = try_restored_master(eid, "p1")
+    if folio_p1:
+        restored_meta["p1"] = f"/assets/mushaf/restored/{eid}/p1.png"
+    else:
+        folio_p1 = inpaint_writing_box(raw_p1, wb_p1)
+    folio_p2 = try_restored_master(eid, "p2")
+    if folio_p2:
+        restored_meta["p2"] = f"/assets/mushaf/restored/{eid}/p2.png"
+    else:
+        folio_p2 = inpaint_writing_box(raw_p2, wb_p2)
+    folio_margin = try_restored_master(eid, "margin")
+    if folio_margin:
+        restored_meta["margin"] = f"/assets/mushaf/restored/{eid}/p3.png"
+    else:
+        folio_margin = inpaint_writing_box(raw_margin, margin_box)
 
     scan_p1 = fit_folio(load_scan(ed, 1))
     scan_p2 = fit_folio(load_scan(ed, 2))
@@ -184,13 +210,30 @@ def process_edition(ed: dict, margin_box: dict) -> dict:
 
     if eid == "pd-mehmed-sevki-ssm":
         os.makedirs(STORE_MEDIA, exist_ok=True)
-        for label, before, after in [
-            ("p1", raw_p1, folio_p1),
-            ("p2", raw_p2, folio_p2),
-            ("p3", raw_margin, folio_margin),
+        from PIL import ImageDraw
+
+        for label, before, after, box in [
+            ("p1", raw_p1, folio_p1, wb_p1),
+            ("p2", raw_p2, folio_p2, wb_p2),
+            ("p3", raw_margin, folio_margin, margin_box),
         ]:
-            before.save(os.path.join(STORE_MEDIA, f"pd-mehmed-sevki-ssm-{label}-compare-before.png"), "PNG")
-            after.save(os.path.join(STORE_MEDIA, f"pd-mehmed-sevki-ssm-{label}-compare-after.png"), "PNG")
+            base = f"pd-mehmed-sevki-ssm-{label}-compare"
+            before.save(os.path.join(STORE_MEDIA, f"{base}-before.png"), "PNG")
+            after.save(os.path.join(STORE_MEDIA, f"{base}-after.png"), "PNG")
+            x0, y0, x1, y1 = box_px(box)
+            before.crop((x0, y0, x1, y1)).save(
+                os.path.join(STORE_MEDIA, f"{base}-writing-before.png"), "PNG"
+            )
+            after.crop((x0, y0, x1, y1)).save(
+                os.path.join(STORE_MEDIA, f"{base}-writing-after.png"), "PNG"
+            )
+            pair = Image.new("RGB", (DESIGN_W * 2, DESIGN_H), (32, 32, 32))
+            pair.paste(before, (0, 0))
+            pair.paste(after, (DESIGN_W, 0))
+            d = ImageDraw.Draw(pair)
+            d.rectangle([x0, y0, x1, y1], outline=(0, 220, 80), width=3)
+            d.rectangle([DESIGN_W + x0, y0, DESIGN_W + x1, y1], outline=(0, 220, 80), width=3)
+            pair.save(os.path.join(STORE_MEDIA, f"{base}-side-by-side.png"), "PNG")
 
     return {
         "id": eid,
@@ -210,6 +253,7 @@ def process_edition(ed: dict, margin_box: dict) -> dict:
             "margin": margin_box,
             "serlevha": serlevha,
         },
+        "restored": restored_meta if restored_meta else None,
         "provenance": {
             "nameTr": ed.get("nameTr", eid),
             "institutionTr": ed.get("institutionTr", ""),
