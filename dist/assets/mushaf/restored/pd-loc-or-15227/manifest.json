@@ -1,0 +1,52 @@
+{
+  "id": "pd-loc-or-15227",
+  "storePrefix": "loc15227",
+  "nameTr": "LOC Or. 15227",
+  "folioMapTr": "",
+  "sade2Edition": false,
+  "assets": {
+    "folio": {
+      "p1": "/assets/mushaf/restored/pd-loc-or-15227/serlevha-p1.webp",
+      "p2": "/assets/mushaf/restored/pd-loc-or-15227/serlevha-p2.webp",
+      "margin": "/assets/mushaf/restored/pd-loc-or-15227/sade2.webp",
+      "sade2": "/assets/mushaf/restored/pd-loc-or-15227/sade2.webp"
+    },
+    "surahStart": null
+  },
+  "writingBox": {
+    "margin": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "serlevha": {
+      "p1": {
+        "top": 0.118,
+        "left": 0.112,
+        "width": 0.776,
+        "height": 0.768
+      },
+      "p2": {
+        "top": 0.112,
+        "left": 0.108,
+        "width": 0.784,
+        "height": 0.776
+      }
+    },
+    "sade2": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "surahStart": null
+  },
+  "provenance": {
+    "licenseUrl": "https://www.loc.gov/item/2021667630/",
+    "shelfmark": "Or. 15227",
+    "institutionTr": "Library of Congress WDL"
+  }
+}

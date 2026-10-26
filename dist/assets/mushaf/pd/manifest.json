@@ -1,7 +1,7 @@
 {
   "schema": 4,
   "verifiedOn": "2026-10-26",
-  "cacheKey": "pdhist4",
+  "cacheKey": "pdhist5",
   "design": {
     "stageW": 1000,
     "stageH": 1610,
@@ -51,7 +51,15 @@
             "width": 0.532,
             "height": 0.312
           }
-        }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
       },
       "provenance": {
         "nameTr": "Mehmed Şevki Efendi",
@@ -97,7 +105,15 @@
             "width": 0.628,
             "height": 0.292
           }
-        }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
       },
       "provenance": {
         "nameTr": "Ruzbihan CBL Is 1558",
@@ -143,6 +159,19 @@
             "width": 0.712,
             "height": 0.302
           }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": {
+          "top": 0.412,
+          "left": 0.142,
+          "width": 0.708,
+          "height": 0.318
         }
       },
       "provenance": {
@@ -189,7 +218,15 @@
             "width": 0.692,
             "height": 0.318
           }
-        }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
       },
       "provenance": {
         "nameTr": "Walters W.557",
@@ -235,7 +272,15 @@
             "width": 0.784,
             "height": 0.776
           }
-        }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
       },
       "provenance": {
         "nameTr": "LOC Or. 15227",
@@ -281,7 +326,15 @@
             "width": 0.772,
             "height": 0.788
           }
-        }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
       },
       "provenance": {
         "nameTr": "LOC plmp.m131",

@@ -38,6 +38,7 @@
   var pageStyle = "sade";
   var editionCatalog = null;
   var pdManifest = null;
+  var sade2Manifest = null;
   var pdFrameId = "pd-walters-w569";
   var originalHat = false;
   var activeEdition = {
@@ -610,7 +611,7 @@
   }
 
   function headerPad() {
-    return pageStyle === "tezhip" ? 18 : 68;
+    return isPdDecorStyle() ? 18 : 68;
   }
 
   function packSpecialTops(data, headers) {
@@ -627,7 +628,7 @@
     }
     var block = items.length * LINE_H + extra;
     var start;
-    if (data.page <= 2 && pageStyle !== "tezhip") start = 28;
+    if (data.page <= 2 && !isPdDecorStyle()) start = 28;
     else {
       start = Math.round((1470 - block) / 2);
       if (start < 28) start = 28;
@@ -665,8 +666,10 @@
     var el = document.getElementById("hy-qcf-source");
     if (!el || !activeEdition) return;
     var main = activeEdition.shortLabelTr || activeEdition.nameTr || "";
-    var sub = pageStyle === "tezhip" ? DECOR_SUB_PD : DECOR_SUB_SADE;
-    if (pageStyle === "tezhip") {
+    var sub = isPdDecorStyle() ? DECOR_SUB_PD : DECOR_SUB_SADE;
+    if (pageStyle === "sade2") {
+      sub = "2. Sade · Walters W.569 restorasyonlu tezhip + KFGQPC QCF";
+    } else if (pageStyle === "tezhip") {
       var pa = pdAttribLine();
       if (pa) sub = pa;
     }
@@ -677,7 +680,7 @@
       esc(sub) +
       "</span>";
     el.title =
-      pageStyle === "tezhip"
+      isPdDecorStyle()
         ? (activeEdition.nameTr || "") + " — " + (pdAttribLine() || DECOR_SUB_PD)
         : (activeEdition.nameTr || "") +
           " — QCF sayfa fontu, basılı Medine mushaf düzeni (15 satır). Sade/Altın kenar özgün dekoratif.";
@@ -815,9 +818,34 @@
     return false;
   }
 
+
+  function loadSade2Manifest() {
+    if (sade2Manifest) return Promise.resolve(sade2Manifest);
+    return fetch("/assets/mushaf/restored/pd-walters-w569/manifest.json?v=pdhist5")
+      .then(function (r) {
+        return r.ok ? r.json() : null;
+      })
+      .then(function (j) {
+        sade2Manifest = j;
+        return j;
+      })
+      .catch(function () {
+        return null;
+      });
+  }
+
+  function isPdDecorStyle() {
+    return pageStyle === "tezhip" || pageStyle === "sade2";
+  }
+
+  function activePdMeta() {
+    if (pageStyle === "sade2") return sade2Manifest;
+    return pdEditionMeta(pdFrameId);
+  }
+
   function loadPdManifest() {
     if (pdManifest) return Promise.resolve(pdManifest);
-    return fetch("/assets/mushaf/pd/manifest.json?v=pdhist4")
+    return fetch("/assets/mushaf/pd/manifest.json?v=pdhist5")
       .then(function (r) {
         return r.ok ? r.json() : null;
       })
@@ -890,7 +918,7 @@
   function applyPdPageLayout(data) {
     var stage = document.getElementById("hy-qcf-stage");
     if (!stage) return;
-    if (!data || pageStyle !== "tezhip") {
+    if (!data || !isPdDecorStyle()) {
       stage.removeAttribute("data-hy-pd-layout");
       return;
     }
@@ -900,13 +928,13 @@
   function applyPdFrameMask(data) {
     var img = document.querySelector("#hy-qcf-ornament .hy-pd-frame-img");
     if (!img) return;
-    if (!data || pageStyle !== "tezhip") {
+    if (!data || !isPdDecorStyle()) {
       img.style.maskImage = "";
       img.style.webkitMaskImage = "";
       return;
     }
-    if (pdLayoutForPage(data.page) === "margin") {
-      var meta = pdEditionMeta(pdFrameId);
+    if (pageStyle !== "sade2" && pdLayoutForPage(data.page) === "margin") {
+      var meta = activePdMeta();
       var box = meta ? writingBoxForPage(meta, data.page) : null;
       var m = pdMarginMaskUrl(box);
       img.style.maskImage = m;
@@ -947,11 +975,11 @@
   }
 
   function applyWritingPortBox(data) {
-    if (!data || pageStyle !== "tezhip") {
+    if (!data || !isPdDecorStyle()) {
       resetWritingPort();
       return;
     }
-    var meta = pdEditionMeta(pdFrameId);
+    var meta = activePdMeta();
     var box = meta ? writingBoxForPage(meta, data.page) : null;
     var port = document.getElementById("hy-qcf-writing-port");
     var glyphs = document.getElementById("hy-qcf-glyphs");
@@ -982,6 +1010,7 @@
       overlay.style.transformOrigin = "top left";
     }
     document.body.classList.toggle("hy-pd-serlevha", data.page <= 2);
+    document.body.classList.toggle("hy-style-sade2", pageStyle === "sade2");
   }
 
   function clearPdLayers() {
@@ -1003,8 +1032,8 @@
   }
 
   function applyPdDecor() {
-    var meta = pdEditionMeta(pdFrameId);
-    if (!meta || pageStyle !== "tezhip") {
+    var meta = activePdMeta();
+    if (!meta || !isPdDecorStyle()) {
       clearPdLayers();
       return;
     }
@@ -1015,7 +1044,7 @@
     if (!folioSrc) return;
     orn.classList.add("hy-tezhip-on", "hy-pd-frame-on");
     orn.setAttribute("data-hy-pd", pdFrameId);
-    var bust = "?v=pdhist4";
+    var bust = "?v=pdhist5";
     var img = orn.querySelector(".hy-pd-frame-img");
     if (!img) {
       img = document.createElement("img");
@@ -1056,7 +1085,7 @@
       return;
     }
     scan.classList.add("hy-on");
-    scan.style.backgroundImage = "url(" + scanUrl + "?v=pdhist4)";
+    scan.style.backgroundImage = "url(" + scanUrl + "?v=pdhist5)";
   }
 
   function setOriginalHat(on) {
@@ -1104,11 +1133,12 @@
   var DECOR_SUB_TR = DECOR_SUB_SADE;
 
   function normalizeStyle(style) {
-    if (style === "tezhip" || style === "altin") return style;
+    if (style === "tezhip" || style === "altin" || style === "sade2") return style;
     return "sade";
   }
 
   function styleLabel(style) {
+    if (style === "sade2") return "2. Sade";
     if (style === "tezhip") return "Tezhip";
     if (style === "altin") return "Altın";
     return "Sade";
@@ -1117,13 +1147,14 @@
   function nextStyle(style) {
     if (style === "sade") return "altin";
     if (style === "altin") return "tezhip";
+    if (style === "tezhip") return "sade2";
     return "sade";
   }
 
   function readStyle() {
     try {
       var s = global.localStorage && localStorage.getItem("hyPageStyle");
-      if (s === "tezhip" || s === "sade" || s === "altin") return s;
+      if (s === "tezhip" || s === "sade" || s === "altin" || s === "sade2") return s;
     } catch (e) {}
     return "sade";
   }
@@ -1157,11 +1188,17 @@
     document.body.classList.toggle("hy-style-sade", pageStyle === "sade");
     document.body.classList.toggle("hy-style-altin", pageStyle === "altin");
     document.body.classList.toggle("hy-style-tezhip", pageStyle === "tezhip");
+    document.body.classList.toggle("hy-style-sade2", pageStyle === "sade2");
     var orn = document.getElementById("hy-qcf-ornament");
-    if (pageStyle !== "tezhip") {
+    if (!isPdDecorStyle()) {
       clearPdLayers();
       document.body.classList.remove("hy-original-hat", "hy-pd-serlevha");
       if (orn && orn.querySelector("svg")) orn.innerHTML = "";
+    } else if (pageStyle === "sade2") {
+      if (orn && orn.querySelector("svg")) orn.innerHTML = "";
+      loadSade2Manifest().then(function () {
+        applyPdDecor();
+      });
     } else {
       if (orn && orn.querySelector("svg")) orn.innerHTML = "";
       applyPdDecor();
@@ -1170,9 +1207,11 @@
     if (btn) {
       btn.textContent = styleLabel(pageStyle);
       btn.title =
-        pageStyle === "tezhip"
-          ? "Tarihî tezhip (PD tarama çerçevesi) + QCF metin"
-          : "Sayfa süsü: Sade veya Sade Altın";
+        pageStyle === "sade2"
+          ? "2. Sade Model — W.569 restorasyonlu standart tezhip + QCF"
+          : pageStyle === "tezhip"
+            ? "Tarihî tezhip (PD tarama çerçevesi) + QCF metin"
+            : "Sayfa süsü: Sade veya Sade Altın";
       btn.setAttribute("aria-label", btn.title);
     }
     var pdBtn = document.getElementById("hy-pd-btn");
@@ -1259,7 +1298,7 @@
     var availH = Math.max(120, box.height);
     var landscape = window.innerWidth > window.innerHeight;
     var s =
-      pageStyle === "sade" || pageStyle === "altin" || pageStyle === "tezhip" || landscape
+      pageStyle === "sade" || pageStyle === "altin" || isPdDecorStyle() || landscape
         ? availW / DESIGN_W
         : Math.min(availW / DESIGN_W, availH / DESIGN_H);
     var key = pageStyle + ":" + s.toFixed(4) + ":" + Math.round(availW) + "x" + Math.round(availH);
@@ -1374,7 +1413,7 @@
     paintedFont = name;
     document.body.classList.add("hy-kuran", "hy-qcf-on");
     applyPdPageLayout(data);
-    if (pageStyle === "tezhip") {
+    if (isPdDecorStyle()) {
       applyPdFrameMask(data);
       applyWritingPortBox(data);
       applyPdDecor();
@@ -1522,7 +1561,7 @@
   }
 
   function loadEditionCatalog() {
-    return fetch("/assets/mushaf/mushaf-editions.json?v=pdhist4")
+    return fetch("/assets/mushaf/mushaf-editions.json?v=pdhist5")
       .then(function (r) {
         return r.ok ? r.json() : null;
       })
@@ -1574,7 +1613,7 @@
       var link = document.createElement("link");
       link.id = "hy-qcf-style-link";
       link.rel = "stylesheet";
-      link.href = "/assets/mushaf/qcf-mushaf.css?v=pdhist4";
+      link.href = "/assets/mushaf/qcf-mushaf.css?v=pdhist5";
       document.head.appendChild(link);
     }
     pageStyle = readStyle();

@@ -1,0 +1,57 @@
+{
+  "id": "pd-walters-w569",
+  "storePrefix": "w569",
+  "nameTr": "Walters W.569",
+  "folioMapTr": "W5693B Fâtiha · W5692A Bakara açılış (2a) · W5694A 15 satır (4a) · W569153B sure taç (153b)",
+  "sade2Edition": true,
+  "assets": {
+    "folio": {
+      "p1": "/assets/mushaf/restored/pd-walters-w569/serlevha-p1.webp",
+      "p2": "/assets/mushaf/restored/pd-walters-w569/serlevha-p2.webp",
+      "margin": "/assets/mushaf/restored/pd-walters-w569/sade2.webp",
+      "sade2": "/assets/mushaf/restored/pd-walters-w569/sade2.webp"
+    },
+    "surahStart": "/assets/mushaf/restored/pd-walters-w569/surah-start.webp"
+  },
+  "writingBox": {
+    "margin": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "serlevha": {
+      "p1": {
+        "top": 0.448,
+        "left": 0.152,
+        "width": 0.696,
+        "height": 0.288
+      },
+      "p2": {
+        "top": 0.428,
+        "left": 0.138,
+        "width": 0.712,
+        "height": 0.302
+      }
+    },
+    "sade2": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "surahStart": {
+      "top": 0.412,
+      "left": 0.142,
+      "width": 0.708,
+      "height": 0.318
+    }
+  },
+  "provenance": {
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Illuminated_Incipit_Page_with_Headpiece_-_Walters_W5693B_-_Full_Page.jpg",
+    "shelfmark": "W.569",
+    "institutionTr": "Walters Art Museum"
+  }
+}

@@ -1147,3 +1147,34 @@ body.hy-style-tezhip #hy-player-dock #hy-pd-btn,
 body.hy-style-tezhip #hy-player-dock #hy-hat-btn {
   display: inline-flex;
 }
+
+body.hy-style-sade2 #hy-qcf-ornament.hy-pd-frame-on {
+  inset: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+body.hy-style-sade2 #hy-qcf-ornament.hy-pd-frame-on::before {
+  display: none;
+}
+
+body.hy-style-sade2 #hy-qcf-ornament .hy-pd-frame-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  filter: saturate(1.05) contrast(1.03);
+  z-index: 0;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+
+body.hy-style-sade2 #hy-qcf-stage[data-hy-pd-layout="margin"] #hy-qcf-writing-port {
+  z-index: 2;
+}
+body.hy-style-sade2.hy-pd-serlevha #hy-qcf-glyphs .hy-qcf-linebox[data-kind="header"] {
+  display: none !important;
+}

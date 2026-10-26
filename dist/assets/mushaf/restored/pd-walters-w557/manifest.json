@@ -1,0 +1,52 @@
+{
+  "id": "pd-walters-w557",
+  "storePrefix": "walters-w557",
+  "nameTr": "Walters W.557",
+  "folioMapTr": "",
+  "sade2Edition": false,
+  "assets": {
+    "folio": {
+      "p1": "/assets/mushaf/restored/pd-walters-w557/serlevha-p1.webp",
+      "p2": "/assets/mushaf/restored/pd-walters-w557/serlevha-p2.webp",
+      "margin": "/assets/mushaf/restored/pd-walters-w557/sade2.webp",
+      "sade2": "/assets/mushaf/restored/pd-walters-w557/sade2.webp"
+    },
+    "surahStart": null
+  },
+  "writingBox": {
+    "margin": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "serlevha": {
+      "p1": {
+        "top": 0.438,
+        "left": 0.162,
+        "width": 0.676,
+        "height": 0.296
+      },
+      "p2": {
+        "top": 0.412,
+        "left": 0.148,
+        "width": 0.692,
+        "height": 0.318
+      }
+    },
+    "sade2": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "surahStart": null
+  },
+  "provenance": {
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Left_Side_of_an_Illuminated_Double-page_Incipit_-_Walters_W5573A_-_Full_Page.jpg",
+    "shelfmark": "W.557",
+    "institutionTr": "Walters Art Museum"
+  }
+}

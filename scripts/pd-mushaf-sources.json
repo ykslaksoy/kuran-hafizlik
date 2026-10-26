@@ -12,6 +12,7 @@
   "editions": [
     {
       "id": "pd-mehmed-sevki-ssm",
+      "storePrefix": "mehmed-sevki-ssm",
       "nameTr": "Mehmed Şevki Efendi",
       "institutionTr": "Sakıp Sabancı Müzesi",
       "shelfmark": "SSM GAP",
@@ -30,6 +31,7 @@
     },
     {
       "id": "pd-ruzbihan-cbl-1558",
+      "storePrefix": "ruzbihan-cbl-1558",
       "nameTr": "Ruzbihan CBL Is 1558",
       "institutionTr": "Columbia Burke",
       "shelfmark": "CBL Is 1558",
@@ -42,10 +44,6 @@
         "folioMapTr": "p1 sağ yaprak · p2 sol yaprak (çift serlevha bölündü)"
       },
       "marginFolio": "File:Illuminated folio. The Ruzbihan Qur'an (CBL Is 1558, f. 209a).jpg",
-      "scan": {
-        "p1": "File:The Ruzbihan Qur'an. Illuminated frontispiece, containing Chapter 1, al-Fatiha (CBL Is 1558, f.2b).jpg",
-        "p2": "File:Second part of illuminated double-page, Heading for Chapter 2, al-Baqara. The Ruzbihan Qur'an (CBL Is 1558, f.4a).jpg"
-      },
       "writingBoxSerlevha": {
         "p1": { "top": 0.398, "left": 0.198, "width": 0.604, "height": 0.276 },
         "p2": { "top": 0.382, "left": 0.178, "width": 0.628, "height": 0.292 }
@@ -53,33 +51,38 @@
     },
     {
       "id": "pd-walters-w569",
+      "storePrefix": "w569",
       "nameTr": "Walters W.569",
       "institutionTr": "Walters Art Museum",
       "shelfmark": "W.569",
       "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Illuminated_Incipit_Page_with_Headpiece_-_Walters_W5693B_-_Full_Page.jpg",
       "folio": {
         "p1": "File:Iranian - Illuminated Incipit Page with Headpiece - Walters W5693B - Full Page.jpg",
-        "p2": "File:Iranian - Decorated Incipit Page with Headpiece Introducing Chapter 18 - Walters W569153B - Full Page.jpg",
+        "p2": "File:Iranian - Left Side of a Double-page Illuminated Frontispiece - Walters W5692A - Full Page.jpg",
         "margin": "File:Iranian - Leaf from Qur'an - Walters W5694A - Full Page.jpg",
+        "surahStart": "File:Iranian - Decorated Incipit Page with Headpiece Introducing Chapter 18 - Walters W569153B - Full Page.jpg",
         "scanP1": "File:Iranian - Left Side of a Double-page Opening Inscribed with Verses of Chapter 1 - Walters W5693A - Full Page.jpg"
       },
-      "folioMapTr": "Tek yaprak: W5693B (p1), sure 18 açılış (p2), W5694A metin (p3+)",
+      "folioMapTr": "W5693B Fâtiha · W5692A Bakara açılış (2a) · W5694A 15 satır (4a) · W569153B sure taç (153b)",
       "writingBoxSerlevha": {
         "p1": { "top": 0.448, "left": 0.152, "width": 0.696, "height": 0.288 },
         "p2": { "top": 0.428, "left": 0.138, "width": 0.712, "height": 0.302 }
-      }
+      },
+      "sade2Edition": true
     },
     {
       "id": "pd-walters-w557",
+      "storePrefix": "walters-w557",
       "nameTr": "Walters W.557",
       "institutionTr": "Walters Art Museum",
       "shelfmark": "W.557",
       "licenseTr": "Kamu malı (Public Domain)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Left_Side_of_an_Illuminated_Double-page_Incipit_-_Walters_W5573A_-_Full_Page.jpg",
       "folio": {
         "p1": "File:Iranian - Left Side of an Illuminated Double-page Incipit - Walters W5573A - Full Page.jpg",
         "p2": "File:Iranian - Illuminated Text Page with Verses from Chapter 2 - Walters W5577B - Full Page.jpg",
-        "margin": "File:Iranian - Leaf from Qur'an - Walters W557104B - Full Page.jpg",
-        "scanP1": "File:Iranian - Leaf from Qur'an - Walters W557104B - Full Page.jpg"
+        "margin": "File:Iranian - Leaf from Qur'an - Walters W557104B - Full Page.jpg"
       },
       "writingBoxSerlevha": {
         "p1": { "top": 0.438, "left": 0.162, "width": 0.676, "height": 0.296 },
@@ -88,14 +91,16 @@
     },
     {
       "id": "pd-loc-or-15227",
+      "storePrefix": "loc15227",
       "nameTr": "LOC Or. 15227",
       "institutionTr": "Library of Congress WDL",
       "shelfmark": "Or. 15227",
       "licenseTr": "Kamu malı (LOC)",
+      "licenseUrl": "https://www.loc.gov/item/2021667630/",
       "direct": {
-        "p1": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:50/0/default.jpg",
-        "p2": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f004r/full/pct:50/0/default.jpg",
-        "margin": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f010r/full/pct:50/0/default.jpg"
+        "p1": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f003v/full/pct:78/0/default.jpg",
+        "p2": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f004r/full/pct:78/0/default.jpg",
+        "margin": "https://tile.loc.gov/image-services/iiif/service:gdc:gdcwdl:wd:l_:14:28:8:wdl_14288:or_15227_f010r/full/pct:78/0/default.jpg"
       },
       "writingBoxSerlevha": {
         "p1": { "top": 0.118, "left": 0.112, "width": 0.776, "height": 0.768 },
@@ -104,14 +109,16 @@
     },
     {
       "id": "pd-loc-plmp-m131",
+      "storePrefix": "loc-plmp-m131",
       "nameTr": "LOC plmp.m131",
       "institutionTr": "Library of Congress",
       "shelfmark": "plmp.m131",
       "licenseTr": "Kamu malı (LOC)",
+      "licenseUrl": "https://www.loc.gov/item/2021668722/",
       "direct": {
-        "p1": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:50.0/0/default.jpg",
-        "p2": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0010/full/pct:50.0/0/default.jpg",
-        "margin": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0015/full/pct:50.0/0/default.jpg"
+        "p1": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0008/full/pct:78.0/0/default.jpg",
+        "p2": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0009/full/pct:78.0/0/default.jpg",
+        "margin": "https://tile.loc.gov/image-services/iiif/public:amed:amedlplmp-m131:0010/full/pct:78.0/0/default.jpg"
       },
       "writingBoxSerlevha": {
         "p1": { "top": 0.108, "left": 0.118, "width": 0.764, "height": 0.782 },

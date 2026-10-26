@@ -1,0 +1,52 @@
+{
+  "id": "pd-ruzbihan-cbl-1558",
+  "storePrefix": "ruzbihan-cbl-1558",
+  "nameTr": "Ruzbihan CBL Is 1558",
+  "folioMapTr": "p1 sağ yaprak · p2 sol yaprak (çift serlevha bölündü)",
+  "sade2Edition": false,
+  "assets": {
+    "folio": {
+      "p1": "/assets/mushaf/restored/pd-ruzbihan-cbl-1558/serlevha-p1.webp",
+      "p2": "/assets/mushaf/restored/pd-ruzbihan-cbl-1558/serlevha-p2.webp",
+      "margin": "/assets/mushaf/restored/pd-ruzbihan-cbl-1558/sade2.webp",
+      "sade2": "/assets/mushaf/restored/pd-ruzbihan-cbl-1558/sade2.webp"
+    },
+    "surahStart": null
+  },
+  "writingBox": {
+    "margin": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "serlevha": {
+      "p1": {
+        "top": 0.398,
+        "left": 0.198,
+        "width": 0.604,
+        "height": 0.276
+      },
+      "p2": {
+        "top": 0.382,
+        "left": 0.178,
+        "width": 0.628,
+        "height": 0.292
+      }
+    },
+    "sade2": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "surahStart": null
+  },
+  "provenance": {
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Double_frontispiece_of_the_Ruzbihan_Qur%27an_(CBL_Is_1558).jpg",
+    "shelfmark": "CBL Is 1558",
+    "institutionTr": "Columbia Burke"
+  }
+}

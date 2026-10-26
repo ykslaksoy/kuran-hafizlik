@@ -1,0 +1,374 @@
+{
+  "schema": 5,
+  "cacheKey": "pdhist5",
+  "verifiedOn": "2026-10-26",
+  "design": {
+    "stageW": 1000,
+    "stageH": 1610,
+    "glyphW": 888,
+    "glyphH": 1470
+  },
+  "writingBoxMargin": {
+    "top": 0.04472049689440994,
+    "left": 0.056,
+    "width": 0.888,
+    "height": 0.9130434782608695,
+    "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+  },
+  "editions": [
+    {
+      "id": "pd-mehmed-sevki-ssm",
+      "storePrefix": "mehmed-sevki-ssm",
+      "nameTr": "Mehmed Şevki Efendi",
+      "folioMapTr": "p1 Fâtiha: sağ yaprak · p2 Bakara açılış: sol yaprak",
+      "sade2Edition": false,
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/restored/pd-mehmed-sevki-ssm/serlevha-p1.webp",
+          "p2": "/assets/mushaf/restored/pd-mehmed-sevki-ssm/serlevha-p2.webp",
+          "margin": "/assets/mushaf/restored/pd-mehmed-sevki-ssm/sade2.webp",
+          "sade2": "/assets/mushaf/restored/pd-mehmed-sevki-ssm/sade2.webp"
+        },
+        "surahStart": null
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.372,
+            "left": 0.248,
+            "width": 0.504,
+            "height": 0.298
+          },
+          "p2": {
+            "top": 0.358,
+            "left": 0.228,
+            "width": 0.532,
+            "height": 0.312
+          }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
+      },
+      "proofPng": {
+        "blank": "media/mehmed-sevki-ssm-restored-blank-template.png",
+        "p1": "media/mehmed-sevki-ssm-restored-p1-fatiha.png",
+        "p2": "media/mehmed-sevki-ssm-restored-p2-bakara.png",
+        "p3": "media/mehmed-sevki-ssm-restored-p3.png"
+      },
+      "provenance": {
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+        "shelfmark": "SSM GAP",
+        "institutionTr": "Sakıp Sabancı Müzesi"
+      }
+    },
+    {
+      "id": "pd-ruzbihan-cbl-1558",
+      "storePrefix": "ruzbihan-cbl-1558",
+      "nameTr": "Ruzbihan CBL Is 1558",
+      "folioMapTr": "p1 sağ yaprak · p2 sol yaprak (çift serlevha bölündü)",
+      "sade2Edition": false,
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/restored/pd-ruzbihan-cbl-1558/serlevha-p1.webp",
+          "p2": "/assets/mushaf/restored/pd-ruzbihan-cbl-1558/serlevha-p2.webp",
+          "margin": "/assets/mushaf/restored/pd-ruzbihan-cbl-1558/sade2.webp",
+          "sade2": "/assets/mushaf/restored/pd-ruzbihan-cbl-1558/sade2.webp"
+        },
+        "surahStart": null
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.398,
+            "left": 0.198,
+            "width": 0.604,
+            "height": 0.276
+          },
+          "p2": {
+            "top": 0.382,
+            "left": 0.178,
+            "width": 0.628,
+            "height": 0.292
+          }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
+      },
+      "proofPng": {
+        "blank": "media/ruzbihan-cbl-1558-restored-blank-template.png",
+        "p1": "media/ruzbihan-cbl-1558-restored-p1-fatiha.png",
+        "p2": "media/ruzbihan-cbl-1558-restored-p2-bakara.png",
+        "p3": "media/ruzbihan-cbl-1558-restored-p3.png"
+      },
+      "provenance": {
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Double_frontispiece_of_the_Ruzbihan_Qur%27an_(CBL_Is_1558).jpg",
+        "shelfmark": "CBL Is 1558",
+        "institutionTr": "Columbia Burke"
+      }
+    },
+    {
+      "id": "pd-walters-w569",
+      "storePrefix": "w569",
+      "nameTr": "Walters W.569",
+      "folioMapTr": "W5693B Fâtiha · W5692A Bakara açılış (2a) · W5694A 15 satır (4a) · W569153B sure taç (153b)",
+      "sade2Edition": true,
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/restored/pd-walters-w569/serlevha-p1.webp",
+          "p2": "/assets/mushaf/restored/pd-walters-w569/serlevha-p2.webp",
+          "margin": "/assets/mushaf/restored/pd-walters-w569/sade2.webp",
+          "sade2": "/assets/mushaf/restored/pd-walters-w569/sade2.webp"
+        },
+        "surahStart": "/assets/mushaf/restored/pd-walters-w569/surah-start.webp"
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.448,
+            "left": 0.152,
+            "width": 0.696,
+            "height": 0.288
+          },
+          "p2": {
+            "top": 0.428,
+            "left": 0.138,
+            "width": 0.712,
+            "height": 0.302
+          }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": {
+          "top": 0.412,
+          "left": 0.142,
+          "width": 0.708,
+          "height": 0.318
+        }
+      },
+      "proofPng": {
+        "blank": "media/w569-restored-blank-template.png",
+        "p1": "media/w569-restored-p1-fatiha.png",
+        "p2": "media/w569-restored-p2-bakara.png",
+        "p3": "media/w569-restored-p3-sade2.png"
+      },
+      "provenance": {
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Illuminated_Incipit_Page_with_Headpiece_-_Walters_W5693B_-_Full_Page.jpg",
+        "shelfmark": "W.569",
+        "institutionTr": "Walters Art Museum"
+      }
+    },
+    {
+      "id": "pd-walters-w557",
+      "storePrefix": "walters-w557",
+      "nameTr": "Walters W.557",
+      "folioMapTr": "",
+      "sade2Edition": false,
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/restored/pd-walters-w557/serlevha-p1.webp",
+          "p2": "/assets/mushaf/restored/pd-walters-w557/serlevha-p2.webp",
+          "margin": "/assets/mushaf/restored/pd-walters-w557/sade2.webp",
+          "sade2": "/assets/mushaf/restored/pd-walters-w557/sade2.webp"
+        },
+        "surahStart": null
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.438,
+            "left": 0.162,
+            "width": 0.676,
+            "height": 0.296
+          },
+          "p2": {
+            "top": 0.412,
+            "left": 0.148,
+            "width": 0.692,
+            "height": 0.318
+          }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
+      },
+      "proofPng": {
+        "blank": "media/walters-w557-restored-blank-template.png",
+        "p1": "media/walters-w557-restored-p1-fatiha.png",
+        "p2": "media/walters-w557-restored-p2-bakara.png",
+        "p3": "media/walters-w557-restored-p3.png"
+      },
+      "provenance": {
+        "licenseUrl": "https://commons.wikimedia.org/wiki/File:Iranian_-_Left_Side_of_an_Illuminated_Double-page_Incipit_-_Walters_W5573A_-_Full_Page.jpg",
+        "shelfmark": "W.557",
+        "institutionTr": "Walters Art Museum"
+      }
+    },
+    {
+      "id": "pd-loc-or-15227",
+      "storePrefix": "loc15227",
+      "nameTr": "LOC Or. 15227",
+      "folioMapTr": "",
+      "sade2Edition": false,
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/restored/pd-loc-or-15227/serlevha-p1.webp",
+          "p2": "/assets/mushaf/restored/pd-loc-or-15227/serlevha-p2.webp",
+          "margin": "/assets/mushaf/restored/pd-loc-or-15227/sade2.webp",
+          "sade2": "/assets/mushaf/restored/pd-loc-or-15227/sade2.webp"
+        },
+        "surahStart": null
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.118,
+            "left": 0.112,
+            "width": 0.776,
+            "height": 0.768
+          },
+          "p2": {
+            "top": 0.112,
+            "left": 0.108,
+            "width": 0.784,
+            "height": 0.776
+          }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
+      },
+      "proofPng": {
+        "blank": "media/loc15227-restored-blank-template.png",
+        "p1": "media/loc15227-restored-p1-fatiha.png",
+        "p2": "media/loc15227-restored-p2-bakara.png",
+        "p3": "media/loc15227-restored-p3.png"
+      },
+      "provenance": {
+        "licenseUrl": "https://www.loc.gov/item/2021667630/",
+        "shelfmark": "Or. 15227",
+        "institutionTr": "Library of Congress WDL"
+      }
+    },
+    {
+      "id": "pd-loc-plmp-m131",
+      "storePrefix": "loc-plmp-m131",
+      "nameTr": "LOC plmp.m131",
+      "folioMapTr": "",
+      "sade2Edition": false,
+      "assets": {
+        "folio": {
+          "p1": "/assets/mushaf/restored/pd-loc-plmp-m131/serlevha-p1.webp",
+          "p2": "/assets/mushaf/restored/pd-loc-plmp-m131/serlevha-p2.webp",
+          "margin": "/assets/mushaf/restored/pd-loc-plmp-m131/sade2.webp",
+          "sade2": "/assets/mushaf/restored/pd-loc-plmp-m131/sade2.webp"
+        },
+        "surahStart": null
+      },
+      "writingBox": {
+        "margin": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "serlevha": {
+          "p1": {
+            "top": 0.108,
+            "left": 0.118,
+            "width": 0.764,
+            "height": 0.782
+          },
+          "p2": {
+            "top": 0.104,
+            "left": 0.114,
+            "width": 0.772,
+            "height": 0.788
+          }
+        },
+        "sade2": {
+          "top": 0.04472049689440994,
+          "left": 0.056,
+          "width": 0.888,
+          "height": 0.9130434782608695,
+          "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+        },
+        "surahStart": null
+      },
+      "proofPng": {
+        "blank": "media/loc-plmp-m131-restored-blank-template.png",
+        "p1": "media/loc-plmp-m131-restored-p1-fatiha.png",
+        "p2": "media/loc-plmp-m131-restored-p2-bakara.png",
+        "p3": "media/loc-plmp-m131-restored-p3.png"
+      },
+      "provenance": {
+        "licenseUrl": "https://www.loc.gov/item/2021668722/",
+        "shelfmark": "plmp.m131",
+        "institutionTr": "Library of Congress"
+      }
+    }
+  ],
+  "w569Sade2Manifest": "/assets/mushaf/restored/pd-walters-w569/manifest.json"
+}

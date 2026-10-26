@@ -1,0 +1,52 @@
+{
+  "id": "pd-mehmed-sevki-ssm",
+  "storePrefix": "mehmed-sevki-ssm",
+  "nameTr": "Mehmed Şevki Efendi",
+  "folioMapTr": "p1 Fâtiha: sağ yaprak · p2 Bakara açılış: sol yaprak",
+  "sade2Edition": false,
+  "assets": {
+    "folio": {
+      "p1": "/assets/mushaf/restored/pd-mehmed-sevki-ssm/serlevha-p1.webp",
+      "p2": "/assets/mushaf/restored/pd-mehmed-sevki-ssm/serlevha-p2.webp",
+      "margin": "/assets/mushaf/restored/pd-mehmed-sevki-ssm/sade2.webp",
+      "sade2": "/assets/mushaf/restored/pd-mehmed-sevki-ssm/sade2.webp"
+    },
+    "surahStart": null
+  },
+  "writingBox": {
+    "margin": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "serlevha": {
+      "p1": {
+        "top": 0.372,
+        "left": 0.248,
+        "width": 0.504,
+        "height": 0.298
+      },
+      "p2": {
+        "top": 0.358,
+        "left": 0.228,
+        "width": 0.532,
+        "height": 0.312
+      }
+    },
+    "sade2": {
+      "top": 0.04472049689440994,
+      "left": 0.056,
+      "width": 0.888,
+      "height": 0.9130434782608695,
+      "noteTr": "Medine 604 QCF alanı (72,56,888×1470) — tüm nüshalar p3+"
+    },
+    "surahStart": null
+  },
+  "provenance": {
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Copied_by_Mehmed_%C5%9Eevki_Efendi_-_Qur%E2%80%99an_-_Google_Art_Project.jpg",
+    "shelfmark": "SSM GAP",
+    "institutionTr": "Sakıp Sabancı Müzesi"
+  }
+}
