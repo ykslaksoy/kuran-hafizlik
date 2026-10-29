@@ -11,7 +11,6 @@
     sudais: { quranId: 3, wordTiming: true, labelTr: "Sudais" },
     husary: { quranId: 6, wordTiming: true, labelTr: "Husary" },
     minshawi: { quranId: 8, wordTiming: true, labelTr: "Minşevi (Mujawwad)" },
-    "hoca-tts": { quranId: null, wordTiming: false, labelTr: "Hoca (TTS)" },
   };
 
   var SOURCES = [

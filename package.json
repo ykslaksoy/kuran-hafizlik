@@ -15,6 +15,7 @@
     "build:restored-pd": "python3 scripts/build-restored-pd-templates.py",
     "patch:pd-mushaf": "node scripts/patch-pd-historical-mushaf.js",
     "patch:pdhist5": "node scripts/patch-pdhist5-sade2.js",
+    "patch:remove-hoca-tts": "node scripts/patch-remove-hoca-tts.js",
     "shot:restored-pd": "node scripts/shot-restored-pd-composites.js"
   },
   "engines": {
