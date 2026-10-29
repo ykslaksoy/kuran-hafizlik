@@ -10,7 +10,6 @@
     { id: "abdulbasit-murattal", label: "Basit Mur." },
     { id: "husary", label: "Husary" },
     { id: "sudais", label: "Sudais" },
-    { id: "hoca-tts", label: "Hoca" },
   ];
   var dock = null;
   var playing = false;

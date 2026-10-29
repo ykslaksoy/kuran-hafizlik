@@ -20,6 +20,14 @@ Orijinal Expo/TypeScript kaynağı **kurtarılamadı**. Repo, canlı siteden ind
 
 Hipotez doğrulandı: canlı site önceki bir export; orijinal TS bu VM’de yok.
 
+## Güncelleme (2026-10-30)
+
+- **GitHub `main` ve tüm açık `cursor/*` dalları:** `app/` **yok** (0 dosya); yalnızca `dist/` + `scripts/`.
+- **Vercel MCP:** `list_deployment_files` production/preview Git deploy’larında **404** (kaynak ağacı yok).
+- **Production `*.js.map`:** 404.
+- **Detaylı denetim + PR stack:** Project store [`docs/source-recovery-2026-10-30.md`](https://github.com/ykslaksoy/kuran-hafizlik) (store path: `/cursor/stores/bc-114252f7-dc62-4152-81a7-76cb5dd7da05/docs/source-recovery-2026-10-30.md`).
+- **Yüksel aksiyonu:** Orijinal proje zip veya Drive yolu — bkz. store belgesi § «Yüklemesi gerekenler».
+
 ## Bundle’dan çıkarılan kimlik (SDK 52)
 
 - Ad: Hafız Yol — slug `hafiz-yol` — sürüm `0.1.0`
